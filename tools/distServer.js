@@ -1,12 +1,12 @@
-import express from 'express';
-import path from 'path';
-import open from 'open';
-import compression from 'compression';
+/*eslint-disable*/
 
-/*eslint-disable no-console */
+var express = require('express');
+var path = require('path');
+var open = require('open');
+var compression = require('compression');
 
-const port = 3000;
-const app = express();
+var port = 3000;
+var app = express();
 
 app.use(compression());
 app.use(express.static('dist'));
@@ -19,6 +19,6 @@ app.listen(port, function(err) {
   if (err) {
     console.log(err);
   } else {
-    open(`http://localhost:${port}`);
+    open('http://localhost:' + port);
   }
 });

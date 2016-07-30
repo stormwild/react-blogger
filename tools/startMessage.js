@@ -1,6 +1,5 @@
-import colors from 'colors';
+/*eslint-disable*/
 
-/* eslint-disable no-console */
+var colors = require('colors');
 
 console.log('Starting app in dev mode...'.green);
-

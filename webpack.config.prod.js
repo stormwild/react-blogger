@@ -1,12 +1,14 @@
-import webpack from 'webpack';
-import path from 'path';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
+/*eslint-disable*/
 
-const GLOBALS = {
+var webpack = require('webpack');
+var path = require('path');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+var GLOBALS = {
   'process.env.NODE_ENV': JSON.stringify('production')
 };
 
-export default {
+module.exports = {
   debug: true,
   devtool: 'source-map',
   noInfo: false,

@@ -1,7 +1,9 @@
-import webpack from 'webpack';
-import path from 'path';
+/*eslint-disable*/
 
-export default {
+var webpack = require('webpack');
+var path = require('path');
+
+module.exports = {
   debug: true,
   devtool: 'cheap-module-eval-source-map',
   noInfo: false,
