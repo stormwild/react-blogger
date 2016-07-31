@@ -1,5 +1,6 @@
 import * as types from './actionTypes';
 import courseApi from '../api/mockCourseApi';
+import {fetchApi} from '../api/fetchApi';
 import {beginAjaxCall, ajaxCallError} from './ajaxStatusActions';
 
 export function loadCoursesSuccess(courses) {
@@ -17,7 +18,7 @@ export function updateCourseSuccess(course) {
 export function loadCourses() {
   return function(dispatch) {
     dispatch(beginAjaxCall());
-    return courseApi.getAllCourses().then(courses => {
+    return fetchApi('/courses').then(courses => {
       dispatch(loadCoursesSuccess(courses));
     }).catch(error => {
       throw(error);
