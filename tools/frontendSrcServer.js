@@ -5,14 +5,13 @@ var webpack = require('webpack');
 var path = require('path');
 var config = require('../webpack.config.dev');
 var open = require('open');
-var proxy = require('express-http-proxy');
+var proxy = require('http-proxy-middleware');
 var colors = require('colors');
 
 var frontendPort = 3000;
 var backendPort = 5000;
 var app = express();
 var compiler = webpack(config);
-var apiSuffix = '/api';
 
 app.use(require('webpack-dev-middleware')(compiler, {
   noInfo: true,
@@ -21,15 +20,15 @@ app.use(require('webpack-dev-middleware')(compiler, {
 
 app.use(require('webpack-hot-middleware')(compiler));
 
-// Any request to the frontend server (localhost:3000/api) will be forwarded to the backend server (localhost:5000/api)
-app.use(apiSuffix, proxy('http://localhost:' + backendPort, {
-  forwardPath: function(req, res) {
-    return apiSuffix;
-  }
+// Any request to the frontend server at localhost:3000/api/* will be forwarded to the backend server at localhost:5000/api/*
+app.use('/api', proxy({
+  target: 'http://localhost:' + backendPort
 }));
 
 app.get('*', function(req, res) {
-  res.sendFile(path.join( __dirname, '../src/index.html'));
+  if (req.accepts('html')) {
+    res.sendFile(path.join( __dirname, '../src/index.html'));
+  }
 });
 
 app.listen(frontendPort, function(err) {
