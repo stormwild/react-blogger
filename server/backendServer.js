@@ -7,6 +7,7 @@ var routes = require('./routes');
 var port = 5000;
 var app = express();
 
+require('./mongoose')();
 app.use('/api', routes);
 
 app.listen(port, function() {
