@@ -18,7 +18,7 @@ export function updateCourseSuccess(course) {
 export function loadCourses() {
   return function(dispatch) {
     dispatch(beginAjaxCall());
-    return fetchApi('/courses').then(courses => {
+    return fetchApi('/courses', 'get').then(courses => {
       dispatch(loadCoursesSuccess(courses));
     }).catch(error => {
       throw(error);
@@ -29,7 +29,7 @@ export function loadCourses() {
 export function saveCourse(course) {
   return function(dispatch, getState) {
     dispatch(beginAjaxCall());
-    return courseApi.saveCourse(course).then(savedCourse => {
+    return fetchApi('/courses', 'post', course).then(savedCourse => {
       course.id ? dispatch(updateCourseSuccess(savedCourse)) :
         dispatch(createCourseSuccess(savedCourse));
     }).catch(error => {

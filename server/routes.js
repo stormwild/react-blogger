@@ -2,21 +2,38 @@
 
 var express = require('express');
 var router = express.Router();
-var Courses = require('./models');
+var Course = require('./models');
 
-router.get('/route1', function(req, res) {
-  res.json({route: 'one'});
-});
+// Helper functions
+function replaceAll(str, find, replace) {
+  return str.replace(new RegExp(find, 'g'), replace);
+}
 
-router.get('/route2', function(req, res) {
-  res.json({route: 'two'});
-});
+function generateId(course) {
+  return replaceAll(course.title, ' ', '-').toLowerCase();
+};
 
+// Actual routes
 router.get('/courses', function(req, res) {
-  var query = Courses.find();
+  var query = Course.find();
   query.exec(function(err, results) {
     res.json(results);
   });
+});
+
+router.post('/courses', function(req, res) {
+  var course = new Course(req.body);
+  course.id = generateId(course); // This is only unique if the course title is unique
+
+  course.save(function(err, results) {
+    if (err) {
+      console.log(err);
+    }
+    else {
+      res.json(results);
+    }
+  });
+
 });
 
 module.exports = router;

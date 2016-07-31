@@ -2,10 +2,14 @@
 
 var express = require('express');
 var colors = require('colors');
+var bodyParser = require('body-parser');
 var routes = require('./routes');
 
 var port = 5000;
 var app = express();
+
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 
 require('./mongoose')();
 app.use('/api', routes);
