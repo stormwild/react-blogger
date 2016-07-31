@@ -30,8 +30,19 @@ export function saveCourse(course) {
   return function(dispatch, getState) {
     dispatch(beginAjaxCall());
     return fetchApi('/courses', 'post', course).then(savedCourse => {
-      course.id ? dispatch(updateCourseSuccess(savedCourse)) :
-        dispatch(createCourseSuccess(savedCourse));
+      dispatch(createCourseSuccess(savedCourse));
+    }).catch(error => {
+      dispatch(ajaxCallError(error));
+      throw(error);
+    });
+  };
+}
+
+export function editCourse(course, courseId) {
+  return function(dispatch, getState) {
+    dispatch(beginAjaxCall());
+    return fetchApi('/courses' + courseId, 'put', course).then(savedCourse => {
+      dispatch(updateCourseSuccess(savedCourse));
     }).catch(error => {
       dispatch(ajaxCallError(error));
       throw(error);

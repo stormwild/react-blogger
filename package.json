@@ -42,6 +42,7 @@
     "babel-preset-react": "6.5.0",
     "babel-preset-react-hmre": "1.1.1",
     "babel-register": "6.8.0",
+    "bluebird": "^3.4.1",
     "body-parser": "^1.15.2",
     "colors": "1.1.2",
     "compression": "1.6.1",

@@ -55,7 +55,14 @@ export class ManageCoursePage extends React.Component {
     }
 
     this.setState({saving: true});
-    this.props.actions.saveCourse(this.state.course)
+
+    let courseId = this.props.params.id;
+    let promise;
+    courseId ? 
+      promise = this.props.actions.editCourse(this.state.course, courseId) :
+      promise = this.props.actions.saveCourse(this.state.course);
+
+    promise
       .then(() => this.redirect())
       .catch(error => {
         toastr.error(error);
@@ -85,7 +92,8 @@ export class ManageCoursePage extends React.Component {
 ManageCoursePage.propTypes = {
   course: PropTypes.object.isRequired,
   authors: PropTypes.array.isRequired,
-  actions: PropTypes.object.isRequired
+  actions: PropTypes.object.isRequired,
+  params: PropTypes.int
 };
 
 // Pull in the React Router context so router is available on this.context.router
