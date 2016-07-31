@@ -5,7 +5,7 @@
   "scripts": {
     "prestart": "node tools/startMessage.js",
     "start": "npm-run-all --parallel test:watch open:src backendServer lint:watch",
-    "open:src": "node tools/frontendSrcServer.js",
+    "open:src": "node server/frontendSrcServer.js",
     "lint": "node_modules/.bin/esw webpack.config.* src tools",
     "lint:watch": "npm run lint -- --watch",
     "test": "mocha --reporter progress tools/testSetup.js \"src/**/*.test.js\"",
@@ -15,8 +15,8 @@
     "build:html": "node tools/buildHtml.js",
     "prebuild": "npm-run-all clean-dist test lint build:html",
     "build": "node tools/build.js",
-    "postbuild": "node tools/frontendDistServer.js",
-    "backendServer": "nodemon tools/backendServer.js"
+    "postbuild": "node server/frontendDistServer.js",
+    "backendServer": "nodemon server/backendServer.js"
   },
   "author": "Cory House",
   "license": "MIT",
