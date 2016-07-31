@@ -1,20 +1,35 @@
-export function fetchApi(suffix, method = 'get', payload) {
-  const urlBase = 'http://localhost:3000/api';
+const urlBase = 'http://localhost:3000/api';
 
-  // Note: catch block doesn't seem to be working :(
-  return new Promise((resolve, reject) => {
-    let options = method === 'get' ? { method: method } : 
-      { method: method, headers: {"Content-type": "application/json"}, body: JSON.stringify(payload) };
-
-    fetch(urlBase + suffix, options)
-    .then(response => {
-      return response.json();
-    })
-    .then(json => {
-      resolve(json);
-    })
-    .catch(err => {
-      reject(err);
+export default {
+  get: (suffix, method = 'get', payload) => {
+    return new Promise((resolve, reject) => {
+      fetch(urlBase + suffix, {method: 'get'})
+      .then(response => { return response.json(); })
+      .then(json => { resolve(json); })
+      .catch(err => { reject(err); });
     });
-  });
-}
+  },
+  post: (suffix, payload) => {
+    return new Promise((resolve, reject) => {
+      fetch(urlBase + suffix, { method: 'post', headers: {"Content-type": "application/json"}, body: JSON.stringify(payload) })
+      .then(response => { return response.json(); })
+      .then(json => { resolve(json); })
+      .catch(err => { reject(err); });
+    });
+  },
+  put: (suffix, payload) => {
+    return new Promise((resolve, reject) => {
+      fetch(urlBase + suffix, { method: 'put', headers: {"Content-type": "application/json"}, body: JSON.stringify(payload) })
+      .then(response => { return response.json(); })
+      .then(json => { resolve(json); })
+      .catch(err => { reject(err); });
+    });
+  },  
+  delete: (suffix) => {
+    return new Promise((resolve, reject) => {
+      fetch(urlBase + suffix, { method: 'delete' })
+      .then(response => { resolve(response); })
+      .catch(err => { reject(err); });
+    });
+  }
+};

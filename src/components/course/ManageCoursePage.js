@@ -93,7 +93,7 @@ ManageCoursePage.propTypes = {
   course: PropTypes.object.isRequired,
   authors: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired,
-  params: PropTypes.int
+  params: PropTypes.object
 };
 
 // Pull in the React Router context so router is available on this.context.router

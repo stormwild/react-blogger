@@ -88,6 +88,24 @@ router.route('/courses/:courseId')
   .catch(function(err) {
     res.status(500).send(err);
   });
+})
+.delete(function(req, res) {
+  var promise = Course.findOne({id: req.params.courseId}).exec();
+
+  promise.then(function(course) {
+    if (course) {
+      return course.remove();
+    }
+    else {
+      res.send('Delete failed, Couldn\'t find a course with ID \"' + req.params.courseId + '\"');
+    }
+  })
+  .then(function() {
+    res.status(204).send('Removed'); // The status code sends, but the 'Removed message' does not...
+  })
+  .catch(function(err) {
+    res.status(500).send(err);
+  });
 });
 
 module.exports = router;
