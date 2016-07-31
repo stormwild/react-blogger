@@ -41,7 +41,7 @@ export function saveCourse(course) {
 export function editCourse(course, courseId) {
   return function(dispatch, getState) {
     dispatch(beginAjaxCall());
-    return fetchApi('/courses' + courseId, 'put', course).then(savedCourse => {
+    return fetchApi('/courses/' + courseId, 'put', course).then(savedCourse => {
       dispatch(updateCourseSuccess(savedCourse));
     }).catch(error => {
       dispatch(ajaxCallError(error));
