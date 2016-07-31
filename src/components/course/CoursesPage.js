@@ -4,6 +4,7 @@ import {bindActionCreators} from 'redux';
 import * as courseActions from '../../actions/courseActions';
 import CourseList from './CourseList';
 import {browserHistory} from 'react-router';
+import toastr from 'toastr';
 
 class CoursesPage extends React.Component {
   constructor(props, context) {
@@ -23,6 +24,7 @@ class CoursesPage extends React.Component {
 
   deleteCourse(course) {
     this.props.actions.deleteCourse(course);
+    toastr.success('Course deleted');
   }
 
   render() {
