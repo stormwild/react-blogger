@@ -25,6 +25,7 @@ export function loadCourses() {
     return fetchApi.get('/courses').then(courses => {
       dispatch(loadCoursesSuccess(courses));
     }).catch(error => {
+      dispatch(ajaxCallError(error));
       throw(error);
     });
   };

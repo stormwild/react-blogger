@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import Editable from '../common/Editable';
+import * as blogActions from '../../actions/blogActions';
 
 class BlogPage extends React.Component {
   constructor(props, context) {
@@ -12,6 +13,17 @@ class BlogPage extends React.Component {
     this.onChange = this.onChange.bind(this);
     this.onClick = this.onClick.bind(this);
     this.onBlur = this.onBlur.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.actions.loadBlogPost(this.props.params.id);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // Once the blog GET request finishes and is mapped to props, update state
+    if (nextProps.blog) {
+      this.setState({content: nextProps.blog.content});
+    }
   }
 
   onClick() {
@@ -53,19 +65,21 @@ class BlogPage extends React.Component {
 }
 
 BlogPage.propTypes = {
-  //myProp: PropTypes.string.isRequired
+  actions: PropTypes.object.isRequired,
+  params: PropTypes.object,
+  blog: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state, ownProps) {
   return {
-    state: state
+    blog: state.blog
   };
 }
 
-/*function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(actions, dispatch)
+    actions: bindActionCreators(blogActions, dispatch)
   };
-}*/
+}
 
-export default connect(mapStateToProps/*, mapDispatchToProps*/)(BlogPage);
+export default connect(mapStateToProps, mapDispatchToProps)(BlogPage);
