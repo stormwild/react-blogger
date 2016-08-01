@@ -36,11 +36,17 @@ class BlogPage extends React.Component {
 
   onBlur() {
     this.setState({edit: false});
+    let blog = Object.assign({}, this.props.blog);
+    blog.content = this.state.content;
+    this.props.actions.saveBlogPost(blog);
   }
 
   onEnter(evt) {
     if(evt.which === 13) {
       this.setState({edit: false});
+      let blog = Object.assign({}, this.props.blog);
+      blog.content = this.state.content;
+      this.props.actions.saveBlogPost(blog);
     }
   }
 

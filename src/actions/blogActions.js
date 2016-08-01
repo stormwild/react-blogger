@@ -22,11 +22,10 @@ export function loadBlogPost(blogId) {
   };
 }
 
-export function saveBlogPost(blogPost) {
+export function saveBlogPost(blog) {
   return function(dispatch) {
     dispatch(beginAjaxCall());
-    return fetchApi.post('/blog/' + blogPost.id).then(savedBlog => {
-      console.log(savedBlog);
+    return fetchApi.put('/blog/' + blog.id, blog).then(savedBlog => {
       dispatch(createBlogPostSuccess(savedBlog));
     }).catch(error => {
       dispatch(ajaxCallError(error));
