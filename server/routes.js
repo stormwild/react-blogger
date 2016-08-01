@@ -2,7 +2,8 @@
 
 var express = require('express');
 var router = express.Router();
-var Course = require('./models');
+var Course = require('./models').Course;
+var Blog = require('./models').Blog;
 
 // Helper functions
 function replaceAll(str, find, replace) {
@@ -14,6 +15,10 @@ function generateId(course) {
 };
 
 // Actual routes
+
+/**
+courses
+**/
 router.route('/courses')
 .get(function(req, res) {
   var promise = Course.find().exec();
@@ -47,6 +52,9 @@ router.route('/courses')
   });
 });
 
+/**
+courses/:courseId
+**/
 router.route('/courses/:courseId')
 .get(function(req, res) {
   var promise = Course.findOne({id: req.params.courseId}).exec();
@@ -98,6 +106,106 @@ router.route('/courses/:courseId')
     }
     else {
       res.send('Delete failed, Couldn\'t find a course with ID \"' + req.params.courseId + '\"');
+    }
+  })
+  .then(function() {
+    res.status(204).send('Removed'); // The status code sends, but the 'Removed message' does not...
+  })
+  .catch(function(err) {
+    res.status(500).send(err);
+  });
+});
+
+/**
+blog
+**/
+router.route('/blog')
+.get(function(req, res) {
+  var promise = Blog.find().exec();
+  
+  promise.then(function(blogs) {
+    res.json(blogs);
+  })
+  .catch(function(err) {
+    res.status(500).send(err);
+  });
+})
+.post(function(req, res) {
+  var blog = new Blog(req.body);
+  blog.id = generateId(blog); // This is only unique if the blog title is unique
+
+  var promise = Blog.findOne({id: blog.id}).exec();
+  
+  promise.then(function(matchingBlog) {
+    if (matchingBlog) {
+      res.send('Blog already exists');
+    }
+    else {
+      return blog.save();
+    }
+  })
+  .then(function(savedBlog) {
+    res.json(savedBlog);
+  })
+  .catch(function(err) {
+    res.status(500).send(err);
+  });
+});
+
+/**
+blog/:blogId
+**/
+router.route('/blog/:blogId')
+.get(function(req, res) {
+  var promise = Blog.findOne({id: req.params.blogId}).exec();
+
+  promise.then(function(blog) {
+    if (blog) {
+      res.json(blog);
+    }
+    else {
+      res.send('Couldn\'t find a blog with ID \"' + req.params.blogId + '\"');
+    }
+  })
+  .catch(function(err) {
+    res.status(500).send(err);
+  });
+})
+.put(function(req, res) {
+  var promise = Blog.findOne({id: req.params.blogId}).exec();
+
+  promise.then(function(blog) {
+    var reqBody = req.body;
+
+    if (blog) {
+      // For each property in the request body, change the blog's associated property
+      for(var key in reqBody) {
+        if(reqBody.hasOwnProperty(key)) {
+          blog[key] = reqBody[key];
+        }
+      }
+      return blog.save();
+    }
+    else {
+      res.send('PUT request failed since blog doesn\'t exist');
+    }
+  })
+  .then(function(savedblog) {
+    res.json(savedblog);
+  })
+  .catch(function(err) {
+    res.status(500).send(err);
+  });
+})
+.delete(function(req, res) {
+  var promise = Blog.findOne({id: req.params.blogId}).exec();
+
+  promise.then(function(blog) {
+    if (blog) {
+      return blog.remove();
+    }
+    else {
+      res.send('Delete failed, Couldn\'t find a blog with ID \"' + req.params.blogId + '\"');
     }
   })
   .then(function() {

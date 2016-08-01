@@ -11,4 +11,13 @@ var courseSchema = mongoose.Schema({
   category: String
 });
 
-module.exports = mongoose.model('Course', courseSchema);
+var blogSchema = mongoose.Schema({
+  id: String,
+  title: String,
+  content: String
+});
+
+module.exports = {
+  Course: mongoose.model('Course', courseSchema),
+  Blog: mongoose.model('Blog', blogSchema)
+};

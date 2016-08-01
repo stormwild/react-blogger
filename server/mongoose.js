@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var connectionString = require('./dbConnectionString');
-var Course = require('./models');
+var Course = require('./models').Course;
 
 module.exports = function() {
   mongoose.connect(connectionString);
