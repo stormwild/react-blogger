@@ -2,23 +2,24 @@ import React, {PropTypes} from 'react';
 
 const TextArea = ({onEnter, onChange, onBlur, value}) => {
   return (
-    <textarea 
-      autoFocus
-      cols="30"
-      rows="10"
-      placeholder="Blog content..."
-      value={value}
-      onKeyDown={onEnter}
-      onBlur={onBlur}
-      onChange={onChange} />
+    <div className="editable-container">
+      <textarea
+        className="editable" 
+        autoFocus
+        placeholder="Blog content..."
+        value={value}
+        onKeyDown={onEnter}
+        onBlur={onBlur}
+        onChange={onChange} />
+    </div>
   );
 };
 
 TextArea.propTypes = {
-  onEnter: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  onBlur: PropTypes.func.isRequired,
-  value: PropTypes.string.isRequired
+  onEnter: PropTypes.func,
+  onBlur: PropTypes.func
 };
 
 export default TextArea;

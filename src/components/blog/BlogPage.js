@@ -1,7 +1,10 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import Editable from '../common/Editable';
+import {Grid, Row, Col, Button} from 'react-bootstrap';
+import MarkdownOutput from '../common/MarkdownOutput';
+//import Editable from '../common/Editable';
+import TextArea from '../common/TextArea';
 import * as blogActions from '../../actions/blogActions';
 
 class BlogPage extends React.Component {
@@ -9,7 +12,7 @@ class BlogPage extends React.Component {
     super(props, context);
     this.state = {edit: true, content: ''};
 
-    this.onEnter = this.onEnter.bind(this);
+    this.onSave = this.onSave.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onClick = this.onClick.bind(this);
     this.onBlur = this.onBlur.bind(this);
@@ -41,31 +44,31 @@ class BlogPage extends React.Component {
     this.props.actions.saveBlogPost(blog);
   }
 
-  onEnter(evt) {
-    if(evt.which === 13) {
-      this.setState({edit: false});
-      let blog = Object.assign({}, this.props.blog);
-      blog.content = this.state.content;
-      this.props.actions.saveBlogPost(blog);
-    }
+  onSave(evt) {
+    this.setState({edit: false});
+    let blog = Object.assign({}, this.props.blog);
+    blog.content = this.state.content;
+    this.props.actions.saveBlogPost(blog);
   }
 
   render() {
     let {edit, content} = this.state;
 
     return (
-      <div>
-        <h2>Blog Title</h2>
-        
-        <Editable
-          edit={edit}
-          onEnter={this.onEnter}
-          onChange={this.onChange}
-          onBlur={this.onBlur}
-          onClick={this.onClick}
-          content={content}
-         />
-    </div>
+      <Grid>
+        <Button className="save-blog" onClick={this.onSave}>Save</Button>
+        <Row>
+          <Col xs={6}>
+            <TextArea
+              value={content}
+              onChange={this.onChange} />
+          </Col>
+          <Col xs={6}>
+          <MarkdownOutput
+            content ={content} />
+          </Col>
+        </Row>
+    </Grid>
     );
   }
 }
