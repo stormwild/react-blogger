@@ -2,9 +2,8 @@
 
 var express = require('express');
 var router = express.Router();
-var Course = require('./models').Course;
-var Blog = require('./models').Blog;
 var routeHandler = require('./routeHandler');
+var Model = require('./models');
 
 // Helper functions
 function replaceAll(str, find, replace) {
@@ -42,28 +41,28 @@ router.route('/bulk-insert')
 });
 
 /**
-courses
+users
 **/
-router.route('/courses')
+router.route('/users')
 .get(function(req, res) {
-  routeHandler.getAll(req, res, Course);
+  routeHandler.getAll(req, res, Model.User);
 })
 .post(function(req, res) {
-  routeHandler.post(req, res, Course);
+  routeHandler.post(req, res, Model.User);
 });
 
 /**
-courses/:courseId
+users/:userId
 **/
-router.route('/courses/:courseId')
+router.route('/users/:userId')
 .get(function(req, res) {
-  routeHandler.getOne(req, res, Course, req.params.courseId);
+  routeHandler.getOne(req, res, Model.User, req.params.userId);
 })
 .put(function(req, res) {
-  routeHandler.put(req, res, Course, req.params.courseId);
+  routeHandler.put(req, res, Model.User, req.params.userId);
 })
 .delete(function(req, res) {
-  routeHandler.delete(req, res, Course, req.params.courseId);
+  routeHandler.delete(req, res, Model.User, req.params.userId);
 });
 
 /**
@@ -71,10 +70,10 @@ blogs
 **/
 router.route('/blogs')
 .get(function(req, res) {
-  routeHandler.getAll(req, res, Blog);
+  routeHandler.getAll(req, res, Model.Blog);
 })
 .post(function(req, res) {
-  routeHandler.post(req, res, Blog);
+  routeHandler.post(req, res, Model.Blog);
 });
 
 /**
@@ -82,13 +81,63 @@ blogs/:blogId
 **/
 router.route('/blogs/:blogId')
 .get(function(req, res) {
-  routeHandler.getOne(req, res, Blog, req.params.blogId);
+  routeHandler.getOne(req, res, Model.Blog, req.params.blogId);
 })
 .put(function(req, res) {
-  routeHandler.put(req, res, Blog, req.params.blogId);
+  routeHandler.put(req, res, Model.Blog, req.params.blogId);
 })
 .delete(function(req, res) {
-  routeHandler.delete(req, res, Blog, req.params.blogId);
+  routeHandler.delete(req, res, Model.Blog, req.params.blogId);
+});
+
+/**
+posts
+**/
+router.route('/posts')
+.get(function(req, res) {
+  routeHandler.getAll(req, res, Model.Post);
+})
+.post(function(req, res) {
+  routeHandler.post(req, res, Model.Post);
+});
+
+/**
+posts/:postId
+**/
+router.route('/posts/:postId')
+.get(function(req, res) {
+  routeHandler.getOne(req, res, Model.Post, req.params.postId);
+})
+.put(function(req, res) {
+  routeHandler.put(req, res, Model.Post, req.params.postId);
+})
+.delete(function(req, res) {
+  routeHandler.delete(req, res, Model.Post, req.params.postId);
+});
+
+/**
+courses
+**/
+router.route('/courses')
+.get(function(req, res) {
+  routeHandler.getAll(req, res, Model.Course);
+})
+.post(function(req, res) {
+  routeHandler.post(req, res, Model.Course);
+});
+
+/**
+courses/:courseId
+**/
+router.route('/courses/:courseId')
+.get(function(req, res) {
+  routeHandler.getOne(req, res, Model.Course, req.params.courseId);
+})
+.put(function(req, res) {
+  routeHandler.put(req, res, Model.Course, req.params.courseId);
+})
+.delete(function(req, res) {
+  routeHandler.delete(req, res, Model.Course, req.params.courseId);
 });
 
 module.exports = router;
