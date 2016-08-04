@@ -32,8 +32,12 @@ module.exports = {
       res.json(savedResult);
     });
   },
-  getOne: function (req, res, Model, id) {
-    var promise = Model.findOne({_id: id}).exec();
+  getOne: function (req, res, Model, id, customField) {
+    var obj = {};
+    var field = customField ? customField : '_id';
+    obj[field] = id;
+
+    var promise = Model.findOne(obj).exec();
 
     promise.then(function(match) {
       if (match) {

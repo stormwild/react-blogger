@@ -56,7 +56,7 @@ users/:userId
 **/
 router.route('/users/:userId')
 .get(function(req, res) {
-  routeHandler.getOne(req, res, Model.User, req.params.userId);
+  routeHandler.getOne(req, res, Model.User, req.params.userId, 'username');
 })
 .put(function(req, res) {
   routeHandler.put(req, res, Model.User, req.params.userId);
