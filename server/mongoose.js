@@ -1,52 +1,50 @@
 var mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
 var connectionString = require('./dbConnectionString');
-var Course = require('./models').Course;
+var Model = require('./models');
+var dummyData = require('./dummyData');
 
 module.exports = function() {
   mongoose.connect(connectionString);
   var db = mongoose.connection;
   db.on('error', console.error.bind(console, 'connection error...'));
   db.once('open', function() {
-    console.log('app db opened');
+    initDB();
   });
 
-  Course.find({}).exec(function(err, collection) {
-    if (collection.length === 0) {
-      Course.create({
-        id: "react-flux-building-applications",
-        title: "Building Applications in React and Flux",
-        authorId: "cory-house",
-        length: "5:08",
-        category: "JavaScript"
-      });
-      Course.create({
-        id: "clean-code",
-        title: "Clean Code: Writing Code for Humans",
-        authorId: "cory-house",
-        length: "3:10",
-        category: "Software Practices"
-      });
-      Course.create({
-        id: "architecture",
-        title: "Architecting Applications for the Real World",
-        authorId: "cory-house",
-        length: "2:52",
-        category: "Software Architecture"
-      });
-      Course.create({
-        id: "career-reboot-for-developer-mind",
-        title: "Becoming an Outlier: Reprogramming the Developer Mind",
-        authorId: "cory-house",
-        length: "2:30",
-        category: "Career"
-      });
-      Course.create({
-        id: "web-components-shadow-dom",
-        title: "Web Component Fundamentals",
-        authorId: "cory-house",
-        length: "5:10",
-        category: "HTML5"
-      });
-    }
-  });
+  function initDB() {
+    console.log('app db opened');
+    return new Promise(function(resolve, reject) {
+      return Model.User.find({}).exec(function(err, users) {
+        if (users.length > 0) {
+          console.log('db already initialized');
+          reject(users);
+        }
+        else {
+          resolve(users);
+        }
+      }); 
+    })
+    .then(function() {
+      return Model.User.remove({}).exec();
+    })
+    .then(function() {
+      return Model.Blog.remove({}).exec()
+    })
+    .then(function() {
+      return Model.Post.remove({}).exec()
+    })
+    .then(function() {
+      return Model.User.create(dummyData.users);
+    })
+    .then(function() {
+      return Model.Blog.create(dummyData.blogs);
+    })
+    .then(function(createdBlogs) {
+      return Model.Post.create(dummyData.posts(createdBlogs));
+    })
+    .then(function() {
+      console.log('db successfully initialized');
+    });
+  }
 };
