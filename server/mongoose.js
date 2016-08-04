@@ -26,13 +26,11 @@ module.exports = function() {
       }); 
     })
     .then(function() {
-      return Model.User.remove({}).exec();
-    })
-    .then(function() {
-      return Model.Blog.remove({}).exec()
-    })
-    .then(function() {
-      return Model.Post.remove({}).exec()
+      return Promise.all([
+        Model.User.remove({}).exec(),
+        Model.Blog.remove({}).exec(),
+        Model.Post.remove({}).exec()
+      ]);
     })
     .then(function() {
       return Model.User.create(dummyData.users);
