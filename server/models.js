@@ -3,7 +3,6 @@ mongoose.Promise = require('bluebird');
 var Schema = mongoose.Schema;
 
 var courseSchema = mongoose.Schema({
-  id: String,
   title: String,
   watchHref: String,
   authorId: String,
@@ -12,7 +11,6 @@ var courseSchema = mongoose.Schema({
 });
 
 var blogSchema = mongoose.Schema({
-  id: String,
   title: String,
   content: String
 });
