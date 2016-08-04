@@ -1,1 +1,1 @@
-This repository follows Cory House's Pluralsight course, "Building Applications with React and Redux in ES6"
+Interactive blog creation platform built using React. Work in progress.
