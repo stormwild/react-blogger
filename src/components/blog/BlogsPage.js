@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import {Link} from 'react-router';
 import * as blogActions from '../../actions/blogActions';
 
 class BlogsPage extends React.Component {
@@ -23,7 +24,7 @@ class BlogsPage extends React.Component {
     return (
       <div>
         <h1>Blogs page</h1>
-        { this.state.blogs.map(blog => <h3>{blog.title}</h3>) }
+        { this.state.blogs.map((blog, index) => <h3 key={index}><Link to={'/blogs/' + blog.titleString}>{blog.title}</Link></h3>) }
       </div>
     );
   }

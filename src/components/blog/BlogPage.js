@@ -10,25 +10,19 @@ import * as blogActions from '../../actions/blogActions';
 class BlogPage extends React.Component {
   constructor(props, context) {
     super(props, context);
-    this.state = {edit: true, content: ''};
+    let self = this;
 
+    let blog = props.blogs.find(blog => {
+      return blog.titleString === self.props.params.blogId;
+    });
+
+    this.state = {edit: true, content: blog.title};
+
+    // Bindings
     this.onSave = this.onSave.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onClick = this.onClick.bind(this);
     this.onBlur = this.onBlur.bind(this);
-  }
-
-  componentDidMount() {
-    // TODO: Use this.props.blog._id when implemented
-    this.props.actions.loadBlogPost('57a378eccd9e0d1c6e4cfe62');
-  }
-
-  componentWillReceiveProps(nextProps) {
-    // Once the blog GET request finishes and is mapped to props, update state
-    if (nextProps.blog) {
-      // Should be nextProps.post.content in the future
-      this.setState({content: nextProps.blog.title});
-    }
   }
 
   onClick() {
@@ -79,13 +73,13 @@ BlogPage.propTypes = {
   actions: PropTypes.object.isRequired,
   params: PropTypes.object,
   user: PropTypes.object.isRequired,
-  blog: PropTypes.object.isRequired
+  blogs: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state, ownProps) {
   return {
     user: state.user,
-    blog: state.blog
+    blogs: state.blogs
   };
 }
 
