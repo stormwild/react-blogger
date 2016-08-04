@@ -139,29 +139,4 @@ router.route('/posts/:postId')
   routeHandler.delete(req, res, Model.Post, req.params.postId);
 });
 
-/**
-courses
-**/
-router.route('/courses')
-.get(function(req, res) {
-  routeHandler.getAll(req, res, Model.Course);
-})
-.post(function(req, res) {
-  routeHandler.post(req, res, Model.Course);
-});
-
-/**
-courses/:courseId
-**/
-router.route('/courses/:courseId')
-.get(function(req, res) {
-  routeHandler.getOne(req, res, Model.Course, req.params.courseId);
-})
-.put(function(req, res) {
-  routeHandler.put(req, res, Model.Course, req.params.courseId);
-})
-.delete(function(req, res) {
-  routeHandler.delete(req, res, Model.Course, req.params.courseId);
-});
-
 module.exports = router;
