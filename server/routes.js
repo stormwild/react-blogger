@@ -66,6 +66,30 @@ router.route('/users/:userId')
 });
 
 /**
+users/:userId/blogs
+**/
+router.route('/users/:userId/blogs')
+.get(function(req, res) {
+  // Displays all the blogs of a specific user
+  Model.Blog.find({userId: req.params.userId}).exec()
+  .then(function (matches) {
+    res.json(matches);
+  })
+});
+
+/**
+users/:userId/blogs/:blogId/posts
+**/
+router.route('/users/:userId/blogs/:blogId/posts')
+.get(function(req, res) {
+  // Displays all the posts of a specific blog
+  Model.Post.find({blogId: req.params.blogId}).exec()
+  .then(function (matches) {
+    res.json(matches);
+  })
+});
+
+/**
 blogs
 **/
 router.route('/blogs')
