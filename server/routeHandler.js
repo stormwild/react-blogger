@@ -3,8 +3,12 @@ module.exports = {
     Model.count({}).exec()
     .then(function(count) {
       // Want to limit the returned results or the query will take forever (ex/ a million results)
+      // Also want to allow pagination through ?offset=value, defaults to 0
+      // NOTE: skip doesn't scale, only a temporary solution
+      // offset=0 takes 45ms, offset=1000000 takes ~1s
       if (count > 50) {
-        return Model.find({}).sort({_id: 1}).limit(50).exec();
+        var offset = req.query.offset || 0;
+        return Model.find({}).sort({_id: 1}).skip(offset).limit(50).exec();
       }
       return Model.find({}).exec();
     })
