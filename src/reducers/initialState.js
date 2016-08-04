@@ -1,5 +1,5 @@
 export default {
   blog: {},
-  login: {},
+  user: {},
   ajaxCallsInProgress: 0
 };

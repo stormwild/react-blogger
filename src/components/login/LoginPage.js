@@ -35,7 +35,7 @@ class LoginPage extends React.Component {
 
   onSave() {
     this.props.actions.login(this.state.user)
-      .then(() => this.context.router.push('/courses'))
+      .then(() => this.context.router.push('/blog/testuser1'))
       .catch(error => console.log(error));
   }
 
@@ -64,6 +64,10 @@ class LoginPage extends React.Component {
 
 LoginPage.propTypes = {
   //myProp: PropTypes.string.isRequired
+};
+
+LoginPage.contextTypes = {
+  router: PropTypes.object
 };
 
 function mapStateToProps(state, ownProps) {

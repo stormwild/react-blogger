@@ -13,7 +13,7 @@ export function createBlogPostSuccess(blogPost) {
 export function loadBlogPost(blogId) {
   return function(dispatch) {
     dispatch(beginAjaxCall());
-    return fetchApi.get('/blog/' + blogId).then(savedBlog => {
+    return fetchApi.get('/blogs/' + blogId).then(savedBlog => {
       dispatch(loadBlogPostSuccess(savedBlog));
     }).catch(error => {
       dispatch(ajaxCallError(error));

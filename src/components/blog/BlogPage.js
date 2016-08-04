@@ -19,13 +19,15 @@ class BlogPage extends React.Component {
   }
 
   componentDidMount() {
-    this.props.actions.loadBlogPost(this.props.params.id);
+    // TODO: Use this.props.blog._id when implemented
+    this.props.actions.loadBlogPost('57a378eccd9e0d1c6e4cfe62');
   }
 
   componentWillReceiveProps(nextProps) {
     // Once the blog GET request finishes and is mapped to props, update state
     if (nextProps.blog) {
-      this.setState({content: nextProps.blog.content});
+      // Should be nextProps.post.content in the future
+      this.setState({content: nextProps.blog.title});
     }
   }
 
@@ -76,11 +78,13 @@ class BlogPage extends React.Component {
 BlogPage.propTypes = {
   actions: PropTypes.object.isRequired,
   params: PropTypes.object,
+  user: PropTypes.object.isRequired,
   blog: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state, ownProps) {
   return {
+    user: state.user,
     blog: state.blog
   };
 }
