@@ -10,10 +10,11 @@ var userSchema = mongoose.Schema({
 });
 
 // Maybe add a logo field. No sense in having a content field since the posts contain the content
-// Title must be unique with respect to the user
+// titleString generated from title, must be unique with respect to the user and url friendly
 var blogSchema = mongoose.Schema({
   userId: String,
-  title: String
+  title: String,
+  titleString: String
 });
 
 var postSchema = mongoose.Schema({

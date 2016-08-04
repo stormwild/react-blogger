@@ -10,8 +10,8 @@ function replaceAll(str, find, replace) {
   return str.replace(new RegExp(find, 'g'), replace);
 }
 
-function generateId(course) {
-  return replaceAll(course.title, ' ', '-').toLowerCase();
+function generateId(value) {
+  return replaceAll(value, ' ', '-').toLowerCase();
 };
 
 // Actual routes
@@ -97,6 +97,10 @@ router.route('/blogs')
   routeHandler.getAll(req, res, Model.Blog);
 })
 .post(function(req, res) {
+  // Need to attach an additional field to the request, generating a titleString from the title
+  console.log(req.body);
+  req.body.titleString = generateId(req.body.title);
+  console.log(req.body);
   routeHandler.post(req, res, Model.Blog);
 });
 
