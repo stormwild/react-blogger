@@ -16,6 +16,30 @@ function generateId(course) {
 
 // Actual routes
 
+router.route('/bulk-insert')
+.get(function(req, res) {
+  
+  let numOfEntries = 1000000; // 1 million
+  var blogs = [];
+
+  for(var i = 0 ; i < numOfEntries; ++i) {
+    blogs.push({
+      id: i,
+      title: '' + Math.random() * (50000 - 1) + 1,
+      content: '' + Math.random() * (80000 - 1) + 1
+    });
+  }
+  
+  Blog.collection.insert(blogs, function (err, docs) {
+    if (err) {
+      res.json(err);
+    } else {
+      res.send('success');
+    }
+  });
+
+});
+
 /**
 courses
 **/
