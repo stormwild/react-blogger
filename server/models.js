@@ -2,14 +2,7 @@ var mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
 var Schema = mongoose.Schema;
 
-var courseSchema = mongoose.Schema({
-  title: String,
-  watchHref: String,
-  authorId: String,
-  length: String,
-  category: String
-});
-
+// Username and email must be unique
 var userSchema = mongoose.Schema({
   username: String,
   email: String,
@@ -17,6 +10,7 @@ var userSchema = mongoose.Schema({
 });
 
 // Maybe add a logo field. No sense in having a content field since the posts contain the content
+// Title must be unique with respect to the user
 var blogSchema = mongoose.Schema({
   userId: String,
   title: String
@@ -30,7 +24,6 @@ var postSchema = mongoose.Schema({
 });
 
 module.exports = {
-  Course: mongoose.model('Course', courseSchema),
   User: mongoose.model('User', userSchema),
   Blog: mongoose.model('Blog', blogSchema),
   Post: mongoose.model('Post', postSchema)
