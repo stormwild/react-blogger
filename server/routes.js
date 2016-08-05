@@ -2,9 +2,9 @@
 
 var express = require('express');
 var router = express.Router();
-var passport = require('passport');
 var Model = require('./models');
 var routeHandler = require('./routeHandler');
+var auth = require('./auth');
 
 // Helper functions
 function replaceAll(str, find, replace) {
@@ -21,17 +21,7 @@ function generateId(value) {
 login
 **/
 router.route('/login')
-.post(function(req, res, next) {
-  var auth = passport.authenticate('local', function(err, user) {
-    if (err) { return next(err); }
-    if (!user) { res.send({success: false}); }
-    req.logIn(user, function(err) {
-      if (err) { return next(err); }
-      res.send({success: true, user: user});
-    });
-  });
-  auth(req, res, next);
-});
+.post(auth.authenticate);
 
 /**
 users
