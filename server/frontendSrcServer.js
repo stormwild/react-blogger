@@ -13,6 +13,8 @@ var backendPort = 5000;
 var app = express();
 var compiler = webpack(config);
 
+app.set('view engine', 'ejs');
+
 app.use(require('webpack-dev-middleware')(compiler, {
   noInfo: true,
   publicPath: config.output.publicPath
@@ -26,9 +28,9 @@ app.use('/api', proxy({
 }));
 
 app.get('*', function(req, res) {
-  if (req.accepts('html')) {
-    res.sendFile(path.join( __dirname, '../src/index.html'));
-  }
+  res.render(path.join( __dirname, '../src/index.ejs'), {
+    bootstrappedUser: req.user || 'unauthenticated'
+  });
 });
 
 app.listen(frontendPort, function(err) {

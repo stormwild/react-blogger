@@ -24,6 +24,15 @@ router.route('/login')
 .post(auth.authenticate);
 
 /**
+logout
+**/
+router.route('/logout')
+.post(function(req, res) {
+  req.logout();
+  res.end();
+});
+
+/**
 users
 **/
 router.route('/users')
