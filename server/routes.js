@@ -2,6 +2,7 @@
 
 var express = require('express');
 var router = express.Router();
+var passport = require('passport');
 var Model = require('./models');
 var routeHandler = require('./routeHandler');
 
@@ -16,28 +17,20 @@ function generateId(value) {
 
 // Actual routes
 
-router.route('/bulk-insert')
-.get(function(req, res) {
-  
-  let numOfEntries = 1000000; // 1 million
-  var blogs = [];
-
-  for(var i = 0 ; i < numOfEntries; ++i) {
-    blogs.push({
-      id: i,
-      title: '' + Math.random() * (50000 - 1) + 1,
-      content: '' + Math.random() * (80000 - 1) + 1
+/**
+login
+**/
+router.route('/login')
+.post(function(req, res, next) {
+  var auth = passport.authenticate('local', function(err, user) {
+    if (err) { return next(err); }
+    if (!user) { res.send({success: false}); }
+    req.logIn(user, function(err) {
+      if (err) { return next(err); }
+      res.send({success: true, user: user});
     });
-  }
-  
-  Model.Blog.collection.insert(blogs, function (err, docs) {
-    if (err) {
-      res.json(err);
-    } else {
-      res.send('success');
-    }
   });
-
+  auth(req, res, next);
 });
 
 /**
@@ -141,6 +134,31 @@ router.route('/posts/:postId')
 })
 .delete(function(req, res) {
   routeHandler.delete(req, res, Model.Post, req.params.postId);
+});
+
+// Simplistic route for bulk inserting huge amounts of data into MongoDB
+// In the future might want to use a shell script or something
+router.route('/bulk-insert')
+.get(function(req, res) {
+  
+  let numOfEntries = 1000000; // 1 million
+  var blogs = [];
+
+  for(var i = 0 ; i < numOfEntries; ++i) {
+    blogs.push({
+      id: i,
+      title: '' + Math.random() * (50000 - 1) + 1,
+      content: '' + Math.random() * (80000 - 1) + 1
+    });
+  }
+  
+  Model.Blog.collection.insert(blogs, function (err, docs) {
+    if (err) {
+      res.json(err);
+    } else {
+      res.send('success');
+    }
+  });
 });
 
 module.exports = router;
