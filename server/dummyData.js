@@ -1,4 +1,4 @@
-// Dummy data for 2 users, each with 2 blogs. Each blog also has a post.
+var encryption = require('./encryption');
 
 // Helper functions
 function replaceAll(str, find, replace) {
@@ -9,17 +9,23 @@ function generateId(value) {
   return replaceAll(value, ' ', '-').toLowerCase();
 };
 
+var salt1 = encryption.createSalt();
+var salt2 = encryption.createSalt();
+
+// Dummy data for 2 users, each with 2 blogs. Each blog also has a post.
 module.exports = {
   users: [
     {
       username: 'testuser1',
       email: 'test@test.com',
-      hashedPwd: '1234'
+      salt: salt1,
+      hashedPwd: encryption.hashPwd(salt1, '1234')
     },
     {
       username: 'testuser2',
       email: 'test@gmail.com',
-      hashedPwd: '4321'
+      salt: salt2,
+      hashedPwd: encryption.hashPwd(salt2, '4321')
     }
   ],
   blogs: [

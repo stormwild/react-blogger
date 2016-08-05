@@ -5,7 +5,7 @@ var LocalStrategy = require('passport-local').Strategy;
 module.exports = function() {
   passport.use(new LocalStrategy(function(username, password, done) {
     Model.User.findOne({username: username}).exec(function(err, user) {
-      if (user) {
+      if (user && user.authenticate(password)) {
         return done(null, user);
       }
       else {
