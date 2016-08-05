@@ -2,8 +2,8 @@
 
 var express = require('express');
 var router = express.Router();
-var routeHandler = require('./routeHandler');
 var Model = require('./models');
+var routeHandler = require('./routeHandler');
 
 // Helper functions
 function replaceAll(str, find, replace) {
@@ -30,7 +30,7 @@ router.route('/bulk-insert')
     });
   }
   
-  Blog.collection.insert(blogs, function (err, docs) {
+  Model.Blog.collection.insert(blogs, function (err, docs) {
     if (err) {
       res.json(err);
     } else {
