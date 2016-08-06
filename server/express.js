@@ -3,7 +3,8 @@ bodyParser = require('body-parser'),
 session = require('express-session'),
 logger = require('morgan'),
 routes = require('./routes'),
-passport = require('passport');
+passport = require('passport'),
+path = require('path');
 
 module.exports = function(app) {
   app.use(cookieParser());
@@ -14,22 +15,13 @@ module.exports = function(app) {
   app.use(passport.session());
   app.use(logger('dev'));
 
-  // Delegate routes
+  // Delegate API routes
   app.use('/api', routes);
 
-  // Catch 404 and forward to error handler
-  app.use(function(req, res, next) {
-      var err = new Error('Not Found');
-      err.status = 404;
-      next(err);
-  });
-
-  // The error handler itself
-  app.use(function(err, req, res, next) {
-      res.status(err.status || 500);
-      res.json({
-          message: err.message,
-          error: err
-      });
+  // For all non-API routes, serve the index page (React Router resolves the route on the client side)
+  app.get('*', function(req, res) {
+    res.render(path.join( __dirname, '../src/index.ejs'), {
+      bootstrappedUser: req.user || 'unauthenticated'
+    });
   });
 }

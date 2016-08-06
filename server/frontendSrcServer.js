@@ -22,16 +22,10 @@ app.use(require('webpack-dev-middleware')(compiler, {
 
 app.use(require('webpack-hot-middleware')(compiler));
 
-// Any request to the frontend server at localhost:3000/api/* will be forwarded to the backend server at localhost:5000/api/*
-app.use('/api', proxy({
+// Forward all requests to a separate server. By doing this, the backend can use nodemon without rebuilding the webpack bundle on each server file change.
+app.use('*', proxy({
   target: 'http://localhost:' + backendPort
 }));
-
-app.get('*', function(req, res) {
-  res.render(path.join( __dirname, '../src/index.ejs'), {
-    bootstrappedUser: req.user || 'unauthenticated'
-  });
-});
 
 app.listen(frontendPort, function(err) {
   if (err) {
