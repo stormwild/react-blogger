@@ -1,5 +1,6 @@
 var dummyData = require('./dummyData');
 var Model = require('./models');
+var registerDummyUser = require('./passport/registerDummyUser');
 
 module.exports = function() {
   console.log('app db opened');
@@ -22,7 +23,11 @@ module.exports = function() {
     ]);
   })
   .then(function() {
-    return Model.User.create(dummyData.users);
+    // Need to create the users through the passport helper function
+    return Promise.all([
+      registerDummyUser('bob', 'bob@gmail.com', 'bob'),
+      registerDummyUser('joe', 'joe@gmail.com' , 'joe')
+    ]);
   })
   .then(function() {
     return Model.Blog.create(dummyData.blogs);

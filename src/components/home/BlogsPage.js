@@ -10,6 +10,13 @@ class BlogsPage extends React.Component {
     this.handleLogout = this.handleLogout.bind(this);
   }
 
+  componentDidMount() {
+    const {user} = this.props;
+    axios.get('/api/users/' + user.username + '/blogs')
+    .then((blogs) => console.log(blogs))
+    .catch(err => {throw err});
+  }
+
   handleLogout() {
     axios.post('/api/logout', {})
     .then(() => window.location.reload())

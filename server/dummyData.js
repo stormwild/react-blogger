@@ -16,36 +16,32 @@ var salt2 = encryption.createSalt();
 module.exports = {
   users: [
     {
-      username: 'testuser1',
+      username: 'joe',
       email: 'test@test.com',
-      salt: salt1,
-      hashedPwd: encryption.hashPwd(salt1, '1234')
     },
     {
-      username: 'testuser2',
+      username: 'bob',
       email: 'test@gmail.com',
-      salt: salt2,
-      hashedPwd: encryption.hashPwd(salt2, '4321')
     }
   ],
   blogs: [
     {
-      userId: 'testuser1',
+      userId: 'joe',
       title: 'My first blog',
       titleString: generateId('My first blog')
     },
     {
-      userId: 'testuser1',
+      userId: 'joe',
       title: 'My second blog',
       titleString: generateId('My second blog')
     },
     {
-      userId: 'testuser2',
+      userId: 'bob',
       title: 'My controversial blog',
       titleString: generateId('My controversial blog')
     },
     {
-      userId: 'testuser2',
+      userId: 'bob',
       title: 'My amazing blog',
       titleString: generateId('My amazing blog')
     }
@@ -55,7 +51,7 @@ module.exports = {
       var rand = Math.floor(Math.random() * (50000 - 1) + 1);
       return {
         userId: blog.userId,
-        blogId: blog._id,
+        blogId: blog.titleString,
         title: 'Generic blog post ' + rand,
         content: 'Generic content ' + rand
       }
