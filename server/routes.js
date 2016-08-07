@@ -4,7 +4,7 @@ var express = require('express');
 var router = express.Router();
 var Model = require('./models');
 var routeHandler = require('./routeHandler');
-//var auth = require('./auth');
+var auth = require('./auth');
 var passport = require('passport');
 
 // Helper functions
@@ -40,9 +40,7 @@ router.post('/register', function(req, res, next) {
 /**
 login
 **/
-router.post('/login', passport.authenticate('local'), function(req, res) {
-  res.redirect('/');
-});
+router.post('/login', auth.authenticate);
 
 /**
 logout

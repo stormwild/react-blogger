@@ -11,7 +11,7 @@ export default {
   },
   post: (suffix, payload) => {
     return new Promise((resolve, reject) => {
-      fetch(urlBase + suffix, { method: 'post', headers: {"Content-type": "application/json"}, body: JSON.stringify(payload) })
+      fetch(urlBase + suffix, { method: 'post', headers: {"Content-type": "application/json"}, credentials: 'include', body: JSON.stringify(payload) })
       .then(response => { return response.json(); })
       .then(json => { resolve(json); })
       .catch(err => { reject(err); });

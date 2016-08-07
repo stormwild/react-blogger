@@ -6,7 +6,7 @@
   <body>
     <div id="app"></div>
     <script>
-      if (<%- JSON.stringify(bootstrappedUser) %> !== 'unauthenticated') window.bootstrappedUser = <%- JSON.stringify(bootstrappedUser) %>
+      if (<%- JSON.stringify(user) %> !== 'unauthenticated') window.user = <%- JSON.stringify(user) %>
     </script>
     <script src="/bundle.js"></script>
   </body>

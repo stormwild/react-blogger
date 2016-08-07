@@ -20,8 +20,9 @@ module.exports = function(app) {
 
   // For all non-API routes, serve the index page (React Router resolves the route on the client side)
   app.get('*', function(req, res) {
+    console.log(req.user);
     res.render(path.join( __dirname, '../src/index.ejs'), {
-      bootstrappedUser: req.user || 'unauthenticated'
+      user: req.user
     });
   });
 }

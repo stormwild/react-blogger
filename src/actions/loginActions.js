@@ -9,8 +9,8 @@ export function loginSuccess(user) {
 export function login(user) {
   return function(dispatch) {
     dispatch(beginAjaxCall());
-    return fetchApi.get('/users/' + user.username).then(matchedUser => {
-      dispatch(loginSuccess(matchedUser));
+    return fetchApi.post('/login/', user).then(() => {
+      //dispatch(loginSuccess(matchedUser));
     }).catch(error => {
       dispatch(ajaxCallError(error));
       throw(error);
