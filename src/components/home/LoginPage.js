@@ -3,6 +3,7 @@ import {Button} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import axios from 'axios';
+import toastr from 'toastr';
 
 class LoginPage extends React.Component {
   constructor(props, context) {
@@ -33,7 +34,7 @@ class LoginPage extends React.Component {
   handleSave() {
     axios.post('/api/login', this.state.user)
     .then(() => window.location.reload())
-    .catch(err => { throw err });
+    .catch(err => { toastr.error('Invalid username / password') });
   }
 
   render() {

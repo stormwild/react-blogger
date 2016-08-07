@@ -40,7 +40,11 @@ router.post('/register', function(req, res, next) {
 /**
 login
 **/
-router.post('/login', auth.authenticate);
+//router.post('/login', auth.authenticate);
+router.post('/login', passport.authenticate('local'), function(req, res) {
+  // If credentials are invalid, passport is already setup to send 401 Unauthorized as a response
+  res.send('Logged in');
+});
 
 /**
 logout
