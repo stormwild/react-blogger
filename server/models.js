@@ -27,6 +27,7 @@ var postSchema = mongoose.Schema({
   userId: String,
   blogId: String,
   title: String,
+  titleString: String,
   content: String
 });
 

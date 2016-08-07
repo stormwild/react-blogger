@@ -89,7 +89,7 @@ router.route('/users/:userId/blogs')
   Model.Blog.find({userId: req.params.userId}).exec()
   .then(function (matches) {
     res.json(matches);
-  })
+  });
 });
 
 /**
@@ -101,7 +101,19 @@ router.route('/users/:userId/blogs/:blogId/posts')
   Model.Post.find({blogId: req.params.blogId}).exec()
   .then(function (matches) {
     res.json(matches);
-  })
+  });
+});
+
+/**
+users/:userId/blogs/:blogId/posts
+**/
+router.route('/users/:userId/blogs/:blogId/posts/:postId')
+.get(function(req, res) {
+  // Displays all the posts of a specific blog
+  Model.Post.findOne({blogId: req.params.blogId, titleString: req.params.postId}).exec()
+  .then(function (match) {
+    res.json(match);
+  });
 });
 
 /**

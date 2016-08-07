@@ -33,7 +33,12 @@ module.exports = function() {
     return Model.Blog.create(dummyData.blogs);
   })
   .then(function(createdBlogs) {
-    return Model.Post.create(dummyData.posts(createdBlogs));
+    // Re-run dummyData.posts a few times to generate several posts per blog
+    return Promise.all([
+      Model.Post.create(dummyData.posts(createdBlogs)),
+      Model.Post.create(dummyData.posts(createdBlogs)),
+      Model.Post.create(dummyData.posts(createdBlogs))
+    ])
   })
   .then(function() {
     console.log('db successfully initialized');

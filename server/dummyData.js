@@ -53,6 +53,7 @@ module.exports = {
         userId: blog.userId,
         blogId: blog.titleString,
         title: 'Generic blog post ' + rand,
+        titleString: generateId('Generic blog post ' + rand),
         content: 'Generic content ' + rand
       }
     });
