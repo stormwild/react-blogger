@@ -1,3 +1,4 @@
 {
-  "watch": "server"
+  "watch": "server",
+  "ignore": ["server/frontendSrcServer.js", "server/frontendDistServer.js"]
 }
