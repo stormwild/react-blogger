@@ -35,7 +35,7 @@ class LoginPage extends React.Component {
 
   onSave() {
     this.props.actions.login(this.state.user)
-      .then(() => browserHistory.push('/'))
+      .then(() => window.location.reload())
       .catch(error => console.log(error));
   }
 

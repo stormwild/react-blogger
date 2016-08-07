@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import { Link, IndexLink, browserHistory } from 'react-router';
 import { Button } from 'react-bootstrap';
 import fetchApi from '../../api/fetchApi';
+import axios from 'axios';
 
 class Header extends React.Component {
   constructor(props, context) {
@@ -11,8 +12,13 @@ class Header extends React.Component {
   }
 
   handleClick() {
-    fetchApi.post('/logout')
-    .then(() => browserHistory.push('/'));
+    //fetchApi.post('/logout')
+    //.then(() => browserHistory.push('/'));
+    axios.post('/api/logout', {})
+    .then(response => {
+      window.location.reload(); // Fully reload the page
+    })
+    .catch(err => console.log(err));
   }
 
   render() {

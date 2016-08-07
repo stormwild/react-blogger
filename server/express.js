@@ -22,7 +22,7 @@ module.exports = function(app) {
   app.get('*', function(req, res) {
     console.log(req.user);
     res.render(path.join( __dirname, '../src/index.ejs'), {
-      user: req.user
+      user: req.user || 'unauthenticated'
     });
   });
 }

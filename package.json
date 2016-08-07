@@ -21,6 +21,7 @@
   "author": "Cory House",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.13.1",
     "babel-polyfill": "6.8.0",
     "bootstrap": "3.3.6",
     "ejs": "^2.5.1",

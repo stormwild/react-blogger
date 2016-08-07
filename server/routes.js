@@ -48,7 +48,7 @@ logout
 router.route('/logout')
 .post(function(req, res) {
   req.logout();
-  res.redirect('/');
+  res.send('Successfully logged out');
 });
 
 /**
