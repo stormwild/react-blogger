@@ -1,21 +1,19 @@
 var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 var Schema = mongoose.Schema;
+var passportLocalMongoose = require('passport-local-mongoose');
 var encryption = require('./encryption');
 
 // Username and email must be unique
 var userSchema = mongoose.Schema({
   username: String,
-  email: String,
-  salt: String,
-  hashedPwd: String
+  password: String,
+  email: String
 });
 
-userSchema.methods = {
-  authenticate: function (passwordToMatch) {
-    return encryption.hashPwd(this.salt, passwordToMatch) === this.hashedPwd;
-  }
-};
+// Adds a username, hash and salt field
+// Also adds some methods, see https://github.com/saintedlama/passport-local-mongoose
+userSchema.plugin(passportLocalMongoose);
 
 // Maybe add a logo field. No sense in having a content field since the posts contain the content
 // titleString generated from title, must be unique with respect to the user and url friendly

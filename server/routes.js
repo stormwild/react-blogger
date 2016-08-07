@@ -4,7 +4,8 @@ var express = require('express');
 var router = express.Router();
 var Model = require('./models');
 var routeHandler = require('./routeHandler');
-var auth = require('./auth');
+//var auth = require('./auth');
+var passport = require('passport');
 
 // Helper functions
 function replaceAll(str, find, replace) {
@@ -18,10 +19,30 @@ function generateId(value) {
 // Actual routes
 
 /**
+register
+**/
+router.post('/register', function(req, res, next) {
+  Model.User.register(new Model.User({ username : req.body.username }), req.body.password, function(err, account) {
+    if (err) {
+      return res.send(err);
+    }
+    passport.authenticate('local')(req, res, function() {
+      req.session.save(function(err) {
+        if (err) {
+          return next(err);
+        }
+        res.redirect('/');
+      })
+    });
+  });
+});
+
+/**
 login
 **/
-router.route('/login')
-.post(auth.authenticate);
+router.post('/login', passport.authenticate('local'), function(req, res) {
+  res.redirect('/');
+});
 
 /**
 logout
@@ -29,7 +50,7 @@ logout
 router.route('/logout')
 .post(function(req, res) {
   req.logout();
-  res.end();
+  res.redirect('/');
 });
 
 /**
