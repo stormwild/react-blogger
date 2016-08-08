@@ -4,6 +4,8 @@ import {Button} from 'react-bootstrap';
 import ToggleComponent from '../common/ToggleComponent';
 import TextArea from '../common/TextArea';
 import PostLink from './PostLink';
+import axios from 'axios';
+import toastr from 'toastr';
 
 class PostExcerpt extends React.Component {
   constructor(props, context) {
@@ -25,7 +27,19 @@ class PostExcerpt extends React.Component {
   }
 
   toggleEditing() {
-    this.setState({isEditing: !this.state.isEditing});
+    const {post} = this.props;
+
+    if(this.state.isEditing) {
+      axios.put("/api/posts/" + post.postId, {title: this.state.title})
+      .then(res => {
+        toastr.success('Blog title successfully changed');
+        this.setState({isEditing: !this.state.isEditing});
+      })
+      .catch(err => {console.log(err);})
+    }
+    else {
+      this.setState({isEditing: !this.state.isEditing});
+    }
   }
 
   render() {
