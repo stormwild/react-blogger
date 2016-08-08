@@ -4,20 +4,19 @@ import {bindActionCreators} from 'redux';
 import {Grid, Row, Col, Button} from 'react-bootstrap';
 import {browserHistory} from 'react-router';
 import LoginPage from './LoginPage';
-import BlogsPage from './BlogsPage';
 
 class HomePage extends React.Component {
   constructor(props, context) {
     super(props, context);
+
+    // If user is logged in, immediately redirect to /blogs
+    if (props.user) {
+      browserHistory.push('/blogs');
+    }
   }
 
   render() {
-    let {user} = this.props;
-
-    if (!user) {
-      return (<LoginPage />);
-    }
-    return (<BlogsPage user={user} />);
+    return (<LoginPage />);
   }
 }
 

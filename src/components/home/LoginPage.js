@@ -33,8 +33,8 @@ class LoginPage extends React.Component {
 
   handleSave() {
     axios.post('/api/login', this.state.user)
-    .then(() => window.location.reload())
-    .catch(err => { toastr.error('Invalid username / password') });
+    .then(() => { window.location.href = '/blogs'; })
+    .catch(err => { toastr.error('Invalid username / password'); });
   }
 
   render() {
