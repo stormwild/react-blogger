@@ -3,12 +3,23 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import axios from 'axios';
 import {Link} from 'react-router';
+import {Button} from 'react-bootstrap';
 
 class BlogPage extends React.Component {
   constructor(props, context) {
     super(props, context);
 
     this.state = {blog: {}, posts: []};
+
+    this.handleNewPost = this.handleNewPost.bind(this);
+  }
+
+  handleNewPost() {
+    const {user, params} = this.props;
+    const postTitle = window.prompt('Title of new post?');
+    axios.post('/api/posts', {userId: user.username, blogId: params.blogId, title: postTitle})
+    .then(res => window.location.reload())
+    .catch(err => {throw err; });
   }
 
   componentDidMount() {
@@ -42,6 +53,7 @@ class BlogPage extends React.Component {
             </h1>
           );
         })}
+        <Button onClick={this.handleNewPost}>New Post</Button>
       </div>
     );
   }
