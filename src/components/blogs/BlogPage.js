@@ -5,6 +5,7 @@ import axios from 'axios';
 import toastr from 'toastr';
 import {Link} from 'react-router';
 import {Button} from 'react-bootstrap';
+import PostExcerpt from '../posts/PostExcerpt';
 
 class BlogPage extends React.Component {
   constructor(props, context) {
@@ -13,6 +14,8 @@ class BlogPage extends React.Component {
     this.state = {blog: {}, posts: []};
 
     this.handleNewPost = this.handleNewPost.bind(this);
+    this.handleEditPostTitle = this.handleEditPostTitle.bind(this);
+    this.handleDeletePost = this.handleDeletePost.bind(this);
   }
 
   handleNewPost() {
@@ -30,6 +33,14 @@ class BlogPage extends React.Component {
         toastr.error('There already exists a post with title ' + postTitle);
       }
     });
+  }
+
+  handleEditPostTitle() {
+    console.log('Post edited');
+  }
+
+  handleDeletePost() {
+    console.log('Post deleted');
   }
 
   componentDidMount() {
@@ -58,9 +69,13 @@ class BlogPage extends React.Component {
         <h1>{blog.title}</h1>
         {posts.map((post, index) => {
           return (
-            <h1 key={index}>
-              <Link to={"/blogs/" + params.blogId + "/posts/" + post.postId}>{post.title}</Link>
-            </h1>
+            <PostExcerpt 
+              key={index}
+              post={post}
+              params={params}
+              editPostTitle={this.handleEditPostTitle}
+              deletePost={this.handleDeletePost}
+            />
           );
         })}
         <Button onClick={this.handleNewPost}>New Post</Button>
