@@ -34,7 +34,7 @@ class BlogsPage extends React.Component {
       <div>
         <Button onClick={this.handleLogout}>Logout</Button>
         {blogs.map((blog, index) => {
-          return (<h2 key={index}><Link to={"/blogs/" + blog.titleString}>{blog.title}</Link></h2>);
+          return (<h2 key={index}><Link to={"/blogs/" + blog.blogId}>{blog.title}</Link></h2>);
         })}
       </div>
     );

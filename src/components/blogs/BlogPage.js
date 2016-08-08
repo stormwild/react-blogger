@@ -8,25 +8,37 @@ class BlogPage extends React.Component {
   constructor(props, context) {
     super(props, context);
 
-    this.state = {posts: []};
+    this.state = {blog: {}, posts: []};
   }
 
   componentDidMount() {
     const {user, params} = this.props;
-    axios.get('/api/users/' + user.username + '/blogs/' + params.blogId + '/posts')
-    .then(res => { this.setState({posts: res.data}); })
-    .catch(err => {if (err) throw err});
+
+    function getBlogData() {
+      return axios.get('/api/users/' + user.username + '/blogs/' + params.blogId);
+    }
+
+    function getPostsData() {
+      return axios.get('/api/users/' + user.username + '/blogs/' + params.blogId + '/posts');
+    }
+
+    axios.all([getBlogData(), getPostsData()])
+    .then(axios.spread((blog, posts) => {
+      this.setState({blog: blog.data, posts: posts.data});
+    }))
+    .catch(err => {throw err});
   }
 
   render() {
-    let {posts} = this.state;
+    let {blog, posts} = this.state;
     const {params} = this.props;
     return (
       <div>
+        <h1>{blog.title}</h1>
         {posts.map((post, index) => {
           return (
             <h1 key={index}>
-              <Link to={"/blogs/" + params.blogId + "/posts/" + post.titleString}>{post.title}</Link>
+              <Link to={"/blogs/" + params.blogId + "/posts/" + post.postId}>{post.title}</Link>
             </h1>
           );
         })}
