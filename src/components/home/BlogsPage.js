@@ -13,6 +13,7 @@ class BlogsPage extends React.Component {
     };
 
     this.handleLogout = this.handleLogout.bind(this);
+    this.handleNewBlog = this.handleNewBlog.bind(this);
   }
 
   componentDidMount() {
@@ -28,6 +29,14 @@ class BlogsPage extends React.Component {
     .catch(err => {throw err});
   }
 
+  handleNewBlog() {
+    const {user, params} = this.props;
+    const blogTitle = window.prompt('Title of new blog?');
+    axios.post('/api/blogs', {userId: user.username, title: blogTitle})
+    .then(res => window.location.reload())
+    .catch(err => {throw err; });
+  }
+
   render() {
     let {blogs} = this.state;
     return (
@@ -36,6 +45,7 @@ class BlogsPage extends React.Component {
         {blogs.map((blog, index) => {
           return (<h2 key={index}><Link to={"/blogs/" + blog.blogId}>{blog.title}</Link></h2>);
         })}
+        <Button onClick={this.handleNewBlog}>New Blog</Button>
       </div>
     );
   }
