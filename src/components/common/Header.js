@@ -9,7 +9,12 @@ class Header extends React.Component {
   constructor(props, context) {
     super(props, context);
 
+    this.handleBack = this.handleBack.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
+  }
+
+  handleBack() {
+    browserHistory.goBack();
   }
 
   handleLogout() {
@@ -34,6 +39,7 @@ class Header extends React.Component {
     }
     return (
       <div>
+        <Button onClick={this.handleBack}>Back</Button>
         <Button onClick={this.handleLogout}>Logout</Button>
       </div>
     );
