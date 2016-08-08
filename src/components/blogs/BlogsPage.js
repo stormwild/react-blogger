@@ -24,9 +24,14 @@ class BlogsPage extends React.Component {
 
   handleNewBlog() {
     const {user, params} = this.props;
+    let {blogs} = this.state;
+
     const blogTitle = window.prompt('Title of new blog?');
     axios.post('/api/blogs', {userId: user.username, title: blogTitle})
-    .then(res => window.location.reload())
+    .then(res => {
+      blogs.push(res.data);
+      this.setState({blogs: blogs});
+    })
     .catch(err => {throw err; });
   }
 
