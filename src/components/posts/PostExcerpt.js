@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import {Link} from 'react-router';
 import {Button} from 'react-bootstrap';
 import ToggleComponent from '../common/ToggleComponent';
+import PostLink from './PostLink';
 
 class PostExcerpt extends React.Component {
   constructor(props, context) {
@@ -21,18 +22,24 @@ class PostExcerpt extends React.Component {
     let {isEditing} = this.state;
 
     let test1 = <Button onClick={this.toggleEditing}>I'm off</Button>;
-    let test2 = <Link to={"/blogs/" + params.blogId + "/posts/" + post.postId}>{post.title}</Link>;
+    let postLink = (
+      <PostLink
+        url={"/blogs/" + params.blogId + "/posts/" + post.postId} 
+        title={post.title}
+        isEditing={isEditing}
+        toggleEditing={this.toggleEditing}
+        deletePost={deletePost}
+      />
+    );
 
     return (
       <div>
         <h1>
           <ToggleComponent
             condition={isEditing}
-            ComponentIfTrue={test1}
-            ComponentIfFalse={test2}
+            componentIfTrue={test1}
+            componentIfFalse={postLink}
           />
-          {!isEditing && <Button onClick={this.toggleEditing}>Edit</Button>}
-          <Button onClick={deletePost}>Delete</Button>
         </h1>
         <p>{post.content}</p>
       </div>

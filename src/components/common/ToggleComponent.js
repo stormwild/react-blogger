@@ -1,17 +1,17 @@
 import React, {PropTypes} from 'react';
 
-const ToggleComponent = ({condition, ComponentIfTrue, ComponentIfFalse}) => {
+const ToggleComponent = ({condition, componentIfTrue, componentIfFalse}) => {
   return (
     <div>
-      {condition ? ComponentIfTrue : ComponentIfFalse}
+      {condition ? componentIfTrue : componentIfFalse}
     </div>
   );
 };
 
 ToggleComponent.propTypes = {
   condition: PropTypes.bool.isRequired,
-  ComponentIfTrue: PropTypes.node.isRequired,
-  ComponentIfFalse: PropTypes.node.isRequired
+  componentIfTrue: PropTypes.node.isRequired,
+  componentIfFalse: PropTypes.node.isRequired
 };
 
 export default ToggleComponent;
