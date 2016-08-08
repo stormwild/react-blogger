@@ -5,9 +5,16 @@ var passportLocalMongoose = require('passport-local-mongoose');
 var encryption = require('./encryption');
 
 // Username and email must be unique
+// Email should be required in the future
 var userSchema = mongoose.Schema({
-  username: String,
-  password: String,
+  username: {
+    type: String,
+    required: [true, 'No username supplied']
+  },
+  password: {
+    type: String,
+    required: [true, 'No password supplied']
+  },
   email: String
 });
 
@@ -16,19 +23,44 @@ var userSchema = mongoose.Schema({
 userSchema.plugin(passportLocalMongoose);
 
 // Maybe add a logo field. No sense in having a content field since the posts contain the content
-// titleString generated from title, must be unique with respect to the user and url friendly
+// blogId generated from title, must be unique with respect to the user and url friendly
 var blogSchema = mongoose.Schema({
-  userId: String,
-  title: String,
-  titleString: String
+  userId: {
+    type: String,
+    required: [true, 'No userId supplied']
+  },
+  blogId: {
+    type: String,
+    required: [true, 'no blogId supplied']
+  },
+  title: {
+    type: String,
+    required: [true, 'No blog title supplied']
+  }
 });
 
+// postId generated from title, must be unique with respect to the blog and url friendly
 var postSchema = mongoose.Schema({
-  userId: String,
-  blogId: String,
-  title: String,
-  titleString: String,
-  content: String
+  userId: {
+    type: String,
+    required: [true, 'No userId supplied']
+  },
+  blogId: {
+    type: String,
+    required: [true, 'no blogId supplied']
+  },
+  postId: {
+    type: String,
+    required: [true, 'No postId supplied']
+  },
+  title: {
+    type: String,
+    required: [true, 'No post title supplied']
+  },
+  content: {
+    type: String,
+    default: ''
+  }
 });
 
 module.exports = {

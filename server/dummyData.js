@@ -28,22 +28,22 @@ module.exports = {
     {
       userId: 'joe',
       title: 'My first blog',
-      titleString: generateId('My first blog')
+      blogId: generateId('My first blog')
     },
     {
       userId: 'joe',
       title: 'My second blog',
-      titleString: generateId('My second blog')
+      blogId: generateId('My second blog')
     },
     {
       userId: 'bob',
       title: 'My controversial blog',
-      titleString: generateId('My controversial blog')
+      blogId: generateId('My controversial blog')
     },
     {
       userId: 'bob',
       title: 'My amazing blog',
-      titleString: generateId('My amazing blog')
+      blogId: generateId('My amazing blog')
     }
   ],
   posts: function(blogs) {
@@ -51,9 +51,9 @@ module.exports = {
       var rand = Math.floor(Math.random() * (50000 - 1) + 1);
       return {
         userId: blog.userId,
-        blogId: blog.titleString,
+        blogId: blog.blogId,
         title: 'Generic blog post ' + rand,
-        titleString: generateId('Generic blog post ' + rand),
+        postId: generateId('Generic blog post ' + rand),
         content: 'Generic content ' + rand
       }
     });

@@ -1,5 +1,6 @@
 module.exports = {
-  getAll: function (req, res, Model) {
+  getAll: function (req, res, Model, queryObj) {
+    queryObj = queryObj || {};
     Model.count({}).exec()
     .then(function(count) {
       // Want to limit the returned results or the query will take forever (ex/ a million results)
@@ -8,19 +9,20 @@ module.exports = {
       // offset=0 takes 45ms, offset=1000000 takes ~1s
       if (count > 50) {
         var offset = req.query.offset || 0;
-        return Model.find({}).sort({_id: 1}).skip(offset).limit(50).exec();
+        return Model.find(queryObj).sort({_id: 1}).skip(offset).limit(50).exec();
       }
-      return Model.find({}).exec();
+      return Model.find(queryObj).exec();
     })
     .then(function(match) {
       res.json(match);
     });
   },
-  post: function (req, res, Model) {
+  post: function (req, res, Model, queryObj) {
     var modelInstance = new Model(req.body);
-    var promise = Model.findOne({_id: req.params.id}).exec();
     
-    promise.then(function(match) {
+    Model.findOne(queryObj).exec()
+    .then(function(match) {
+      console.log(match);
       if (match) {
         res.send('Cannot post, duplicate entry');
       }
@@ -30,56 +32,50 @@ module.exports = {
     })
     .then(function(savedResult) {
       res.json(savedResult);
+    })
+    .catch(function(err) {
+      res.json(err);
     });
   },
-  getOne: function (req, res, Model, id, customField) {
-    var obj = {};
-    var field = customField ? customField : '_id';
-    obj[field] = id;
-
-    var promise = Model.findOne(obj).exec();
-
-    promise.then(function(match) {
+  getOne: function (req, res, Model, queryObj) {
+    Model.findOne(queryObj).exec()
+    .then(function(match) {
       if (match) {
         res.json(match);
       }
       else {
-        res.send('Couldn\'t find a match with ID \"' + id + '\"');
+        res.send('No match found');
       }
     });
   },
-  put: function(req, res, Model, id) {
-    var promise = Model.findOne({_id: id}).exec();
-
-    promise.then(function(match) {
-      var reqBody = req.body;
-
+  put: function(req, res, Model, queryObj) {
+    Model.findOne(queryObj).exec()
+    .then(function(match) {
       if (match) {
         // For each property in the request body, change the match's associated property
-        for(var key in reqBody) {
-          if(reqBody.hasOwnProperty(key)) {
-            match[key] = reqBody[key];
+        for(var key in req.body) {
+          if(req.body.hasOwnProperty(key)) {
+            match[key] = req.body[key];
           }
         }
         return match.save();
       }
       else {
-        res.send('PUT request failed, couldn\'t find a match with ID \"' + id + '\"');
+        res.send('PUT request failed because no match found');
       }
     })
     .then(function(savedCourse) {
       res.json(savedCourse);
     });
   },
-  delete: function(req, res, Model, id) {
-    var promise = Model.findOne({_id: id}).exec();
-
-    promise.then(function(match) {
+  delete: function(req, res, Model, queryObj) {
+    Model.findOne(queryObj).exec()
+    .then(function(match) {
       if (match) {
         return match.remove();
       }
       else {
-        res.send('Delete failed, Couldn\'t find a match with ID \"' + id + '\"');
+        res.send('DELETE request failed because no match found');
       }
     })
     .then(function() {

@@ -13,6 +13,7 @@ function replaceAll(str, find, replace) {
 }
 
 function generateId(value) {
+  if (!value) { return; }
   return replaceAll(value, ' ', '-').toLowerCase();
 };
 
@@ -62,22 +63,19 @@ router.route('/users')
 .get(function(req, res) {
   routeHandler.getAll(req, res, Model.User);
 })
-.post(function(req, res) {
-  routeHandler.post(req, res, Model.User);
-});
 
 /**
 users/:userId
 **/
 router.route('/users/:userId')
 .get(function(req, res) {
-  routeHandler.getOne(req, res, Model.User, req.params.userId, 'username');
+  routeHandler.getOne(req, res, Model.User, {username: req.params.userId});
 })
 .put(function(req, res) {
-  routeHandler.put(req, res, Model.User, req.params.userId);
+  routeHandler.put(req, res, Model.User, {username: req.params.userId});
 })
 .delete(function(req, res) {
-  routeHandler.delete(req, res, Model.User, req.params.userId);
+  routeHandler.delete(req, res, Model.User, {username: req.params.userId});
 });
 
 /**
@@ -85,11 +83,15 @@ users/:userId/blogs
 **/
 router.route('/users/:userId/blogs')
 .get(function(req, res) {
-  // Displays all the blogs of a specific user
-  Model.Blog.find({userId: req.params.userId}).exec()
-  .then(function (matches) {
-    res.json(matches);
-  });
+  routeHandler.getAll(req, res, Model.Blog, {userId: req.params.userId});
+});
+
+/**
+users/:userId/blogs/:blogId
+**/
+router.route('/users/:userId/blogs/:blogId')
+.get(function(req, res) {
+  routeHandler.getOne(req, res, Model.Blog, {blogId: req.params.blogId});
 });
 
 /**
@@ -97,11 +99,7 @@ users/:userId/blogs/:blogId/posts
 **/
 router.route('/users/:userId/blogs/:blogId/posts')
 .get(function(req, res) {
-  // Displays all the posts of a specific blog
-  Model.Post.find({blogId: req.params.blogId}).exec()
-  .then(function (matches) {
-    res.json(matches);
-  });
+  routeHandler.getAll(req, res, Model.Post, {blogId: req.params.blogId});
 });
 
 /**
@@ -109,11 +107,7 @@ users/:userId/blogs/:blogId/posts
 **/
 router.route('/users/:userId/blogs/:blogId/posts/:postId')
 .get(function(req, res) {
-  // Displays all the posts of a specific blog
-  Model.Post.findOne({blogId: req.params.blogId, titleString: req.params.postId}).exec()
-  .then(function (match) {
-    res.json(match);
-  });
+  routeHandler.getOne(req, res, Model.Post, {postId: req.params.postId});
 });
 
 /**
@@ -124,11 +118,9 @@ router.route('/blogs')
   routeHandler.getAll(req, res, Model.Blog);
 })
 .post(function(req, res) {
-  // Need to attach an additional field to the request, generating a titleString from the title
-  console.log(req.body);
-  req.body.titleString = generateId(req.body.title);
-  console.log(req.body);
-  routeHandler.post(req, res, Model.Blog);
+  // Need to attach an additional field to the request, generating a blogId from the title
+  req.body.blogId = generateId(req.body.title);
+  routeHandler.post(req, res, Model.Blog, {userId: req.body.userId, blogId: req.body.blogId});
 });
 
 /**
@@ -136,13 +128,13 @@ blogs/:blogId
 **/
 router.route('/blogs/:blogId')
 .get(function(req, res) {
-  routeHandler.getOne(req, res, Model.Blog, req.params.blogId);
+  routeHandler.getOne(req, res, Model.Blog, {blogId: req.params.blogId});
 })
 .put(function(req, res) {
-  routeHandler.put(req, res, Model.Blog, req.params.blogId);
+  routeHandler.put(req, res, Model.Blog, {blogId: req.params.blogId});
 })
 .delete(function(req, res) {
-  routeHandler.delete(req, res, Model.Blog, req.params.blogId);
+  routeHandler.delete(req, res, Model.Blog, {blogId: req.params.blogId});
 });
 
 /**
@@ -153,7 +145,10 @@ router.route('/posts')
   routeHandler.getAll(req, res, Model.Post);
 })
 .post(function(req, res) {
-  routeHandler.post(req, res, Model.Post);
+  // Need to attach an additional field to the request, generating a postId from the title
+  /** NOTE: CURRENTLY POSSIBLE TO POST TO A BLOG THAT DOESN'T EXIST **/
+  req.body.postId = generateId(req.body.title);
+  routeHandler.post(req, res, Model.Post, {userId: req.body.userId, blogId: req.body.blogId, postId: req.body.postId});
 });
 
 /**
@@ -161,13 +156,13 @@ posts/:postId
 **/
 router.route('/posts/:postId')
 .get(function(req, res) {
-  routeHandler.getOne(req, res, Model.Post, req.params.postId);
+  routeHandler.getOne(req, res, Model.Post, {postId: req.params.postId});
 })
 .put(function(req, res) {
-  routeHandler.put(req, res, Model.Post, req.params.postId);
+  routeHandler.put(req, res, Model.Post, {postId: req.params.postId});
 })
 .delete(function(req, res) {
-  routeHandler.delete(req, res, Model.Post, req.params.postId);
+  routeHandler.delete(req, res, Model.Post, {postId: req.params.postId});
 });
 
 // Simplistic route for bulk inserting huge amounts of data into MongoDB
