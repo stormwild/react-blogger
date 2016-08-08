@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {Button} from 'react-bootstrap';
 import axios from 'axios';
+import toastr from 'toastr';
 import {Link} from 'react-router';
 
 class BlogsPage extends React.Component {
@@ -32,7 +33,11 @@ class BlogsPage extends React.Component {
       blogs.push(res.data);
       this.setState({blogs: blogs});
     })
-    .catch(err => {throw err; });
+    .catch(err => {
+      if (err.response.status === 500 && err.response.data.error === 'duplicate entry') {
+        toastr.error('There already exists a blog with title ' + blogTitle);
+      }
+    });
   }
 
   render() {

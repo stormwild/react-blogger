@@ -24,7 +24,7 @@ module.exports = {
     .then(function(match) {
       console.log(match);
       if (match) {
-        res.send('Cannot post, duplicate entry');
+        res.status(500).json({error: 'duplicate entry'});
       }
       else {
         return modelInstance.save();
@@ -44,7 +44,7 @@ module.exports = {
         res.json(match);
       }
       else {
-        res.send('No match found');
+        res.status(500).json({error: 'no match found'});
       }
     });
   },
@@ -61,7 +61,7 @@ module.exports = {
         return match.save();
       }
       else {
-        res.send('PUT request failed because no match found');
+        res.status(500).json({error: 'no match found'});
       }
     })
     .then(function(savedCourse) {
@@ -75,7 +75,7 @@ module.exports = {
         return match.remove();
       }
       else {
-        res.send('DELETE request failed because no match found');
+        res.status(500).json({error: 'no match found'});
       }
     })
     .then(function() {

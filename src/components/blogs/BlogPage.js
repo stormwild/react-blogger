@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import axios from 'axios';
+import toastr from 'toastr';
 import {Link} from 'react-router';
 import {Button} from 'react-bootstrap';
 
@@ -24,7 +25,11 @@ class BlogPage extends React.Component {
       posts.push(res.data);
       this.setState({posts: posts});
      })
-    .catch(err => {throw err; });
+    .catch(err => {
+      if (err.response.status === 500 && err.response.data.error === 'duplicate entry') {
+        toastr.error('There already exists a post with title ' + postTitle);
+      }
+    });
   }
 
   componentDidMount() {
