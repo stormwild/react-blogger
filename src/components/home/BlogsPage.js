@@ -12,7 +12,6 @@ class BlogsPage extends React.Component {
       blogs: []
     };
 
-    this.handleLogout = this.handleLogout.bind(this);
     this.handleNewBlog = this.handleNewBlog.bind(this);
   }
 
@@ -20,12 +19,6 @@ class BlogsPage extends React.Component {
     const {user} = this.props;
     axios.get('/api/users/' + user.username + '/blogs')
     .then(res => this.setState({blogs: res.data}))
-    .catch(err => {throw err});
-  }
-
-  handleLogout() {
-    axios.post('/api/logout', {})
-    .then(() => window.location.reload())
     .catch(err => {throw err});
   }
 
@@ -41,7 +34,6 @@ class BlogsPage extends React.Component {
     let {blogs} = this.state;
     return (
       <div>
-        <Button onClick={this.handleLogout}>Logout</Button>
         {blogs.map((blog, index) => {
           return (<h2 key={index}><Link to={"/blogs/" + blog.blogId}>{blog.title}</Link></h2>);
         })}
