@@ -59,10 +59,14 @@ router.route('/logout')
 /**
 users
 **/
+// Note: No need for POST /users because of our register endpoint that uses passport
 router.route('/users')
 .get(function(req, res) {
   routeHandler.getAll(req, res, Model.User);
 })
+.delete(function(req, res) {
+  routeHandler.deleteAll(req, res, Model.User);
+});
 
 /**
 users/:userId
@@ -121,6 +125,9 @@ router.route('/blogs')
   // Need to attach an additional field to the request, generating a blogId from the title
   req.body.blogId = generateId(req.body.title);
   routeHandler.post(req, res, Model.Blog, {userId: req.body.userId, blogId: req.body.blogId});
+})
+.delete(function(req, res) {
+  routeHandler.deleteAll(req, res, Model.Blog);
 });
 
 /**
@@ -153,6 +160,9 @@ router.route('/posts')
   /** NOTE: CURRENTLY POSSIBLE TO POST TO A BLOG THAT DOESN'T EXIST **/
   req.body.postId = generateId(req.body.title);
   routeHandler.post(req, res, Model.Post, {userId: req.body.userId, blogId: req.body.blogId, postId: req.body.postId});
+})
+.delete(function(req, res) {
+  routeHandler.deleteAll(req, res, Model.Post);
 });
 
 /**

@@ -73,5 +73,11 @@ module.exports = {
     .then(function() {
       res.status(204).end();
     });
+  },
+  deleteAll: function(req, res, Model) {
+    Model.remove({})
+    .then(function(deleteRes) {
+      res.json(deleteRes);
+    });
   }
 }
