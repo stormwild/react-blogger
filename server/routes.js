@@ -3,7 +3,8 @@
 var express = require('express');
 var router = express.Router();
 var Model = require('./models');
-var routeHandler = require('./routeHandler');
+var routeHandler = require('./handlers/routeHandler');
+var userHandler = require('./handlers/userHandler');
 var auth = require('./auth');
 var passport = require('passport');
 
@@ -76,7 +77,7 @@ router.route('/users/:userId')
   routeHandler.getOne(req, res, Model.User, {username: req.params.userId});
 })
 .put(function(req, res) {
-  routeHandler.put(req, res, Model.User, {username: req.params.userId});
+  userHandler.put(req, res, Model, req.params.userId);
 })
 .delete(function(req, res) {
   routeHandler.deleteOne(req, res, [Model.User, Model.Blog, Model.Post], [{username: req.params.userId}, {userId: req.params.userId}]);
