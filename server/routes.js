@@ -90,7 +90,7 @@ router.route('/users/:userId/blogs')
   routeHandler.getMany(req, res, Model.Blog, {userId: req.params.userId});
 })
 .delete(function(req, res) {
-  routeHandler.deleteMany(req, res, Model.Blog, {userId: req.params.userId});
+  routeHandler.deleteMany(req, res, [Model.Blog, Model.Post], {userId: req.params.userId});
 });
 
 /**

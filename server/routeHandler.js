@@ -107,10 +107,23 @@ module.exports = {
     }
   },
   deleteMany: function(req, res, Model, queryObj) {
-    Model.remove(queryObj)
-    .then(function(deleteRes) {
-      res.json(deleteRes);
-    });
+    if (Model.constructor === Array) {
+      Promise.all(Model.map(function(model) {
+        return model.remove(queryObj).exec();
+      }))
+      .then(function() {
+        res.status(204).end();
+      })
+      .catch(function(err) {
+        res.status(500).send(err);
+      });
+    }
+    else {
+      Model.remove(queryObj)
+      .then(function(deleteRes) {
+        res.json(deleteRes);
+      });
+    }
   },
   deleteAll: function(req, res, Model) {
     if (Model.constructor === Array) {
