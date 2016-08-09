@@ -39,8 +39,15 @@ class BlogPage extends React.Component {
     console.log('Post edited');
   }
 
-  handleDeletePost() {
-    console.log('Post deleted');
+  handleDeletePost(index) {
+    let {posts} = this.state;
+    let postId = posts[index].postId;
+    axios.delete('/api/posts/' + postId)
+    .then(res => {
+      toastr.success('Post deleted successfully');
+      this.setState({posts: posts.filter((post, i) => i !== index)});
+    })
+    .catch(err => { console.log(err); });
   }
 
   componentDidMount() {
@@ -74,7 +81,7 @@ class BlogPage extends React.Component {
               post={post}
               params={params}
               editPostTitle={this.handleEditPostTitle}
-              deletePost={this.handleDeletePost}
+              deletePost={this.handleDeletePost.bind(this, index)}
             />
           );
         })}
