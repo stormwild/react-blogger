@@ -1,24 +1,11 @@
 /*eslint-disable no-var*/
-
 var express = require('express');
 var router = express.Router();
+var passport = require('passport');
 var Model = require('./models');
 var routeHandler = require('./handlers/routeHandler');
 var userHandler = require('./handlers/userHandler');
 var auth = require('./auth');
-var passport = require('passport');
-
-// Helper functions
-function replaceAll(str, find, replace) {
-  return str.replace(new RegExp(find, 'g'), replace);
-}
-
-function generateId(value) {
-  if (!value) { return; }
-  return replaceAll(value, ' ', '-').toLowerCase();
-};
-
-// Actual routes
 
 /**
 register
@@ -135,8 +122,6 @@ router.route('/blogs')
   routeHandler.getAll(req, res, Model.Blog);
 })
 .post(function(req, res) {
-  // Need to attach an additional field to the request, generating a blogId from the title
-  req.body.blogId = generateId(req.body.title);
   routeHandler.post(req, res, Model.Blog, {userId: req.body.userId, blogId: req.body.blogId});
 })
 .delete(function(req, res) {
@@ -151,10 +136,6 @@ router.route('/blogs/:blogId')
   routeHandler.getOne(req, res, Model.Blog, {blogId: req.params.blogId});
 })
 .put(function(req, res) {
-  // If changing the blog title, need to change the generated blogId as well
-  if (req.body.title) {
-    req.body.blogId = generateId(req.body.title);
-  }
   routeHandler.put(req, res, Model.Blog, {blogId: req.params.blogId}, {lockedFields: ['userId', 'postId']});
 })
 .delete(function(req, res) {
@@ -169,9 +150,7 @@ router.route('/posts')
   routeHandler.getAll(req, res, Model.Post);
 })
 .post(function(req, res) {
-  // Need to attach an additional field to the request, generating a postId from the title
   /** NOTE: CURRENTLY POSSIBLE TO POST TO A BLOG THAT DOESN'T EXIST **/
-  req.body.postId = generateId(req.body.title);
   routeHandler.post(req, res, Model.Post, {userId: req.body.userId, blogId: req.body.blogId, postId: req.body.postId});
 })
 .delete(function(req, res) {
@@ -186,10 +165,6 @@ router.route('/posts/:postId')
   routeHandler.getOne(req, res, Model.Post, {postId: req.params.postId});
 })
 .put(function(req, res) {
-  // If changing the post title, need to change the generated postId as well
-  if (req.body.title) {
-    req.body.postId = generateId(req.body.title);
-  }
   routeHandler.put(req, res, Model.Post, {postId: req.params.postId}, {lockedFields: ['userId', 'blogId', 'postId']});
 })
 .delete(function(req, res) {

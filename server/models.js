@@ -3,6 +3,7 @@ mongoose.Promise = global.Promise;
 var Schema = mongoose.Schema;
 var passportLocalMongoose = require('passport-local-mongoose');
 var encryption = require('./encryption');
+var utils = require('./utils/utils');
 
 // Username and email must be unique
 // Email should be required in the future
@@ -58,6 +59,11 @@ var blogSchema = mongoose.Schema({
 
 blogSchema.pre('save', function(next) {
   this.updatedAt = new Date();
+
+  if (this.isModified('title')) {
+    this.blogId = utils.generateIdFromTitle(this.title);
+  }
+
   next();
 });
 
@@ -92,6 +98,11 @@ var postSchema = mongoose.Schema({
 
 postSchema.pre('save', function(next) {
   this.updatedAt = new Date();
+
+  if (this.isModified('title')) {
+    this.postId = utils.generateIdFromTitle(this.title);
+  }
+
   next();
 });
 
