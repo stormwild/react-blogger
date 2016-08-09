@@ -74,10 +74,37 @@ module.exports = {
     });
   },
   deleteOne: function(req, res, Model, queryObj) {
-    Model.findOneAndRemove(queryObj)
-    .then(function() {
-      res.status(204).end();
-    });
+    if (Model.constructor === Array) {
+      // It is assumed that you only delete one entry from the first model, and all entries of subsequent models
+      // For example, delete one user, but also delete all his associated blogs and posts
+      Promise.all(Model.map(function(model, index) {
+        if (index === 0) {
+          // This is a bit of a hack to get around the fact that /users uses a username, but everywhere else uses a userId
+          // Making userId used everywhere involves messing with passport, possibly having to revert to the old implementation
+          // (No mongoose-passport-local library)
+          if (queryObj.constructor === Array) {
+            return model.findOneAndRemove(queryObj[0]);
+          }
+          return model.findOneAndRemove(queryObj);
+        }
+        if (queryObj.constructor === Array) {
+          return model.remove(queryObj[1]);
+        }
+        return model.remove(queryObj);
+      }))
+      .then(function() {
+        res.status(204).end();
+      })
+      .catch(function(err) {
+        res.status(500).send(err);
+      });
+    }
+    else {
+      Model.findOneAndRemove(queryObj)
+      .then(function() {
+        res.status(204).end();
+      });      
+    }
   },
   deleteMany: function(req, res, Model, queryObj) {
     Model.remove(queryObj)
