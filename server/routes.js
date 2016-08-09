@@ -65,7 +65,7 @@ router.route('/users')
   routeHandler.getAll(req, res, Model.User);
 })
 .delete(function(req, res) {
-  routeHandler.deleteAll(req, res, Model.User);
+  routeHandler.deleteAll(req, res, [Model.User, Model.Blog, Model.Post]);
 });
 
 /**
@@ -139,7 +139,7 @@ router.route('/blogs')
   routeHandler.post(req, res, Model.Blog, {userId: req.body.userId, blogId: req.body.blogId});
 })
 .delete(function(req, res) {
-  routeHandler.deleteAll(req, res, Model.Blog);
+  routeHandler.deleteAll(req, res, [Model.Blog, Model.Post]);
 });
 
 /**
