@@ -5,6 +5,7 @@ var passport = require('passport');
 var Model = require('./models');
 var routeHandler = require('./handlers/routeHandler');
 var userHandler = require('./handlers/userHandler');
+var blogHandler = require('./handlers/blogHandler');
 var auth = require('./auth');
 
 /**
@@ -136,7 +137,7 @@ router.route('/blogs/:blogId')
   routeHandler.getOne(req, res, Model.Blog, {blogId: req.params.blogId});
 })
 .put(function(req, res) {
-  routeHandler.put(req, res, Model.Blog, {blogId: req.params.blogId}, {lockedFields: ['userId', 'postId']});
+  blogHandler.put(req, res, Model, req.params.blogId);
 })
 .delete(function(req, res) {
   routeHandler.deleteOne(req, res, [Model.Blog, Model.Post], {blogId: req.params.blogId});
