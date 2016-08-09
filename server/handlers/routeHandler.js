@@ -1,13 +1,23 @@
+var intersection = require('lodash/intersection');
+
 // For each property in the request body, change the match's associated property
 function modifyReq(match, reqBody) {
   for(var key in reqBody) {
-    if(reqBody.hasOwnProperty(key)) {
+    if (reqBody.hasOwnProperty(key)) {
       match[key] = reqBody[key];
     }
   }
 }
 
-function putOne(Model, queryObj, reqBody, res) {
+function putOne(reqBody, res, Model, queryObj, lockedFields) {
+  // Prevent PUT requests from updating locked fields
+  if (lockedFields && intersection(Object.keys(reqBody), lockedFields).length > 0 ) {
+    res.status(500).json({
+      error: 'Cannot update a locked field',
+      lockedFields: lockedFields
+    });
+  }
+
   return Model.findOne(queryObj).exec()
   .then(function(match) {
     if (match) {
@@ -74,8 +84,8 @@ module.exports = {
       res.json(err);
     });
   },
-  put: function(req, res, Model, queryObj) {
-    putOne(Model, queryObj, req.body, res)
+  put: function(req, res, Model, queryObj, lockedFields) {
+    putOne(req.body, res, Model, queryObj, lockedFields)
     .then(function(savedCourse) {
       res.json(savedCourse);
     });

@@ -155,7 +155,7 @@ router.route('/blogs/:blogId')
   if (req.body.title) {
     req.body.blogId = generateId(req.body.title);
   }
-  routeHandler.put(req, res, Model.Blog, {blogId: req.params.blogId});
+  routeHandler.put(req, res, Model.Blog, {blogId: req.params.blogId}, ['userId', 'postId']);
 })
 .delete(function(req, res) {
   routeHandler.deleteOne(req, res, [Model.Blog, Model.Post], {blogId: req.params.blogId});
@@ -190,7 +190,7 @@ router.route('/posts/:postId')
   if (req.body.title) {
     req.body.postId = generateId(req.body.title);
   }
-  routeHandler.put(req, res, Model.Post, {postId: req.params.postId});
+  routeHandler.put(req, res, Model.Post, {postId: req.params.postId}, ['userId', 'blogId', 'postId']);
 })
 .delete(function(req, res) {
   routeHandler.deleteOne(req, res, Model.Post, {postId: req.params.postId});
