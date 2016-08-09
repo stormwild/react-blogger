@@ -87,7 +87,7 @@ users/:userId/blogs
 **/
 router.route('/users/:userId/blogs')
 .get(function(req, res) {
-  routeHandler.getAll(req, res, Model.Blog, {userId: req.params.userId});
+  routeHandler.getMany(req, res, Model.Blog, {userId: req.params.userId});
 })
 .delete(function(req, res) {
   routeHandler.deleteMany(req, res, Model.Blog, {userId: req.params.userId});
@@ -109,7 +109,7 @@ users/:userId/blogs/:blogId/posts
 **/
 router.route('/users/:userId/blogs/:blogId/posts')
 .get(function(req, res) {
-  routeHandler.getAll(req, res, Model.Post, {blogId: req.params.blogId});
+  routeHandler.getMany(req, res, Model.Post, {blogId: req.params.blogId});
 })
 .delete(function(req, res) {
   routeHandler.deleteMany(req, res, Model.Post, {blogId: req.params.blogId});

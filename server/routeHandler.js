@@ -1,6 +1,22 @@
 module.exports = {
-  getAll: function (req, res, Model, queryObj) {
-    queryObj = queryObj || {};
+  getOne: function (req, res, Model, queryObj) {
+    Model.findOne(queryObj).exec()
+    .then(function(match) {
+      if (match) {
+        res.json(match);
+      }
+      else {
+        res.status(500).json({error: 'no match found'});
+      }
+    });
+  },
+  getMany: function(req, res, Model, queryObj) {
+    Model.find(queryObj).exec()
+    .then(function(matches) {
+      res.json(matches);
+    });
+  },
+  getAll: function (req, res, Model) {
     Model.count({}).exec()
     .then(function(count) {
       // Want to limit the returned results or the query will take forever (ex/ a million results)
@@ -9,9 +25,9 @@ module.exports = {
       // offset=0 takes 45ms, offset=1000000 takes ~1s
       if (count > 50) {
         var offset = req.query.offset || 0;
-        return Model.find(queryObj).sort({_id: 1}).skip(offset).limit(50).exec();
+        return Model.find({}).sort({_id: 1}).skip(offset).limit(50).exec();
       }
-      return Model.find(queryObj).exec();
+      return Model.find({}).exec();
     })
     .then(function(match) {
       res.json(match);
@@ -35,17 +51,6 @@ module.exports = {
     })
     .catch(function(err) {
       res.json(err);
-    });
-  },
-  getOne: function (req, res, Model, queryObj) {
-    Model.findOne(queryObj).exec()
-    .then(function(match) {
-      if (match) {
-        res.json(match);
-      }
-      else {
-        res.status(500).json({error: 'no match found'});
-      }
     });
   },
   put: function(req, res, Model, queryObj) {
