@@ -98,10 +98,10 @@ users/:userId/blogs/:blogId
 **/
 router.route('/users/:userId/blogs/:blogId')
 .get(function(req, res) {
-  routeHandler.getOne(req, res, Model.Blog, {blogId: req.params.blogId});
+  routeHandler.getOne(req, res, Model.Blog, {userId: req.params.userId, blogId: req.params.blogId});
 })
 .delete(function(req, res) {
-  routeHandler.deleteOne(req, res, Model.Blog, {blogId: req.params.blogId});
+  routeHandler.deleteOne(req, res, Model.Blog, {userId: req.params.userId, blogId: req.params.blogId});
 });
 
 /**
@@ -109,10 +109,10 @@ users/:userId/blogs/:blogId/posts
 **/
 router.route('/users/:userId/blogs/:blogId/posts')
 .get(function(req, res) {
-  routeHandler.getMany(req, res, Model.Post, {blogId: req.params.blogId});
+  routeHandler.getMany(req, res, Model.Post, {userId: req.params.userId, blogId: req.params.blogId});
 })
 .delete(function(req, res) {
-  routeHandler.deleteMany(req, res, Model.Post, {blogId: req.params.blogId});
+  routeHandler.deleteMany(req, res, Model.Post, {userId: req.params.userId, blogId: req.params.blogId});
 });
 
 /**
@@ -120,10 +120,10 @@ users/:userId/blogs/:blogId/posts
 **/
 router.route('/users/:userId/blogs/:blogId/posts/:postId')
 .get(function(req, res) {
-  routeHandler.getOne(req, res, Model.Post, {postId: req.params.postId});
+  routeHandler.getOne(req, res, Model.Post, {userId: req.params.userId, blogId: req.params.blogId, postId: req.params.postId});
 })
 .delete(function(req, res) {
-  routeHandler.deleteOne(req, res, Model.Post, {postId: req.params.postId});
+  routeHandler.deleteOne(req, res, Model.Post, {userId: req.params.userId, blogId: req.params.blogId, postId: req.params.postId});
 });
 
 /**
