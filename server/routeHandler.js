@@ -1,3 +1,25 @@
+// For each property in the request body, change the match's associated property
+function modifyReq(match, reqBody) {
+  for(var key in reqBody) {
+    if(reqBody.hasOwnProperty(key)) {
+      match[key] = reqBody[key];
+    }
+  }
+}
+
+function putOne(Model, queryObj, reqBody, res) {
+  return Model.findOne(queryObj).exec()
+  .then(function(match) {
+    if (match) {
+      modifyReq(match, reqBody);
+      return match.save();
+    }
+    else {
+      res.status(500).json({error: 'no match found'});
+    }
+  });
+}
+
 module.exports = {
   getOne: function (req, res, Model, queryObj) {
     Model.findOne(queryObj).exec()
@@ -38,7 +60,6 @@ module.exports = {
     
     Model.findOne(queryObj).exec()
     .then(function(match) {
-      console.log(match);
       if (match) {
         res.status(500).json({error: 'duplicate entry'});
       }
@@ -54,24 +75,31 @@ module.exports = {
     });
   },
   put: function(req, res, Model, queryObj) {
-    Model.findOne(queryObj).exec()
-    .then(function(match) {
-      if (match) {
-        // For each property in the request body, change the match's associated property
-        for(var key in req.body) {
-          if(req.body.hasOwnProperty(key)) {
-            match[key] = req.body[key];
-          }
+    if (Model.constructor === Array) {
+      Promise.all(Model.map(function(model, index) {
+        if (index === 0) {
+          //putOne(model, queryObj, req.body, res);
         }
-        return match.save();
-      }
-      else {
-        res.status(500).json({error: 'no match found'});
-      }
-    })
-    .then(function(savedCourse) {
-      res.json(savedCourse);
-    });
+        else {
+          model.find(queryObj).exec()
+          .then(function(matches) {
+            console.log(matches);
+          });
+        }
+      }))
+      .then(function() {
+        res.status(200).end();
+      })
+      .catch(function(err) {
+        res.status(500).json(err);
+      })
+    }
+    else {
+      putOne(Model, queryObj, req.body, res)
+      .then(function(savedCourse) {
+        res.json(savedCourse);
+      });
+    }
   },
   deleteOne: function(req, res, Model, queryObj) {
     if (Model.constructor === Array) {
