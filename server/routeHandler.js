@@ -74,10 +74,16 @@ module.exports = {
       res.status(204).end();
     });
   },
+  deleteMany: function(req, res, Model, queryObj) {
+    Model.remove(queryObj)
+    .then(function(deleteRes) {
+      res.json(deleteRes);
+    });
+  },
   deleteAll: function(req, res, Model) {
     Model.remove({})
     .then(function(deleteRes) {
       res.json(deleteRes);
     });
   }
-}
+};
