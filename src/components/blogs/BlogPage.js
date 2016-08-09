@@ -14,7 +14,6 @@ class BlogPage extends React.Component {
     this.state = {blog: {}, posts: []};
 
     this.handleNewPost = this.handleNewPost.bind(this);
-    this.handleEditPostTitle = this.handleEditPostTitle.bind(this);
     this.handleDeletePost = this.handleDeletePost.bind(this);
   }
 
