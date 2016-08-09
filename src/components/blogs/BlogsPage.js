@@ -14,6 +14,7 @@ class BlogsPage extends React.Component {
     };
 
     this.handleNewBlog = this.handleNewBlog.bind(this);
+    this.handleDeleteBlog = this.handleDeleteBlog.bind(this);
   }
 
   componentDidMount() {
@@ -40,12 +41,28 @@ class BlogsPage extends React.Component {
     });
   }
 
+  handleDeleteBlog(index) {
+    let {blogs} = this.state;
+    let blogId = blogs[index].blogId;
+    axios.delete('/api/blogs/' + blogId)
+    .then(res => {
+      toastr.success('Blog deleted successfully');
+      this.setState({blogs: blogs.filter((blog, i) => i !== index)});
+    })
+    .catch(err => { console.log(err); });
+  }
+
   render() {
     let {blogs} = this.state;
     return (
       <div>
         {blogs.map((blog, index) => {
-          return (<h2 key={index}><Link to={"/blogs/" + blog.blogId}>{blog.title}</Link></h2>);
+          return (
+            <h2 key={index}>
+              <Link to={"/blogs/" + blog.blogId}>{blog.title}</Link>
+              <Button onClick={this.handleDeleteBlog.bind(this, index)}>Delete</Button>
+            </h2>
+          );
         })}
         <Button onClick={this.handleNewBlog}>New Blog</Button>
       </div>
