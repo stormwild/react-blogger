@@ -15,12 +15,24 @@ var userSchema = mongoose.Schema({
     type: String,
     required: [true, 'No password supplied']
   },
-  email: String
+  email: String,
+  createdAt: {
+    type: Date,
+    default: Date.now
+  },
+  updatedAt: Date
 });
 
 // Adds a username, hash and salt field
 // Also adds some methods, see https://github.com/saintedlama/passport-local-mongoose
 userSchema.plugin(passportLocalMongoose);
+
+userSchema.pre('save', function(next) {
+  // Note: When a new user is created, it sets updatedAt as slightly ahead of createdAt. Not sure if this is really an issue.
+  console.log('Initiating user save');
+  this.updatedAt = new Date();
+  next();
+});
 
 // Maybe add a logo field. No sense in having a content field since the posts contain the content
 // blogId generated from title, must be unique with respect to the user and url friendly
@@ -36,7 +48,17 @@ var blogSchema = mongoose.Schema({
   title: {
     type: String,
     required: [true, 'No blog title supplied']
-  }
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
+  },
+  updatedAt: Date
+});
+
+blogSchema.pre('save', function(next) {
+  this.updatedAt = new Date();
+  next();
 });
 
 // postId generated from title, must be unique with respect to the blog and url friendly
@@ -60,7 +82,17 @@ var postSchema = mongoose.Schema({
   content: {
     type: String,
     default: ''
-  }
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
+  },
+  updatedAt: Date
+});
+
+postSchema.pre('save', function(next) {
+  this.updatedAt = new Date();
+  next();
 });
 
 module.exports = {
