@@ -75,31 +75,10 @@ module.exports = {
     });
   },
   put: function(req, res, Model, queryObj) {
-    if (Model.constructor === Array) {
-      Promise.all(Model.map(function(model, index) {
-        if (index === 0) {
-          //putOne(model, queryObj, req.body, res);
-        }
-        else {
-          model.find(queryObj).exec()
-          .then(function(matches) {
-            console.log(matches);
-          });
-        }
-      }))
-      .then(function() {
-        res.status(200).end();
-      })
-      .catch(function(err) {
-        res.status(500).json(err);
-      })
-    }
-    else {
-      putOne(Model, queryObj, req.body, res)
-      .then(function(savedCourse) {
-        res.json(savedCourse);
-      });
-    }
+    putOne(Model, queryObj, req.body, res)
+    .then(function(savedCourse) {
+      res.json(savedCourse);
+    });
   },
   deleteOne: function(req, res, Model, queryObj) {
     if (Model.constructor === Array) {
