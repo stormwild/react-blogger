@@ -12,7 +12,7 @@ function modifyReq(match, reqBody) {
 function putOne(reqBody, res, Model, queryObj, options) {
   // Prevent PUT requests from updating locked fields
   if (options && options.lockedFields && intersection(Object.keys(reqBody), options.lockedFields).length > 0 ) {
-    res.status(500).json({
+    return res.status(500).json({
       error: 'Cannot update a locked field',
       lockedFields: options.lockedFields
     });
