@@ -35,10 +35,6 @@ class BlogPage extends React.Component {
     });
   }
 
-  handleEditPostTitle() {
-    console.log('Post edited');
-  }
-
   handleDeletePost(index) {
     let {posts} = this.state;
     let postId = posts[index].postId;
