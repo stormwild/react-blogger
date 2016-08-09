@@ -68,18 +68,10 @@ module.exports = {
       res.json(savedCourse);
     });
   },
-  delete: function(req, res, Model, queryObj) {
-    Model.findOne(queryObj).exec()
-    .then(function(match) {
-      if (match) {
-        return match.remove();
-      }
-      else {
-        res.status(500).json({error: 'no match found'});
-      }
-    })
+  deleteOne: function(req, res, Model, queryObj) {
+    Model.findOneAndRemove(queryObj)
     .then(function() {
-      res.status(204).send('Removed'); // The status code sends, but the 'Removed message' does not...
+      res.status(204).end();
     });
   }
 }

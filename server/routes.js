@@ -75,7 +75,7 @@ router.route('/users/:userId')
   routeHandler.put(req, res, Model.User, {username: req.params.userId});
 })
 .delete(function(req, res) {
-  routeHandler.delete(req, res, Model.User, {username: req.params.userId});
+  routeHandler.deleteOne(req, res, Model.User, {username: req.params.userId});
 });
 
 /**
@@ -138,7 +138,7 @@ router.route('/blogs/:blogId')
   routeHandler.put(req, res, Model.Blog, {blogId: req.params.blogId});
 })
 .delete(function(req, res) {
-  routeHandler.delete(req, res, Model.Blog, {blogId: req.params.blogId});
+  routeHandler.deleteOne(req, res, Model.Blog, {blogId: req.params.blogId});
 });
 
 /**
@@ -170,7 +170,7 @@ router.route('/posts/:postId')
   routeHandler.put(req, res, Model.Post, {postId: req.params.postId});
 })
 .delete(function(req, res) {
-  routeHandler.delete(req, res, Model.Post, {postId: req.params.postId});
+  routeHandler.deleteOne(req, res, Model.Post, {postId: req.params.postId});
 });
 
 // Simplistic route for bulk inserting huge amounts of data into MongoDB
