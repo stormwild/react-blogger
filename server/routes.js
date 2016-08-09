@@ -131,6 +131,10 @@ router.route('/blogs/:blogId')
   routeHandler.getOne(req, res, Model.Blog, {blogId: req.params.blogId});
 })
 .put(function(req, res) {
+  // If changing the blog title, need to change the generated blogId as well
+  if (req.body.title) {
+    req.body.blogId = generateId(req.body.title);
+  }
   routeHandler.put(req, res, Model.Blog, {blogId: req.params.blogId});
 })
 .delete(function(req, res) {
@@ -159,6 +163,10 @@ router.route('/posts/:postId')
   routeHandler.getOne(req, res, Model.Post, {postId: req.params.postId});
 })
 .put(function(req, res) {
+  // If changing the post title, need to change the generated postId as well
+  if (req.body.title) {
+    req.body.postId = generateId(req.body.title);
+  }
   routeHandler.put(req, res, Model.Post, {postId: req.params.postId});
 })
 .delete(function(req, res) {
