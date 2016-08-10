@@ -65,23 +65,13 @@ module.exports = {
       res.json(match);
     });
   },
-  post: function (req, res, Model, queryObj) {
+  post: function (req, res, Model) {
     var modelInstance = new Model(req.body);
-    
-    Model.findOne(queryObj).exec()
-    .then(function(match) {
-      if (match) {
-        res.status(500).json({error: 'duplicate entry'});
+    modelInstance.save(function(err, savedResult) {
+      if (err) {
+        return res.status(500).json({error: 'duplicate entry'});
       }
-      else {
-        return modelInstance.save();
-      }
-    })
-    .then(function(savedResult) {
-      res.json(savedResult);
-    })
-    .catch(function(err) {
-      res.status(500).json(err);
+      return res.json(savedResult);
     });
   },
   put: function(req, res, Model, queryObj, options) {

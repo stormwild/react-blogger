@@ -123,7 +123,7 @@ router.route('/blogs')
   routeHandler.getAll(req, res, Model.Blog);
 })
 .post(function(req, res) {
-  routeHandler.post(req, res, Model.Blog, {userId: req.body.userId, blogId: req.body.blogId});
+  routeHandler.post(req, res, Model.Blog);
 })
 .delete(function(req, res) {
   routeHandler.deleteAll(req, res, [Model.Blog, Model.Post]);

@@ -56,13 +56,27 @@ var blogSchema = mongoose.Schema({
   updatedAt: Date
 });
 
+blogSchema.pre('validate', function(next) {
+  if (this.isModified('title')) {
+    // Need to generate the blogId in the pre-validation hook since the pre-save hook is too late
+    this.blogId = utils.generateIdFromTitle(this.title);
+
+    // Verify that there aren't any other blogs belonging to this user with the same blogId
+    Model.Blog.find({userId: this.userId, blogId: this.blogId}, function(err, matches) {
+      if (matches.length > 0) {
+        next(new Error('There already exists a blog with this title'));
+      }
+      next();
+    });
+  }
+  else {
+    // Without the else block, the next() will execute regardless and get in a race condition with Model.Blog.find
+    next();
+  }
+});
+
 blogSchema.pre('save', function(next) {
   this.updatedAt = new Date();
-
-  if (this.isModified('title')) {
-    this.blogId = utils.generateIdFromTitle(this.title);
-  }
-
   next();
 });
 
@@ -104,8 +118,10 @@ postSchema.pre('save', function(next) {
   next();
 });
 
-module.exports = {
+var Model = {
   User: mongoose.model('User', userSchema),
   Blog: mongoose.model('Blog', blogSchema),
   Post: mongoose.model('Post', postSchema)
 };
+
+module.exports = Model;

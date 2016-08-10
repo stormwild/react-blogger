@@ -37,6 +37,7 @@ class BlogsPage extends React.Component {
     .catch(err => {
       if (err.response.status === 500 && err.response.data.error === 'duplicate entry') {
         toastr.error('There already exists a blog with title ' + blogTitle);
+        console.error(err.response); // This is the best way of debugging the error in the console
       }
     });
   }
