@@ -28,7 +28,7 @@ class Header extends React.Component {
         window.location.href = '/';
       }
     })
-    .catch(err => {throw err});
+    .catch(err => { throw err; });
   }
 
   render() {

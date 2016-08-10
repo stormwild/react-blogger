@@ -38,7 +38,7 @@ class PostExcerpt extends React.Component {
           isEditing: !this.state.isEditing
         });
       })
-      .catch(err => {console.log(err);})
+      .catch(err => { throw err; });
     }
     else {
       this.setState({isEditing: !this.state.isEditing});

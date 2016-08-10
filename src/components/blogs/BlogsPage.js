@@ -21,7 +21,7 @@ class BlogsPage extends React.Component {
     const {user} = this.props;
     axios.get('/api/users/' + user.username + '/blogs')
     .then(res => this.setState({blogs: res.data}))
-    .catch(err => {throw err});
+    .catch(err => { throw err; });
   }
 
   handleNewBlog() {
@@ -49,7 +49,7 @@ class BlogsPage extends React.Component {
       toastr.success('Blog deleted successfully');
       this.setState({blogs: blogs.filter((blog, i) => i !== index)});
     })
-    .catch(err => { console.log(err); });
+    .catch(err => { throw err; });
   }
 
   render() {

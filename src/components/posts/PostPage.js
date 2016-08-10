@@ -9,7 +9,7 @@ class PostsPage extends React.Component {
 
     this.state = {
       post: {}
-    }
+    };
   }
 
   componentDidMount() {

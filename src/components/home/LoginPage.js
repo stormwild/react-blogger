@@ -22,13 +22,11 @@ class LoginPage extends React.Component {
   }
 
   handleUsername(evt) {
-    this.state.user.username = evt.target.value;
-    this.setState({user: this.state.user});
+    this.setState({user: {...this.state.user, username: evt.target.value}});
   }
 
   handlePassword(evt) {
-    this.state.user.password = evt.target.value;
-    this.setState({user: this.state.user});
+    this.setState({user: {...this.state.user, password: evt.target.value}});
   }
 
   handleSave() {

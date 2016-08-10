@@ -1,3 +1,3 @@
 export default {
-  user: window.user || '',
+  user: window.user || ''
 };

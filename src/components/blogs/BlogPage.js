@@ -17,6 +17,24 @@ class BlogPage extends React.Component {
     this.handleDeletePost = this.handleDeletePost.bind(this);
   }
 
+  componentDidMount() {
+    const {user, params} = this.props;
+
+    function getBlogData() {
+      return axios.get('/api/users/' + user.username + '/blogs/' + params.blogId);
+    }
+
+    function getPostsData() {
+      return axios.get('/api/users/' + user.username + '/blogs/' + params.blogId + '/posts');
+    }
+
+    axios.all([getBlogData(), getPostsData()])
+    .then(axios.spread((blog, posts) => {
+      this.setState({blog: blog.data, posts: posts.data});
+    }))
+    .catch(err => {throw err; });
+  }
+
   handleNewPost() {
     const {user, params} = this.props;
     let {posts} = this.state;
@@ -42,25 +60,7 @@ class BlogPage extends React.Component {
       toastr.success('Post deleted successfully');
       this.setState({posts: posts.filter((post, i) => i !== index)});
     })
-    .catch(err => { console.log(err); });
-  }
-
-  componentDidMount() {
-    const {user, params} = this.props;
-
-    function getBlogData() {
-      return axios.get('/api/users/' + user.username + '/blogs/' + params.blogId);
-    }
-
-    function getPostsData() {
-      return axios.get('/api/users/' + user.username + '/blogs/' + params.blogId + '/posts');
-    }
-
-    axios.all([getBlogData(), getPostsData()])
-    .then(axios.spread((blog, posts) => {
-      this.setState({blog: blog.data, posts: posts.data});
-    }))
-    .catch(err => {throw err});
+    .catch(err => { throw err; });
   }
 
   render() {
