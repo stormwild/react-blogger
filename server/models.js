@@ -123,13 +123,27 @@ var postSchema = mongoose.Schema({
   updatedAt: Date
 });
 
+postSchema.pre('validate', function(next) {
+  if (this.isModified('title')) {
+    // Need to generate the postId in the pre-validation hook since the pre-save hook is too late
+    this.postId = utils.generateIdFromTitle(this.title);
+
+    // Verify that there aren't any other posts belonging to this user/blog combo
+    Model.Post.find({userId: this.userId, blogId: this.blogId, postId: this.postId}, function(err, matches) {
+      if (matches.length > 0) {
+        next(new Error('There already exists a post with this title'));
+      }
+      next();
+    });
+  }
+  else {
+    // Without the else block, the next() will execute regardless and get in a race condition with Model.Blog.find
+    next();
+  }
+});
+
 postSchema.pre('save', function(next) {
   this.updatedAt = new Date();
-
-  if (this.isModified('title')) {
-    this.postId = utils.generateIdFromTitle(this.title);
-  }
-
   next();
 });
 
