@@ -11,7 +11,7 @@ class PostExcerpt extends React.Component {
   constructor(props, context) {
     super(props, context);
 
-    this.state = {isEditing: false, post: props.post};
+    this.state = {isEditing: false, post: props.post, lastValidTitle: props.post.title};
 
     this.toggleEditing = this.toggleEditing.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -26,19 +26,28 @@ class PostExcerpt extends React.Component {
   }
 
   toggleEditing() {
-    const {post} = this.state;
+    const {post, lastValidTitle, isEditing} = this.state;
 
-    if(this.state.isEditing) {
+    if(isEditing) {
       axios.put("/api/posts/" + post.postId, {title: post.title})
       .then(res => {
-        toastr.success('Blog title successfully changed');
         // Need to update the entire post after the PUT request to retreive the new postId
         this.setState({
           post: res.data,
-          isEditing: !this.state.isEditing
+          lastValidTitle: res.data.title,
+          isEditing: !isEditing
         });
+        toastr.success('Blog title successfully changed');
       })
-      .catch(err => { throw err; });
+      .catch(err => {
+        console.log(err.response);
+        // If there's an error, set editing to false and roll back the title to its last valid state
+        this.setState({
+          isEditing: false,
+          post: {...post, title: lastValidTitle}
+        });
+        toastr.error('There already exists a blog with title ' + post.title);
+      });
     }
     else {
       this.setState({isEditing: !this.state.isEditing});
