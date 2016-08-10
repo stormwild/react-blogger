@@ -25,8 +25,11 @@ function putOne(reqBody, res, Model, queryObj, options) {
       return match.save();
     }
     else {
-      res.status(500).json({error: 'no match found'});
+      return res.status(500).json({error: 'no match found'});
     }
+  })
+  .catch(function(err) {
+    return res.status(500).json(err);
   });
 }
 

@@ -28,6 +28,21 @@ var userSchema = mongoose.Schema({
 // Also adds some methods, see https://github.com/saintedlama/passport-local-mongoose
 userSchema.plugin(passportLocalMongoose);
 
+userSchema.pre('validate', function(next) {
+  if (this.isModified('email')) {
+    Model.User.find({email: this.email}, function(err, matches) {
+      if (matches.length > 0) {
+        next(new Error('This email is already in use'));
+      }
+      next();
+    });
+  }
+  else {
+    // Without the else block, the next() will execute regardless and get in a race condition with Model.Blog.find
+    next();
+  }
+});
+
 userSchema.pre('save', function(next) {
   // Note: When a new user is created, it sets updatedAt as slightly ahead of createdAt. Not sure if this is really an issue.
   console.log('Initiating user save');
