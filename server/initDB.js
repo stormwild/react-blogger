@@ -6,13 +6,13 @@ module.exports = function() {
   console.log('app db opened');
   return new Promise(function(resolve, reject) {
     return Model.User.find({}).exec(function(err, users) {
-      if (users.length > 0) {
+      /*if (users.length > 0) {
         console.log('db already initialized');
         reject(users);
-      }
-      else {
+      }*/
+      //else {
         resolve(users);
-      }
+      //}
     }); 
   })
   .then(function() {
