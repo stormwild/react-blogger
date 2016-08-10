@@ -81,7 +81,7 @@ module.exports = {
       res.json(savedResult);
     })
     .catch(function(err) {
-      res.json(err);
+      res.status(500).json(err);
     });
   },
   put: function(req, res, Model, queryObj, options) {

@@ -43,8 +43,7 @@ var blogSchema = mongoose.Schema({
     required: [true, 'No userId supplied']
   },
   blogId: {
-    type: String,
-    required: [true, 'no blogId supplied']
+    type: String
   },
   title: {
     type: String,
@@ -78,8 +77,7 @@ var postSchema = mongoose.Schema({
     required: [true, 'no blogId supplied']
   },
   postId: {
-    type: String,
-    required: [true, 'No postId supplied']
+    type: String
   },
   title: {
     type: String,
