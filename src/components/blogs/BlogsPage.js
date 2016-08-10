@@ -58,7 +58,7 @@ class BlogsPage extends React.Component {
       <div>
         {blogs.map((blog, index) => {
           return (
-            <h2 key={index}>
+            <h2 key={blog._id}>
               <Link to={"/blogs/" + blog.blogId}>{blog.title}</Link>
               <Button onClick={this.handleDeleteBlog.bind(this, index)}>Delete</Button>
             </h2>

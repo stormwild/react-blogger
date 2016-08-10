@@ -71,8 +71,10 @@ class BlogPage extends React.Component {
         <h1>{blog.title}</h1>
         {posts.map((post, index) => {
           return (
+            // The key cannot be the same as index
+            // has something to do with the key auto-updating when you delete elements out of order
             <PostExcerpt 
-              key={index}
+              key={post._id}
               post={post}
               params={params}
               editPostTitle={this.handleEditPostTitle}
