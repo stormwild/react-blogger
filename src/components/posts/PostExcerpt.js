@@ -11,8 +11,7 @@ class PostExcerpt extends React.Component {
   constructor(props, context) {
     super(props, context);
 
-    const {post} = props;
-    this.state = {isEditing: false, title: post.title};
+    this.state = {isEditing: false, post: props.post};
 
     this.toggleEditing = this.toggleEditing.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -23,17 +22,21 @@ class PostExcerpt extends React.Component {
       this.toggleEditing();
       return;
     }
-    this.setState({title: evt.target.value});
+    this.setState({post: {...this.state.post, title: evt.target.value}});
   }
 
   toggleEditing() {
-    const {post} = this.props;
+    const {post} = this.state;
 
     if(this.state.isEditing) {
-      axios.put("/api/posts/" + post.postId, {title: this.state.title})
+      axios.put("/api/posts/" + post.postId, {title: post.title})
       .then(res => {
         toastr.success('Blog title successfully changed');
-        this.setState({isEditing: !this.state.isEditing});
+        // Need to update the entire post after the PUT request to retreive the new postId
+        this.setState({
+          post: res.data,
+          isEditing: !this.state.isEditing
+        });
       })
       .catch(err => {console.log(err);})
     }
@@ -43,22 +46,22 @@ class PostExcerpt extends React.Component {
   }
 
   render() {
-    const {post, params, editPostTitle, deletePost} = this.props;
-    let {isEditing, title} = this.state;
+    const {params, editPostTitle, deletePost} = this.props;
+    let {post, isEditing} = this.state;
 
     let textarea = (
       <TextArea
         onKeyDown={this.handleChange}
         onChange={this.handleChange}
         onBlur={this.toggleEditing}
-        value={title} 
+        value={post.title} 
       />
     );
 
     let postLink = (
       <PostLink
         url={"/blogs/" + params.blogId + "/posts/" + post.postId} 
-        title={title}
+        title={post.title}
         isEditing={isEditing}
         toggleEditing={this.toggleEditing}
         deletePost={deletePost}

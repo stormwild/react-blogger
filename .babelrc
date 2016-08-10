@@ -4,5 +4,6 @@
     "development": {
 
     }
-  }
+  },
+  "plugins": ["transform-object-rest-spread"]
 }

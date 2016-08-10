@@ -77,7 +77,6 @@ class BlogPage extends React.Component {
               key={post._id}
               post={post}
               params={params}
-              editPostTitle={this.handleEditPostTitle}
               deletePost={this.handleDeletePost.bind(this, index)}
             />
           );
