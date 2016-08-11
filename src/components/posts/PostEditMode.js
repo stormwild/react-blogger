@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
-// import actions here
+import TextArea from '../common/TextArea';
+import ToggleComponent from '../common/ToggleComponent';
 
 class PostEditMode extends React.Component {
   constructor(props, context) {
@@ -7,9 +8,50 @@ class PostEditMode extends React.Component {
   }
 
   render() {
+    let {
+      post, 
+      handleChangeTitle,
+      toggleEditingTitle,
+      handleChangeContent,
+      toggleEditingContent,
+      isEditingTitle,
+      isEditingContent
+    } = this.props;
+
+    let textareaTitle = (
+      <TextArea
+        onKeyDown={handleChangeTitle}
+        onChange={handleChangeTitle}
+        onBlur={toggleEditingTitle}
+        value={post.title || ''} 
+      />
+    );
+
+    let textareaContent = (
+      <TextArea
+        onKeyDown={handleChangeContent}
+        onChange={handleChangeContent}
+        onBlur={toggleEditingContent}
+        value={post.content || ''} 
+      />
+    );
+
     return (
       <div>
-        PostEditMode
+        <h1>
+          <ToggleComponent
+            condition={isEditingTitle}
+            componentIfTrue={textareaTitle}
+            componentIfFalse={<div onClick={toggleEditingTitle}>{post.title}</div>}
+          />
+        </h1>
+        <h2>
+          <ToggleComponent
+            condition={isEditingContent}
+            componentIfTrue={textareaContent}
+            componentIfFalse={<div onClick={toggleEditingContent}>{post.content}</div>}
+          />
+        </h2>
       </div>
     );
   }

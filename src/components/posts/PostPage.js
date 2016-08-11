@@ -2,8 +2,6 @@ import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import axios from 'axios';
-import TextArea from '../common/TextArea';
-import ToggleComponent from '../common/ToggleComponent';
 import ViewEditToggle from '../common/ViewEditToggle';
 import PostViewMode from './PostViewMode';
 import PostEditMode from './PostEditMode';
@@ -116,24 +114,6 @@ class PostsPage extends React.Component {
   render() {
     let {post, isEditingTitle, isEditingContent, isEditMode} = this.state;
 
-    let textareaTitle = (
-      <TextArea
-        onKeyDown={this.handleChangeTitle}
-        onChange={this.handleChangeTitle}
-        onBlur={this.toggleEditingTitle}
-        value={post.title || ''} 
-      />
-    );
-
-    let textareaContent = (
-      <TextArea
-        onKeyDown={this.handleChangeContent}
-        onChange={this.handleChangeContent}
-        onBlur={this.toggleEditingContent}
-        value={post.content || ''} 
-      />
-    );
-
     return (
       <div>
         <ViewEditToggle
@@ -144,24 +124,18 @@ class PostsPage extends React.Component {
 
         {
           isEditMode ?
-          <PostEditMode /> :
+          <PostEditMode
+            post={post}
+            handleChangeTitle={this.handleChangeTitle}
+            toggleEditingTitle={this.toggleEditingTitle}
+            handleChangeContent={this.handleChangeContent}
+            toggleEditingContent={this.toggleEditingContent}
+            isEditingTitle={isEditingTitle}
+            isEditingContent={isEditingContent}
+            /> :
+
           <PostViewMode />
         }
-
-        {/*<h1>
-          <ToggleComponent
-            condition={isEditingTitle}
-            componentIfTrue={textareaTitle}
-            componentIfFalse={<div onClick={this.toggleEditingTitle}>{post.title}</div>}
-          />
-        </h1>
-        <h2>
-          <ToggleComponent
-            condition={isEditingContent}
-            componentIfTrue={textareaContent}
-            componentIfFalse={<div onClick={this.toggleEditingContent}>{post.content}</div>}
-          />
-        </h2>*/}
       </div>
     );
   }
