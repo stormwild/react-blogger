@@ -1,9 +1,10 @@
 import React, {PropTypes} from 'react';
 
-const TextArea = ({onKeyDown, onChange, onBlur, value}) => {
+const TextArea = ({onKeyDown, onChange, onBlur, value, name=''}) => {
   return (
     <div className="editable-container">
       <textarea
+        name={name}
         className="editable" 
         autoFocus
         value={value}

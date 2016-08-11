@@ -19,10 +19,9 @@ class PostsPage extends React.Component {
       isEditMode: true
     };
 
+    this.handleChange = this.handleChange.bind(this);
     this.toggleEditingTitle = this.toggleEditingTitle.bind(this);
-    this.handleChangeTitle = this.handleChangeTitle.bind(this);
     this.toggleEditingContent = this.toggleEditingContent.bind(this);
-    this.handleChangeContent = this.handleChangeContent.bind(this);
     this.activateEditMode = this.activateEditMode.bind(this);
     this.activateViewMode = this.activateViewMode.bind(this);
   }
@@ -32,14 +31,6 @@ class PostsPage extends React.Component {
     axios.get('/api/users/' + user.username + '/blogs/' + params.blogId + '/posts/' + params.postId)
     .then((res) => { this.setState({post: res.data, lastValidTitle: res.data.title}); })
     .catch(err => {throw err; });
-  }
-
-  handleChangeTitle(evt) {
-    if (evt.which === 13) {
-      this.toggleEditingTitle();
-      return;
-    }
-    this.setState({post: {...this.state.post, title: evt.target.value}});
   }
 
   toggleEditingTitle() {
@@ -70,14 +61,6 @@ class PostsPage extends React.Component {
     }
   }
 
-  handleChangeContent(evt) {
-    if (evt.which === 13) {
-      this.toggleEditingContent();
-      return;
-    }
-    this.setState({post: {...this.state.post, content: evt.target.value}});
-  }
-
   toggleEditingContent() {
     const {post, isEditingContent} = this.state;
 
@@ -96,6 +79,24 @@ class PostsPage extends React.Component {
     }
     else {
       this.setState({isEditingContent: !isEditingContent});
+    }
+  }
+  
+  handleChange(evt) {
+    if (evt.target.name === 'post-title') {
+      if (evt.which === 13) {
+        this.toggleEditingTitle();
+        return;
+      }
+      this.setState({post: {...this.state.post, title: evt.target.value}});
+    }
+
+    else if (evt.target.name === 'post-content') {
+      if (evt.which === 13) {
+        this.toggleEditingContent();
+        return;
+      }
+      this.setState({post: {...this.state.post, content: evt.target.value}});
     }
   }
 
@@ -126,9 +127,8 @@ class PostsPage extends React.Component {
           isEditMode ?
           <PostEditMode
             post={post}
-            handleChangeTitle={this.handleChangeTitle}
+            handleChange={this.handleChange}
             toggleEditingTitle={this.toggleEditingTitle}
-            handleChangeContent={this.handleChangeContent}
             toggleEditingContent={this.toggleEditingContent}
             isEditingTitle={isEditingTitle}
             isEditingContent={isEditingContent}

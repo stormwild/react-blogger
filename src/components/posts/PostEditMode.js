@@ -10,9 +10,8 @@ class PostEditMode extends React.Component {
   render() {
     let {
       post, 
-      handleChangeTitle,
+      handleChange,
       toggleEditingTitle,
-      handleChangeContent,
       toggleEditingContent,
       isEditingTitle,
       isEditingContent
@@ -20,8 +19,9 @@ class PostEditMode extends React.Component {
 
     let textareaTitle = (
       <TextArea
-        onKeyDown={handleChangeTitle}
-        onChange={handleChangeTitle}
+        name="post-title"
+        onKeyDown={handleChange}
+        onChange={handleChange}
         onBlur={toggleEditingTitle}
         value={post.title || ''} 
       />
@@ -29,8 +29,9 @@ class PostEditMode extends React.Component {
 
     let textareaContent = (
       <TextArea
-        onKeyDown={handleChangeContent}
-        onChange={handleChangeContent}
+        name="post-content"
+        onKeyDown={handleChange}
+        onChange={handleChange}
         onBlur={toggleEditingContent}
         value={post.content || ''} 
       />
