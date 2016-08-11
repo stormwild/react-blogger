@@ -11,28 +11,25 @@ class PostEditMode extends React.Component {
     let {
       post, 
       handleChange,
-      toggleEditingTitle,
-      toggleEditingContent,
+      toggleEditing,
       isEditingTitle,
       isEditingContent
     } = this.props;
 
     let textareaTitle = (
       <TextArea
-        name="post-title"
-        onKeyDown={handleChange}
-        onChange={handleChange}
-        onBlur={toggleEditingTitle}
+        onKeyDown={handleChange.bind(this, 'post-title')}
+        onChange={handleChange.bind(this, 'post-title')}
+        onBlur={toggleEditing.bind(this, 'post-title')}
         value={post.title || ''} 
       />
     );
 
     let textareaContent = (
       <TextArea
-        name="post-content"
-        onKeyDown={handleChange}
-        onChange={handleChange}
-        onBlur={toggleEditingContent}
+        onKeyDown={handleChange.bind(this, 'post-content')}
+        onChange={handleChange.bind(this, 'post-content')}
+        onBlur={toggleEditing.bind(this, 'post-content')}
         value={post.content || ''} 
       />
     );
@@ -43,14 +40,14 @@ class PostEditMode extends React.Component {
           <ToggleComponent
             condition={isEditingTitle}
             componentIfTrue={textareaTitle}
-            componentIfFalse={<div onClick={toggleEditingTitle}>{post.title}</div>}
+            componentIfFalse={<div onClick={toggleEditing.bind(this, 'post-title')}>{post.title}</div>}
           />
         </h1>
         <h2>
           <ToggleComponent
             condition={isEditingContent}
             componentIfTrue={textareaContent}
-            componentIfFalse={<div onClick={toggleEditingContent}>{post.content}</div>}
+            componentIfFalse={<div onClick={toggleEditing.bind(this, 'post-content')}>{post.content}</div>}
           />
         </h2>
       </div>

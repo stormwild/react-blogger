@@ -20,8 +20,7 @@ class PostsPage extends React.Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.toggleEditingTitle = this.toggleEditingTitle.bind(this);
-    this.toggleEditingContent = this.toggleEditingContent.bind(this);
+    this.toggleEditing = this.toggleEditing.bind(this);
     this.activateEditMode = this.activateEditMode.bind(this);
     this.activateViewMode = this.activateViewMode.bind(this);
   }
@@ -33,69 +32,46 @@ class PostsPage extends React.Component {
     .catch(err => {throw err; });
   }
 
-  toggleEditingTitle() {
-    const {post, lastValidTitle, isEditingTitle} = this.state;
+  toggleEditing(name) {
+    const {post, isEditingTitle, isEditingContent} = this.state;
+    let isTitle = name === 'post-title';
+    let isContent = name === 'post-content';
+    
+    if (isTitle || isContent) {
+      if (isEditingTitle || isEditingContent) {
+        let payload = isTitle ? {title: post.title} : {content: post.content};
+        axios.put("/api/posts/" + post.postId, payload)
+        .then(res => {
+          // Need to update the entire post after the PUT request to retreive the new postId
+          let stateObj = isTitle ? 
+            {post: res.data, lastValidTitle: res.data.title, isEditingTitle: !isEditingTitle} : 
+            {post: res.data, isEditingContent: !isEditingContent};
 
-    if (isEditingTitle) {
-      axios.put("/api/posts/" + post.postId, {title: post.title})
-      .then(res => {
-        // Need to update the entire post after the PUT request to retreive the new postId
-        this.setState({
-          post: res.data,
-          lastValidTitle: res.data.title,
-          isEditingTitle: !isEditingTitle
-        });
-      })
-      .catch(err => {
-        console.log(err.response);
-        // If there's an error, set editing to false and roll back the title to its last valid state
-        this.setState({
-          isEditingTitle: false,
-          post: {...post, title: lastValidTitle}
-        });
-        toastr.error('There already exists a post with title ' + post.title);
-      });        
-    }
-    else {
-      this.setState({isEditingTitle: !isEditingTitle});
+          this.setState(stateObj);
+        })
+        .catch(err => {
+          console.log(err.response);
+        });        
+      }
+      else {
+        isTitle ?
+        this.setState({isEditingTitle: !isEditingTitle}) :
+        this.setState({isEditingContent: !isEditingContent});
+      }      
     }
   }
 
-  toggleEditingContent() {
-    const {post, isEditingContent} = this.state;
+  handleChange(name, evt) {
+    let isTitle = name === 'post-title';
+    let isContent = name === 'post-content';
 
-    if (isEditingContent) {
-      axios.put("/api/posts/" + post.postId, {content: post.content})
-      .then(res => {
-        // Need to update the entire post after the PUT request to retreive the new postId
-        this.setState({
-          post: res.data,
-          isEditingContent: !isEditingContent
-        });
-      })
-      .catch(err => {
-        console.log(err.response);
-      });        
-    }
-    else {
-      this.setState({isEditingContent: !isEditingContent});
-    }
-  }
-  
-  handleChange(evt) {
-    if (evt.target.name === 'post-title') {
+    if (isTitle || isContent) {
       if (evt.which === 13) {
-        this.toggleEditingTitle();
+        this.toggleEditing(name);
         return;
       }
-      this.setState({post: {...this.state.post, title: evt.target.value}});
-    }
-
-    else if (evt.target.name === 'post-content') {
-      if (evt.which === 13) {
-        this.toggleEditingContent();
-        return;
-      }
+      isTitle ?
+      this.setState({post: {...this.state.post, title: evt.target.value}}) :
       this.setState({post: {...this.state.post, content: evt.target.value}});
     }
   }
@@ -128,8 +104,7 @@ class PostsPage extends React.Component {
           <PostEditMode
             post={post}
             handleChange={this.handleChange}
-            toggleEditingTitle={this.toggleEditingTitle}
-            toggleEditingContent={this.toggleEditingContent}
+            toggleEditing={this.toggleEditing}
             isEditingTitle={isEditingTitle}
             isEditingContent={isEditingContent}
             /> :
