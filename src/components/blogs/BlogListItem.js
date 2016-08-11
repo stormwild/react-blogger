@@ -3,15 +3,15 @@ import {Link} from 'react-router';
 import {Button} from 'react-bootstrap';
 import ToggleComponent from '../common/ToggleComponent';
 import TextArea from '../common/TextArea';
-import PostLink from './PostLink';
+import PostLink from '../posts/PostLink';
 import axios from 'axios';
 import toastr from 'toastr';
 
-class PostExcerpt extends React.Component {
+class BlogListItem extends React.Component {
   constructor(props, context) {
     super(props, context);
 
-    this.state = {isEditing: false, post: props.post, lastValidTitle: props.post.title};
+    this.state = {isEditing: false, blog: props.blog, lastValidTitle: props.blog.title};
 
     this.toggleEditing = this.toggleEditing.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -22,31 +22,30 @@ class PostExcerpt extends React.Component {
       this.toggleEditing();
       return;
     }
-    this.setState({post: {...this.state.post, title: evt.target.value}});
+    this.setState({blog: {...this.state.blog, title: evt.target.value}});
   }
 
   toggleEditing() {
-    const {post, lastValidTitle, isEditing} = this.state;
-
+    const {blog, lastValidTitle, isEditing} = this.state;
     if(isEditing) {
-      axios.put("/api/posts/" + post.postId, {title: post.title})
+      axios.put("/api/blogs/" + blog.blogId, {title: blog.title})
       .then(res => {
-        // Need to update the entire post after the PUT request to retreive the new postId
+        // Need to update the entire blog after the PUT request to retreive the new postId
         this.setState({
-          post: res.data,
+          blog: res.data,
           lastValidTitle: res.data.title,
           isEditing: !isEditing
         });
-        toastr.success('Post title successfully changed');
+        toastr.success('Blog title successfully changed');
       })
       .catch(err => {
         console.log(err.response);
         // If there's an error, set editing to false and roll back the title to its last valid state
         this.setState({
           isEditing: false,
-          post: {...post, title: lastValidTitle}
+          blog: {...blog, title: lastValidTitle}
         });
-        toastr.error('There already exists a post with title ' + post.title);
+        toastr.error('There already exists a blog with title ' + blog.title);
       });
     }
     else {
@@ -55,25 +54,25 @@ class PostExcerpt extends React.Component {
   }
 
   render() {
-    const {params, deletePost} = this.props;
-    let {post, isEditing} = this.state;
+    const {params, deleteBlog} = this.props;
+    let {blog, isEditing} = this.state;
 
     let textarea = (
       <TextArea
         onKeyDown={this.handleChange}
         onChange={this.handleChange}
         onBlur={this.toggleEditing}
-        value={post.title} 
+        value={blog.title} 
       />
     );
 
-    let postLink = (
+    let blogLink = (
       <PostLink
-        url={"/blogs/" + params.blogId + "/posts/" + post.postId} 
-        title={post.title}
+        url={"/blogs/" + blog.blogId} 
+        title={blog.title}
         isEditing={isEditing}
         toggleEditing={this.toggleEditing}
-        deletePost={deletePost}
+        deletePost={deleteBlog}
       />
     );
 
@@ -83,18 +82,18 @@ class PostExcerpt extends React.Component {
           <ToggleComponent
             condition={isEditing}
             componentIfTrue={textarea}
-            componentIfFalse={postLink}
+            componentIfFalse={blogLink}
           />
         </h1>
-        <p>{post.content}</p>
+        <p>{blog.content}</p>
       </div>
     );
   }
 }
 
-PostExcerpt.propTypes = {
-  post: PropTypes.object.isRequired,
+BlogListItem.propTypes = {
+  blog: PropTypes.object.isRequired,
   params: PropTypes.object.isRequired
 };
 
-export default PostExcerpt;
+export default BlogListItem;

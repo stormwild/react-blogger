@@ -4,6 +4,7 @@ import {Button} from 'react-bootstrap';
 import axios from 'axios';
 import toastr from 'toastr';
 import {Link} from 'react-router';
+import BlogListItem from './BlogListItem';
 
 class BlogsPage extends React.Component {
   constructor(props, context) {
@@ -55,14 +56,17 @@ class BlogsPage extends React.Component {
 
   render() {
     let {blogs} = this.state;
+    const {params} = this.props;
     return (
       <div>
         {blogs.map((blog, index) => {
           return (
-            <h2 key={blog._id}>
-              <Link to={"/blogs/" + blog.blogId}>{blog.title}</Link>
-              <Button onClick={this.handleDeleteBlog.bind(this, index)}>Delete</Button>
-            </h2>
+            <BlogListItem
+              key={blog._id}
+              blog={blog}
+              params={params}
+              deleteBlog={this.handleDeleteBlog.bind(this, index)}
+            />
           );
         })}
         <Button onClick={this.handleNewBlog}>New Blog</Button>
