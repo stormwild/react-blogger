@@ -1,6 +1,8 @@
 import React, {PropTypes} from 'react';
 import TextArea from '../common/TextArea';
 import ToggleComponent from '../common/ToggleComponent';
+import {Grid, Row, Col} from 'react-bootstrap';
+import MarkdownOutput from '../common/MarkdownOutput';
 
 class PostEditMode extends React.Component {
   constructor(props, context) {
@@ -8,49 +10,27 @@ class PostEditMode extends React.Component {
   }
 
   render() {
-    let {
-      post, 
-      handleChange,
-      toggleEditing,
-      isEditingTitle,
-      isEditingContent
-    } = this.props;
-
-    let textareaTitle = (
-      <TextArea
-        onKeyDown={handleChange.bind(this, 'post-title')}
-        onChange={handleChange.bind(this, 'post-title')}
-        onBlur={toggleEditing.bind(this, 'post-title')}
-        value={post.title || ''} 
-      />
-    );
-
-    let textareaContent = (
-      <TextArea
-        onKeyDown={handleChange.bind(this, 'post-content')}
-        onChange={handleChange.bind(this, 'post-content')}
-        onBlur={toggleEditing.bind(this, 'post-content')}
-        value={post.content || ''} 
-      />
-    );
+    let {post, handleChange} = this.props;
 
     return (
-      <div>
-        <h1>
-          <ToggleComponent
-            condition={isEditingTitle}
-            componentIfTrue={textareaTitle}
-            componentIfFalse={<div onClick={toggleEditing.bind(this, 'post-title')}>{post.title}</div>}
-          />
-        </h1>
-        <h2>
-          <ToggleComponent
-            condition={isEditingContent}
-            componentIfTrue={textareaContent}
-            componentIfFalse={<div onClick={toggleEditing.bind(this, 'post-content')}>{post.content}</div>}
-          />
-        </h2>
-      </div>
+      <Grid>
+        <Row>
+          <Col sm={6}>
+            <TextArea
+              onChange={handleChange.bind(this, 'post-title')}
+              value={post.title || ''} 
+            />
+            <TextArea
+              onChange={handleChange.bind(this, 'post-content')}
+              value={post.content || ''} 
+            />
+          </Col>
+          <Col sm={6}>
+            <h1><MarkdownOutput content={post.title || ''} /></h1>
+            <MarkdownOutput content={post.content || ''} />
+          </Col>
+        </Row>
+      </Grid>
     );
   }
 }
