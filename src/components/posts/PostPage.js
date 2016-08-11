@@ -5,6 +5,8 @@ import axios from 'axios';
 import TextArea from '../common/TextArea';
 import ToggleComponent from '../common/ToggleComponent';
 import ViewEditToggle from '../common/ViewEditToggle';
+import PostViewMode from './PostViewMode';
+import PostEditMode from './PostEditMode';
 import toastr from 'toastr';
 
 class PostsPage extends React.Component {
@@ -139,7 +141,14 @@ class PostsPage extends React.Component {
           editMode={this.activateEditMode}
           viewMode={this.activateViewMode}
         />
-        <h1>
+
+        {
+          isEditMode ?
+          <PostEditMode /> :
+          <PostViewMode />
+        }
+
+        {/*<h1>
           <ToggleComponent
             condition={isEditingTitle}
             componentIfTrue={textareaTitle}
@@ -152,7 +161,7 @@ class PostsPage extends React.Component {
             componentIfTrue={textareaContent}
             componentIfFalse={<div onClick={this.toggleEditingContent}>{post.content}</div>}
           />
-        </h2>
+        </h2>*/}
       </div>
     );
   }

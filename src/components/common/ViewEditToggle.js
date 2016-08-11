@@ -8,7 +8,6 @@ const ViewEditToggle = ({isEditMode, viewMode, editMode}) => {
   let editModeClass = isEditMode ? activeClass : passiveClass;
 
   return (
-
     <ButtonGroup>
       <Button onClick={viewMode} bsStyle={viewModeClass}>View</Button>
       <Button onClick={editMode} bsStyle={editModeClass}>Edit</Button>
