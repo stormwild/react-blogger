@@ -1,6 +1,5 @@
 import React, {PropTypes} from 'react';
 import TextArea from '../common/TextArea';
-import ToggleComponent from '../common/ToggleComponent';
 import {Grid, Row, Col} from 'react-bootstrap';
 import MarkdownOutput from '../common/MarkdownOutput';
 

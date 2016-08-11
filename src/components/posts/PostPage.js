@@ -6,6 +6,7 @@ import ViewEditToggle from '../common/ViewEditToggle';
 import PostViewMode from './PostViewMode';
 import PostEditMode from './PostEditMode';
 import toastr from 'toastr';
+import {Button} from 'react-bootstrap';
 
 class PostsPage extends React.Component {
   constructor(props, context) {
@@ -13,52 +14,22 @@ class PostsPage extends React.Component {
 
     this.state = {
       post: {},
-      lastValidTitle: '',
       isEditingTitle: false,
       isEditingContent: false,
       isEditMode: true
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.toggleEditing = this.toggleEditing.bind(this);
     this.activateEditMode = this.activateEditMode.bind(this);
     this.activateViewMode = this.activateViewMode.bind(this);
+    this.savePost = this.savePost.bind(this);
   }
 
   componentDidMount() {
     let {user, params} = this.props;
     axios.get('/api/users/' + user.username + '/blogs/' + params.blogId + '/posts/' + params.postId)
-    .then((res) => { this.setState({post: res.data, lastValidTitle: res.data.title}); })
+    .then((res) => { this.setState({post: res.data}); })
     .catch(err => {throw err; });
-  }
-
-  toggleEditing(name) {
-    const {post, isEditingTitle, isEditingContent} = this.state;
-    let isTitle = name === 'post-title';
-    let isContent = name === 'post-content';
-    
-    if (isTitle || isContent) {
-      if (isEditingTitle || isEditingContent) {
-        let payload = isTitle ? {title: post.title} : {content: post.content};
-        axios.put("/api/posts/" + post.postId, payload)
-        .then(res => {
-          // Need to update the entire post after the PUT request to retreive the new postId
-          let stateObj = isTitle ? 
-            {post: res.data, lastValidTitle: res.data.title, isEditingTitle: !isEditingTitle} : 
-            {post: res.data, isEditingContent: !isEditingContent};
-
-          this.setState(stateObj);
-        })
-        .catch(err => {
-          console.log(err.response);
-        });        
-      }
-      else {
-        isTitle ?
-        this.setState({isEditingTitle: !isEditingTitle}) :
-        this.setState({isEditingContent: !isEditingContent});
-      }      
-    }
   }
 
   handleChange(name, evt) {
@@ -88,6 +59,20 @@ class PostsPage extends React.Component {
     }
   }
 
+  savePost() {
+    let {post} = this.state;
+
+    axios.put("/api/posts/" + post.postId, {title: post.title, content: post.content})
+    .then(res => {
+      this.setState({post: res.data});
+      toastr.success('Post successfully saved');
+    })
+    .catch(err => {
+      console.error(err.response);
+      toastr.error('Error: Post couldn\'t be saved');
+    });
+  }
+
   render() {
     let {post, isEditingTitle, isEditingContent, isEditMode} = this.state;
 
@@ -98,18 +83,18 @@ class PostsPage extends React.Component {
           editMode={this.activateEditMode}
           viewMode={this.activateViewMode}
         />
+        <Button onClick={this.savePost}>Save</Button>
 
         {
           isEditMode ?
           <PostEditMode
             post={post}
             handleChange={this.handleChange}
-            toggleEditing={this.toggleEditing}
             isEditingTitle={isEditingTitle}
             isEditingContent={isEditingContent}
             /> :
 
-          <PostViewMode />
+          <PostViewMode post={post} />
         }
       </div>
     );
