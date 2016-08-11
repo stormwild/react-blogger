@@ -4,6 +4,7 @@ import {bindActionCreators} from 'redux';
 import axios from 'axios';
 import TextArea from '../common/TextArea';
 import ToggleComponent from '../common/ToggleComponent';
+import ViewEditToggle from '../common/ViewEditToggle';
 import toastr from 'toastr';
 
 class PostsPage extends React.Component {
@@ -14,13 +15,16 @@ class PostsPage extends React.Component {
       post: {},
       lastValidTitle: '',
       isEditingTitle: false,
-      isEditingContent: false
+      isEditingContent: false,
+      isEditMode: true
     };
 
     this.toggleEditingTitle = this.toggleEditingTitle.bind(this);
     this.handleChangeTitle = this.handleChangeTitle.bind(this);
     this.toggleEditingContent = this.toggleEditingContent.bind(this);
     this.handleChangeContent = this.handleChangeContent.bind(this);
+    this.activateEditMode = this.activateEditMode.bind(this);
+    this.activateViewMode = this.activateViewMode.bind(this);
   }
 
   componentDidMount() {
@@ -95,8 +99,20 @@ class PostsPage extends React.Component {
     }
   }
 
+  activateEditMode() {
+    if (!this.state.isEditMode) {
+      this.setState({isEditMode: true});
+    }
+  }
+
+  activateViewMode() {
+    if (this.state.isEditMode) {
+      this.setState({isEditMode: false});
+    }
+  }
+
   render() {
-    let {post, isEditingTitle, isEditingContent} = this.state;
+    let {post, isEditingTitle, isEditingContent, isEditMode} = this.state;
 
     let textareaTitle = (
       <TextArea
@@ -118,6 +134,11 @@ class PostsPage extends React.Component {
 
     return (
       <div>
+        <ViewEditToggle
+          isEditMode={isEditMode}
+          editMode={this.activateEditMode}
+          viewMode={this.activateViewMode}
+        />
         <h1>
           <ToggleComponent
             condition={isEditingTitle}
