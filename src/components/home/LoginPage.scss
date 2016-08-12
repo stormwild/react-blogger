@@ -1,7 +1,93 @@
 @import 'styles/variables';
+@import 'styles/mixins';
 
 .LoginPage {
-  .btn {
-    margin-top: $test2;
+  $shadow-color: #23203b;
+  $input-color: lighten(#AB9E95, 10%);
+  $input-border-color: #5E5165;
+  $button-background-color: #27AE60;
+
+  padding: 15px;
+  margin: 0 auto;
+  width: 400px;
+
+  .heading {
+    text-align: center;
+
+    h2 {
+      font-size: 3em;
+      font-weight: 300;
+      color: rgba(255, 255, 255, 0.7);
+      display: inline-block;
+      padding-bottom: 5px;
+      text-shadow: 1px 1px 3px $shadow-color;
+    }
+  }
+
+  form {
+    .input-group {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+      &:last-of-type {
+        border-top: none;
+      }
+
+      span {
+        background: transparent;
+        min-width: 53px;
+        border: none;
+
+        i {
+          font-size: 1.5em;
+          color: rgba(255, 255, 255, 0.2);
+        }
+      }
+    }
+
+    input.form-control {
+      @include normalize-input;
+
+      padding: 10px;
+      font-size: 1.6em;
+      width: 100%;
+      background: transparent;
+      color: $input-color;
+
+      &:focus {
+        border: none;
+      }
+    }
+
+    button {
+      margin-top: 20px;
+      background: $button-background-color;
+      border: none;
+      font-size: 1.6em;
+      font-weight: 300;
+      padding: 5px 0;
+      width: 100%;
+      border-radius: 3px;
+      color: lighten($button-background-color, 40%);
+      border-bottom: 4px solid darken($button-background-color, 10%);
+
+      &:hover {
+        background: tint($button-background-color, 4%);
+        -webkit-animation: hop 1s;
+        animation: hop 1s;
+      }
+    }
+  }
+
+  .float {
+    display: inline-block;
+    transition-duration: 0.3s;
+    transition-property: transform;
+    transform: translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  }
+
+  .float:hover, .float:focus, .float:active {
+    transform: translateY(-3px);
   }
 }

@@ -41,24 +41,22 @@ class LoginPage extends React.Component {
   render() {
     return (
       <div className="LoginPage">
-        <Grid>
-          <TextInput
-            name="username"
-            label=""
-            placeholder="Username or email"
-            value={this.state.username}
-            onChange={this.handleUsername}
-          />
-          <TextInput
-            name="password"
-            type="password"
-            label=""
-            placeholder="Password"
-            value={this.state.password}
-            onChange={this.handlePassword}
-          />  
-          <Button onClick={this.handleSave}>Login</Button>
-        </Grid>
+        <div className="heading">
+          <h2>Sign in</h2>
+          <form>
+            <div className="input-group input-group-lg">
+              <span className="input-group-addon"><i className="fa fa-user"></i></span>
+              <input type="text" className="form-control" placeholder="Username or email" />
+            </div>
+
+            <div className="input-group input-group-lg">
+              <span className="input-group-addon"><i className="fa fa-lock"></i></span>
+              <input type="password" className="form-control" placeholder="Password" />
+            </div>
+
+            <button type="submit" className="float">Login</button>
+          </form>
+        </div>
       </div>
     );
   }
