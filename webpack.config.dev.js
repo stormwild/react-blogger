@@ -35,7 +35,16 @@ module.exports = {
       {test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=image/svg+xml'}
     ]
   },
+  sassLoader: {
+    includePaths: [path.resolve('./src')]
+  },
   postcss: function() {
     return [autoprefixer]
+  },
+  resolve: {
+    modules: [
+      path.resolve('./src'),
+      path.resolve('./node_modules')
+    ]
   }
 };
