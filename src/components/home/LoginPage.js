@@ -4,6 +4,8 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import axios from 'axios';
 import toastr from 'toastr';
+import {Grid} from 'react-bootstrap';
+import TextInput from '../common/TextInput';
 
 class LoginPage extends React.Component {
   constructor(props, context) {
@@ -37,23 +39,24 @@ class LoginPage extends React.Component {
 
   render() {
     return (
-      <div>
-        Username
-        <input 
-          type="text"
+      <Grid>
+        <TextInput
+          name="username"
+          label=""
+          placeholder="Username or email"
           value={this.state.username}
           onChange={this.handleUsername}
         />
-        <br/>
-        Password
-        <input 
-          type="text"
+        <TextInput
+          name="password"
+          type="password"
+          label=""
+          placeholder="Password"
           value={this.state.password}
           onChange={this.handlePassword}
-        />
-        <br/>
+        />  
         <Button onClick={this.handleSave}>Login</Button>
-      </div>
+      </Grid>
     );
   }
 }
