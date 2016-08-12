@@ -6,6 +6,7 @@ import axios from 'axios';
 import toastr from 'toastr';
 import {Grid} from 'react-bootstrap';
 import TextInput from '../common/TextInput';
+import './LoginPage.scss';
 
 class LoginPage extends React.Component {
   constructor(props, context) {
@@ -39,24 +40,26 @@ class LoginPage extends React.Component {
 
   render() {
     return (
-      <Grid>
-        <TextInput
-          name="username"
-          label=""
-          placeholder="Username or email"
-          value={this.state.username}
-          onChange={this.handleUsername}
-        />
-        <TextInput
-          name="password"
-          type="password"
-          label=""
-          placeholder="Password"
-          value={this.state.password}
-          onChange={this.handlePassword}
-        />  
-        <Button onClick={this.handleSave}>Login</Button>
-      </Grid>
+      <div className="LoginPage">
+        <Grid>
+          <TextInput
+            name="username"
+            label=""
+            placeholder="Username or email"
+            value={this.state.username}
+            onChange={this.handleUsername}
+          />
+          <TextInput
+            name="password"
+            type="password"
+            label=""
+            placeholder="Password"
+            value={this.state.password}
+            onChange={this.handlePassword}
+          />  
+          <Button onClick={this.handleSave}>Login</Button>
+        </Grid>
+      </div>
     );
   }
 }

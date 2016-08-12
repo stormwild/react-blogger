@@ -7,9 +7,9 @@ import {Provider} from 'react-redux';
 import { Router, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import routes from './routes';
-import './styles/styles.scss';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import '../node_modules/toastr/build/toastr.min.css';
+import './styles/base.scss';
 
 const store = configureStore();
 const history = syncHistoryWithStore(browserHistory, store);

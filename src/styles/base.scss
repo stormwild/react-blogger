@@ -1,4 +1,5 @@
-/* Styles */
+@import 'variables';
+
 #app {
   font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: #4d4d4d;
@@ -15,5 +16,9 @@ a.active {
 }
 
 nav {
-  padding-top: 20px;
+  padding-top: 80px;
+}
+
+.btn {
+  margin-top: $test1;
 }
