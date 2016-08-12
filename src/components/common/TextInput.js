@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 
 const TextInput = ({name, label, type='text', onChange, placeholder, value, error}) => {
-  let wrapperClass = '';
+  let wrapperClass = 'form-group';
   if (error && error.length > 0) {
     wrapperClass += ' has-error';
   }
@@ -13,7 +13,7 @@ const TextInput = ({name, label, type='text', onChange, placeholder, value, erro
         <input
           type={type}
           name={name}
-          className=""
+          className="form-control"
           placeholder={placeholder}
           value={value}
           onChange={onChange} />
