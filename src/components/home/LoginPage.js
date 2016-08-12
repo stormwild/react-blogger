@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import axios from 'axios';
 import toastr from 'toastr';
-import {Grid} from 'react-bootstrap';
+import {Row, Col, Grid} from 'react-bootstrap';
 import TextInput from '../common/TextInput';
 import './LoginPage.scss';
 
@@ -41,22 +41,28 @@ class LoginPage extends React.Component {
   render() {
     return (
       <div className="LoginPage">
-        <div className="heading">
-          <h2>Sign in</h2>
-          <form>
-            <div className="input-group input-group-lg">
-              <span className="input-group-addon"><i className="fa fa-user"></i></span>
-              <input type="text" className="form-control" placeholder="Username or email" />
-            </div>
+        <Grid>
+          <Row>
+            <Col sm={6} smOffset={3}>
+              <div className="heading">
+                <h2>Sign in</h2>
+                <form>
+                  <div className="input-group input-group-lg">
+                    <span className="input-group-addon"><i className="fa fa-user"></i></span>
+                    <input type="text" className="form-control" placeholder="Username or email" />
+                  </div>
 
-            <div className="input-group input-group-lg">
-              <span className="input-group-addon"><i className="fa fa-lock"></i></span>
-              <input type="password" className="form-control" placeholder="Password" />
-            </div>
+                  <div className="input-group input-group-lg">
+                    <span className="input-group-addon"><i className="fa fa-lock"></i></span>
+                    <input type="password" className="form-control" placeholder="Password" />
+                  </div>
 
-            <button type="submit" className="float">Login</button>
-          </form>
-        </div>
+                  <button type="submit" className="float">Login</button>
+                </form>
+              </div>
+            </Col>
+          </Row>
+        </Grid>
       </div>
     );
   }
