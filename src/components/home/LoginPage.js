@@ -5,8 +5,7 @@ import {bindActionCreators} from 'redux';
 import axios from 'axios';
 import toastr from 'toastr';
 import {Row, Col, Grid} from 'react-bootstrap';
-import TextInput from '../common/TextInput';
-import './LoginPage.scss';
+import LoginForm from './LoginForm';
 
 class LoginPage extends React.Component {
   constructor(props, context) {
@@ -32,7 +31,8 @@ class LoginPage extends React.Component {
     this.setState({user: {...this.state.user, password: evt.target.value}});
   }
 
-  handleSave() {
+  handleSave(evt) {
+    evt.preventDefault(); // Prevents the form from performing any actions
     axios.post('/api/login', this.state.user)
     .then(() => { window.location.href = '/blogs'; })
     .catch(err => { toastr.error('Invalid username / password'); });
@@ -44,24 +44,12 @@ class LoginPage extends React.Component {
         <Grid>
           <Row>
             <Col sm={6} smOffset={3}>
-              <div className="position-container">
-                <div className="heading">
-                  <h2>Sign in</h2>
-                  <form>
-                    <div className="input-group input-group-lg">
-                      <span className="input-group-addon"><i className="fa fa-user"></i></span>
-                      <input type="text" className="form-control" placeholder="Username or email" />
-                    </div>
-
-                    <div className="input-group input-group-lg">
-                      <span className="input-group-addon"><i className="fa fa-lock"></i></span>
-                      <input type="password" className="form-control" placeholder="Password" />
-                    </div>
-
-                    <button type="submit" className="float">Login</button>
-                  </form>
-                </div>
-              </div>
+              <LoginForm
+                credentials={this.state.user}
+                handleUsername={this.handleUsername}
+                handlePassword={this.handlePassword}
+                handleSave={this.handleSave}
+              />
             </Col>
           </Row>
         </Grid>
