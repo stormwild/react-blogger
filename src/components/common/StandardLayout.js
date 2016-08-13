@@ -6,7 +6,7 @@ const StandardLayout = (props) => {
   return (
     <Grid>
       <Row>
-        <Col xs={6} xsOffset={3}>
+        <Col xs={8} xsOffset={2}>
           {props.children}
         </Col>
       </Row>

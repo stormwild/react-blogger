@@ -4,7 +4,8 @@ import {Button} from 'react-bootstrap';
 import axios from 'axios';
 import toastr from 'toastr';
 import {Link} from 'react-router';
-import BlogListItem from './BlogListItem';
+import BlogList from './BlogList';
+import StandardLayout from '../common/StandardLayout';
 
 class BlogsPage extends React.Component {
   constructor(props, context) {
@@ -58,18 +59,15 @@ class BlogsPage extends React.Component {
     let {blogs} = this.state;
     const {params} = this.props;
     return (
-      <div>
-        {blogs.map((blog, index) => {
-          return (
-            <BlogListItem
-              key={blog._id}
-              blog={blog}
-              params={params}
-              deleteBlog={this.handleDeleteBlog.bind(this, index)}
-            />
-          );
-        })}
-        <Button onClick={this.handleNewBlog}>New Blog</Button>
+      <div className="BlogsPage">
+        <StandardLayout>
+          <BlogList 
+            blogs={blogs}
+            params={params}
+            handleDeleteBlog={this.handleDeleteBlog}
+            handleNewBlog={this.handleNewBlog}
+          />
+        </StandardLayout>
       </div>
     );
   }

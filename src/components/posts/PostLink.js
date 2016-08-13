@@ -6,8 +6,8 @@ const PostLink = ({url, title, isEditing, toggleEditing, deletePost}) => {
   return (
     <div>
       <Link to={url}>{title}</Link>
-      {!isEditing && <Button onClick={toggleEditing}>Edit</Button>}
-      <Button onClick={deletePost}>Delete</Button>
+      {!isEditing && <i className="fa fa-pencil-square-o" onClick={toggleEditing}></i>}
+      <i className="fa fa-times-circle" onClick={deletePost}></i>
     </div>
   );
 };

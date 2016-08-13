@@ -6,6 +6,7 @@ import TextArea from '../common/TextArea';
 import PostLink from '../posts/PostLink';
 import axios from 'axios';
 import toastr from 'toastr';
+import './BlogListItem.scss';
 
 class BlogListItem extends React.Component {
   constructor(props, context) {
@@ -77,14 +78,12 @@ class BlogListItem extends React.Component {
     );
 
     return (
-      <div>
-        <h1>
-          <ToggleComponent
-            condition={isEditing}
-            componentIfTrue={textarea}
-            componentIfFalse={blogLink}
-          />
-        </h1>
+      <div className="BlogListItem">
+        <ToggleComponent
+          condition={isEditing}
+          componentIfTrue={textarea}
+          componentIfFalse={blogLink}
+        />
         <p>{blog.content}</p>
       </div>
     );
