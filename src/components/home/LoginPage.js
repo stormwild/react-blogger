@@ -4,8 +4,8 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import axios from 'axios';
 import toastr from 'toastr';
-import {Row, Col, Grid} from 'react-bootstrap';
 import LoginForm from './LoginForm';
+import StandardLayout from '../common/StandardLayout';
 import './LoginPage.scss';
 
 class LoginPage extends React.Component {
@@ -43,18 +43,14 @@ class LoginPage extends React.Component {
     return (
       <div className="LoginPage">
         <div className="page-wrapper">
-          <Grid>
-            <Row>
-              <Col sm={6} smOffset={3}>
-                <LoginForm
-                  credentials={this.state.user}
-                  handleUsername={this.handleUsername}
-                  handlePassword={this.handlePassword}
-                  handleSave={this.handleSave}
-                />
-              </Col>
-            </Row>
-          </Grid>
+          <StandardLayout>
+            <LoginForm
+              credentials={this.state.user}
+              handleUsername={this.handleUsername}
+              handlePassword={this.handlePassword}
+              handleSave={this.handleSave}
+            />
+          </StandardLayout>
         </div>
       </div>
     );
