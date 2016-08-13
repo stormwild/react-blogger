@@ -1,13 +1,16 @@
 import React, {PropTypes} from 'react';
 import {Link} from 'react-router';
 import {Button} from 'react-bootstrap';
+import './PostLink.scss';
 
 const PostLink = ({url, title, isEditing, toggleEditing, deletePost}) => {
   return (
-    <div>
-      <Link to={url}>{title}</Link>
-      {!isEditing && <i className="fa fa-pencil-square-o" onClick={toggleEditing}></i>}
-      <i className="fa fa-times-circle" onClick={deletePost}></i>
+    <div className="PostLink">
+      <Link className="post-link" to={url}>{title}</Link>
+      <div className="modify-buttons">
+        {!isEditing && <i className="fa fa-pencil-square-o" onClick={toggleEditing}></i>}
+        <i className="fa fa-times-circle" onClick={deletePost}></i>
+      </div>
     </div>
   );
 };
