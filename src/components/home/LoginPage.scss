@@ -1,10 +1,19 @@
 @import 'styles/variables';
 @import 'styles/mixins';
 
+/* Break encapsulation just for the login page since we have to modify parents of the container */
 #app {
   position: relative;
+  background: rgba(0,0,0,0.65);
 }
 
+body {
+  background: url('img/realestate2.jpg');
+  background-size: cover;
+  background-position: 50% 100%;
+}
+
+/* Component CSS */
 .LoginPage {
   $shadow-color: #23203b;
   $input-color: rgba(255, 255, 255, 0.8);
@@ -23,12 +32,11 @@
     top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
+    width: 50%;
   }
 
   .heading {
     text-align: center;
-    width: 75%;
-    margin: 0 auto;
 
     h2 {
       font-size: 3em;
@@ -119,5 +127,24 @@
 
   .float:hover, .float:focus, .float:active {
     transform: translateY(-3px);
+  }
+
+  @media #{$xs} {
+    .position-container {
+      width: calc(100% - 30px);
+      top: 33%;
+    }
+
+    .heading h2 {
+      font-size: 2em;
+    }
+
+    form .input-group span i {
+      font-size: 1em;
+    }
+
+    form input.form-control {
+      font-size: 1.3em;
+    }
   }
 }

@@ -1,8 +1,4 @@
-$lg: '@media only screen and (max-width : 1200px)';
-$md: '@media only screen and (max-width : 979px)';
-$sm: '@media only screen and (max-width : 767px)';
-$xs: '@media only screen and (max-width : 480px)';
-$xsMobile: '@media only screen and (max-width : 320px)';
-
-$test1: 20px;
-$test2: 40px;
+$md: '(max-width : 1200px)';
+$sm: '(max-width : 979px)';
+$xs: '(max-width : 767px)';
+$xsMobile: '(max-width : 480px)';
