@@ -6,6 +6,7 @@ import axios from 'axios';
 import toastr from 'toastr';
 import {Row, Col, Grid} from 'react-bootstrap';
 import LoginForm from './LoginForm';
+import './LoginPage.scss';
 
 class LoginPage extends React.Component {
   constructor(props, context) {
@@ -41,18 +42,20 @@ class LoginPage extends React.Component {
   render() {
     return (
       <div className="LoginPage">
-        <Grid>
-          <Row>
-            <Col sm={6} smOffset={3}>
-              <LoginForm
-                credentials={this.state.user}
-                handleUsername={this.handleUsername}
-                handlePassword={this.handlePassword}
-                handleSave={this.handleSave}
-              />
-            </Col>
-          </Row>
-        </Grid>
+        <div className="page-wrapper">
+          <Grid>
+            <Row>
+              <Col sm={6} smOffset={3}>
+                <LoginForm
+                  credentials={this.state.user}
+                  handleUsername={this.handleUsername}
+                  handlePassword={this.handlePassword}
+                  handleSave={this.handleSave}
+                />
+              </Col>
+            </Row>
+          </Grid>
+        </div>
       </div>
     );
   }

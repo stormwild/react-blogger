@@ -2,11 +2,12 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import Header from './common/Header';
+import './App.scss';
 
 class App extends React.Component {
   render() {
     return (
-      <div className="container-fluid">
+      <div className="App">
         <Header />
         {this.props.children}
       </div>
