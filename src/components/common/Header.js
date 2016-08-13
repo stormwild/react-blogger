@@ -1,9 +1,11 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {Button} from 'react-bootstrap';
+import {Grid, Button} from 'react-bootstrap';
 import axios from 'axios';
 import {browserHistory} from 'react-router';
+import StandardLayout from './StandardLayout';
+import './Header.scss';
 
 class Header extends React.Component {
   constructor(props, context) {
@@ -38,9 +40,14 @@ class Header extends React.Component {
       return (<div></div>);
     }
     return (
-      <div>
-        <Button onClick={this.handleBack}>Back</Button>
-        <Button onClick={this.handleLogout}>Logout</Button>
+      <div className="Header">
+        <StandardLayout>
+          <Button className="back-button" onClick={this.handleBack}>
+            <i className="fa fa-chevron-left"></i>
+          </Button>
+          <h1>React Bootstrap</h1>
+          <Button className="logout-button" onClick={this.handleLogout}>Logout</Button>
+        </StandardLayout>
       </div>
     );
   }

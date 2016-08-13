@@ -1,0 +1,24 @@
+.Header {
+  padding: 20px 0;
+  background: #27AE60;
+  margin-bottom: 60px;
+
+  h1 {
+    display: inline-block;
+    margin: 0;
+    color: #b3eecc;
+    font-size: 32px;
+  }
+
+  .back-button {
+    float: left;
+  }
+
+  .logout-button {
+    float: right;
+  }
+
+  .back-button {
+    margin-right: 30px;
+  }
+}
