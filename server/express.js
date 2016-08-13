@@ -4,7 +4,8 @@ session = require('express-session'),
 logger = require('morgan'),
 routes = require('./routes'),
 passport = require('passport'),
-path = require('path');
+path = require('path'),
+express = require('express');
 
 module.exports = function(app) {
   app.use(cookieParser());
@@ -14,6 +15,7 @@ module.exports = function(app) {
   app.use(passport.initialize());
   app.use(passport.session());
   app.use(logger('dev'));
+  app.use(express.static(path.join(__dirname, '../src/public')));
 
   // Delegate API routes
   app.use('/api', routes);
