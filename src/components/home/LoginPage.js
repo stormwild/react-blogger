@@ -44,21 +44,23 @@ class LoginPage extends React.Component {
         <Grid>
           <Row>
             <Col sm={6} smOffset={3}>
-              <div className="heading">
-                <h2>Sign in</h2>
-                <form>
-                  <div className="input-group input-group-lg">
-                    <span className="input-group-addon"><i className="fa fa-user"></i></span>
-                    <input type="text" className="form-control" placeholder="Username or email" />
-                  </div>
+              <div className="position-container">
+                <div className="heading">
+                  <h2>Sign in</h2>
+                  <form>
+                    <div className="input-group input-group-lg">
+                      <span className="input-group-addon"><i className="fa fa-user"></i></span>
+                      <input type="text" className="form-control" placeholder="Username or email" />
+                    </div>
 
-                  <div className="input-group input-group-lg">
-                    <span className="input-group-addon"><i className="fa fa-lock"></i></span>
-                    <input type="password" className="form-control" placeholder="Password" />
-                  </div>
+                    <div className="input-group input-group-lg">
+                      <span className="input-group-addon"><i className="fa fa-lock"></i></span>
+                      <input type="password" className="form-control" placeholder="Password" />
+                    </div>
 
-                  <button type="submit" className="float">Login</button>
-                </form>
+                    <button type="submit" className="float">Login</button>
+                  </form>
+                </div>
               </div>
             </Col>
           </Row>

@@ -1,5 +1,19 @@
 @import 'variables';
 
+html, body {
+  height: 100%;
+}
+
+#app {
+  height: 100%;
+}
+
 body {
-  background: gray;
+  background: url('img/realestate2.jpg');
+  background-size: cover;
+  background-position: 50% 100%;
+}
+
+#app {
+  background: rgba(0,0,0,0.65);
 }
