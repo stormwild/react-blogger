@@ -5,7 +5,7 @@ import './MarkdownOutput.scss';
 const MarkdownOutput = ({content}) => {
   const rawMarkup = () => {
     let md = new Remarkable();
-    return { __html: md.render(content) || 'Live preview of the output will show here' };
+    return { __html: md.render(content || '[Post content here]')};
   };
 
   return (

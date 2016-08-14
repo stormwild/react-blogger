@@ -1,8 +1,8 @@
 import React, {PropTypes} from 'react';
 
-const ToggleComponent = ({condition, componentIfTrue, componentIfFalse}) => {
+const ToggleComponent = ({condition, componentIfTrue, componentIfFalse, className=''}) => {
   return (
-    <div className="ToggleComponent">
+    <div className={"ToggleComponent " + className}>
       {condition ? componentIfTrue : componentIfFalse}
     </div>
   );

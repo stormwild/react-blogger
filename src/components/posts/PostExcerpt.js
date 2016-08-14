@@ -102,6 +102,7 @@ class PostExcerpt extends React.Component {
           condition={isEditing}
           componentIfTrue={textarea}
           componentIfFalse={postLink}
+          className="editable-post-title"
         />
         <MarkdownOutput content={this.generatePostExcerpt(post.content)} />
         <Link className="read-more" to={"/blogs/" + params.blogId + "/posts/" + post.postId}>Read More</Link>

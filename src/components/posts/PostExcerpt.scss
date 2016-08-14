@@ -4,6 +4,11 @@
     border-top: #EBF2F6 1px solid;
   }
 
+  /* Hooks into the PostExcerpt component through a custom className */
+  .editable-post-title {
+    margin-bottom: 26.8px; /* Same as margin-bottom of h1 in markdown output */
+  }
+
   /* Hooks into the ContentLink component through a custom className */
   .post-link {
     font-size: 40px;
