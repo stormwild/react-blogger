@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import {Grid, Row, Col} from 'react-bootstrap';
 import MarkdownOutput from '../common/MarkdownOutput';
+import PostOutput from './PostOutput';
 
 class PostViewMode extends React.Component {
   constructor(props, context) {
@@ -14,8 +15,7 @@ class PostViewMode extends React.Component {
       <Grid>
         <Row>
           <Col sm={12}>
-            <h1><MarkdownOutput content={post.title || ''} /></h1>
-            <MarkdownOutput content={post.content || ''} />
+            <PostOutput post={post} />
           </Col>
         </Row>
       </Grid>

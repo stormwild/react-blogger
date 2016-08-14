@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import TextArea from '../common/TextArea';
 import {Grid, Row, Col} from 'react-bootstrap';
-import MarkdownOutput from '../common/MarkdownOutput';
+import PostOutput from './PostOutput';
 
 class PostEditMode extends React.Component {
   constructor(props, context) {
@@ -27,8 +27,7 @@ class PostEditMode extends React.Component {
             />
           </Col>
           <Col sm={6}>
-            <h1 className="blog-title"><MarkdownOutput content={post.title || ''} /></h1>
-            <MarkdownOutput content={post.content || ''} />
+            <PostOutput post={post} />
           </Col>
         </Row>
       </Grid>
