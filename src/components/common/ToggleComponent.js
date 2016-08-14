@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 
 const ToggleComponent = ({condition, componentIfTrue, componentIfFalse}) => {
   return (
-    <div>
+    <div className="ToggleComponent">
       {condition ? componentIfTrue : componentIfFalse}
     </div>
   );

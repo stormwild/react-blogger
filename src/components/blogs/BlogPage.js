@@ -72,6 +72,8 @@ class BlogPage extends React.Component {
       <div className="BlogPage">
         <StandardLayout>
           <h1 className="blog-title">{blog.title}</h1>
+          <button className="primary new-post-button" onClick={this.handleNewPost}>New Post</button>
+          <hr/>
           {posts.map((post, index) => {
             return (
               // The key cannot be the same as index
@@ -84,7 +86,6 @@ class BlogPage extends React.Component {
               />
             );
           })}
-          <Button onClick={this.handleNewPost}>New Post</Button>
         </StandardLayout>
       </div>
     );

@@ -1,11 +1,19 @@
 .BlogPage {
 
+  .new-post-button {
+    margin-bottom: 10px;
+    width: 25%;
+  }
+
   .blog-title {
-    text-align: center;
     font-size: 4em;
-    margin-bottom: 45px;
+    margin-bottom: 20px;
     font-family: 'Open Sans', sans-serif;
     font-weight: 700;
     font-style: italic;
+  }
+
+  hr {
+    border-top: #EBF2F6 1px solid;
   }
 }
