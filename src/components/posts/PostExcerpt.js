@@ -56,10 +56,19 @@ class PostExcerpt extends React.Component {
   }
 
   generatePostExcerpt(content) {
-    // For now, just return the first paragraph.
-    // Might want to offer an option to make the excepts a certain number of words instead.
-    let contentArr = content.split('\n');
-    return contentArr[0];
+    /* Generates a blog post excerpt from the full content of the post */
+    let postExcerpt = '';
+    let contentArr = content.split('\n\n');
+    let markupRegex = /^[#->`]+.*$/g;
+    // If the post starts with a header such as "# My blog", include it in the excerpt
+    // Once a paragraph is found that doesn't start with a special markup character, return the accumulated content
+    for(var i = 0; i < contentArr.length; ++i) {
+      postExcerpt += contentArr[i] + '\n\n';
+      if (!markupRegex.test(contentArr[i])) {
+        return postExcerpt.slice(0, -2); // Need to strip away the last two newlines
+      }
+    }
+    return content;
   }
 
   render() {
