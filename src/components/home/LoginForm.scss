@@ -10,6 +10,10 @@
   padding: 15px;
   margin: 0 auto;
 
+  .login-button {
+    margin-top: 20px;
+  }
+
   .position-container {
     position: absolute;
     top: 40%;
@@ -79,37 +83,6 @@
       }
 
     }
-
-    button {
-      margin-top: 20px;
-      background: $button-background-color;
-      border: none;
-      font-size: 1.6em;
-      font-weight: 300;
-      padding: 5px 0;
-      width: 100%;
-      border-radius: 3px;
-      color: lighten($button-background-color, 40%);
-      border-bottom: 4px solid darken($button-background-color, 10%);
-
-      &:hover {
-        background: tint($button-background-color, 4%);
-        -webkit-animation: hop 1s;
-        animation: hop 1s;
-      }
-    }
-  }
-
-  .float {
-    display: inline-block;
-    transition-duration: 0.3s;
-    transition-property: transform;
-    transform: translateZ(0);
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-  }
-
-  .float:hover, .float:focus, .float:active {
-    transform: translateY(-3px);
   }
 
   @media #{$xs} {

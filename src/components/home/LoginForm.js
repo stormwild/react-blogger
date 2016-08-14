@@ -28,7 +28,7 @@ const LoginForm = ({credetials, handleUsername, handlePassword, handleSave}) => 
               />
             </div>
 
-            <button type="submit" className="float" onClick={handleSave}>Login</button>
+            <button className="primary login-button" onClick={handleSave}>Login</button>
           </form>
         </div>
       </div>

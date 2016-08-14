@@ -1,11 +1,11 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
-import {Button} from 'react-bootstrap';
 import axios from 'axios';
 import toastr from 'toastr';
 import {Link} from 'react-router';
 import BlogList from './BlogList';
 import StandardLayout from '../common/StandardLayout';
+import './BlogsPage.scss';
 
 class BlogsPage extends React.Component {
   constructor(props, context) {
@@ -61,6 +61,7 @@ class BlogsPage extends React.Component {
     return (
       <div className="BlogsPage">
         <StandardLayout>
+          <button className="primary new-blog-button" onClick={this.handleNewBlog}>New Blog</button>
           <BlogList 
             blogs={blogs}
             params={params}

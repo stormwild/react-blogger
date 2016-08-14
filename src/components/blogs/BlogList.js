@@ -1,5 +1,4 @@
 import React, {PropTypes} from 'react';
-import {Button} from 'react-bootstrap';
 import BlogListItem from './BlogListItem';
 
 const BlogList = ({blogs, params, handleNewBlog, handleDeleteBlog}) => {
@@ -15,7 +14,6 @@ const BlogList = ({blogs, params, handleNewBlog, handleDeleteBlog}) => {
           />
         );
       })}
-      <Button className="btn-green" onClick={handleNewBlog}>New Blog</Button>
     </div>
   );
 };
