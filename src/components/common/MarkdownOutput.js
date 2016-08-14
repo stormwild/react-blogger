@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import Remarkable from 'remarkable';
+import './MarkdownOutput.scss';
 
 const MarkdownOutput = ({content}) => {
   const rawMarkup = () => {
@@ -9,7 +10,7 @@ const MarkdownOutput = ({content}) => {
 
   return (
     <div
-      className="markdown-output"
+      className="MarkdownOutput"
       dangerouslySetInnerHTML={rawMarkup()} 
     />
   );

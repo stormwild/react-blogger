@@ -7,6 +7,7 @@ import PostLink from './PostLink';
 import axios from 'axios';
 import toastr from 'toastr';
 import MarkdownOutput from '../common/MarkdownOutput';
+import './PostExcerpt.scss';
 
 class PostExcerpt extends React.Component {
   constructor(props, context) {
@@ -95,16 +96,15 @@ class PostExcerpt extends React.Component {
     );
 
     return (
-      <div>
-        <h1>
-          <ToggleComponent
-            condition={isEditing}
-            componentIfTrue={textarea}
-            componentIfFalse={postLink}
-          />
-        </h1>
+      <div className="PostExcerpt">
+        <ToggleComponent
+          condition={isEditing}
+          componentIfTrue={textarea}
+          componentIfFalse={postLink}
+        />
         <MarkdownOutput content={this.generatePostExcerpt(post.content)} />
         <Link to={"/blogs/" + params.blogId + "/posts/" + post.postId}>Read More</Link>
+        <hr/>
       </div>
     );
   }
