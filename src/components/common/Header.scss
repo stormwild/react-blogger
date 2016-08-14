@@ -1,4 +1,7 @@
 .Header {
+  $default-green: #21c163;
+  $text-green: #b3eecc;
+
   padding: 20px 0;
   background: #27AE60;
   margin-bottom: 30px;
@@ -12,15 +15,41 @@
 
   .back-button {
     float: left;
+    width: 50px;
+    border: none;
+
+    &:hover {
+      border: none;
+    }
   }
 
   .user-dropdown-group {
     display: inline-block;
   }
 
+  span.username {
+    /* Adjust the text position so it aligns with the user icon */
+    position: relative;
+    top: -2px;
+    margin-left: 2px;
+  }
+
   .fa.fa-user {
     font-size: 24px;
-    border-right: 1px solid black;
+    position: relative;
+    padding-right: 10px;
+    margin-right: 5px;
+
+    &:after {
+      /* Add a border that takes into account outer margin/padding */
+      content: '';
+      position: absolute;
+      top: 2px;
+      right: 0;
+      height: 21px;
+      width: 1px;
+      background: #b3eecc;
+    }
   }
 
   .back-button {
@@ -38,20 +67,21 @@
     margin: 0;
     padding: 15px 4px 17px 0;
     list-style: none;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
     
     li {
-      font: bold 12px/18px sans-serif;
+      font-size: 16px;
       display: inline-block;
       margin-right: -4px;
       position: relative;
-      padding: 15px 20px;
-      background: #fff;
+      padding: 5px 10px;
+      background: $default-green;
+      box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.75);
       cursor: pointer;
       transition: all 0.2s;
+      color: $text-green;
 
       &:hover {
-        background: #555;
+        background: darken($default-green, 5%);
         color: #fff;
       }
     }
@@ -61,7 +91,7 @@
     padding: 0;
     position: absolute;
     z-index: 1000;
-    top: 48px;
+    top: 42px;
     left: 0;
     width: 150px;
     box-shadow: none;
@@ -71,13 +101,12 @@
     transition: opacity 0.2s;
 
     li {
-      background: #555; 
+      background: $default-green; 
       display: block; 
-      color: #fff;
-      text-shadow: 0 -1px 0 #000;
+      color: $text-green;
 
       &:hover {
-        background: #666;
+        background: darken($default-green, 5%);
       }   
     }
   }

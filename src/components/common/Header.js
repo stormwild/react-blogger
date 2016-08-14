@@ -54,14 +54,15 @@ class Header extends React.Component {
     return (
       <div className="Header">
         <StandardLayout>
-          <Button className="back-button" onClick={this.handleBack}>
+          <button className="primary back-button" onClick={this.handleBack}>
             <i className="fa fa-chevron-left"></i>
-          </Button>
+          </button>
           <h1>React Blog</h1>
           <div className="user-dropdown-container">
             <ul className={userDropdownClass} onClick={this.toggleMenu}>
               <li>
-                {user.username}
+                <i className="fa fa-user"></i>
+                <span className="username">{user.username}</span>
                 <ul>
                   <li onClick={this.handleLogout}>Logout</li>
                 </ul>
