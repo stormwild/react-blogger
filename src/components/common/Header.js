@@ -45,7 +45,7 @@ class Header extends React.Component {
           <Button className="back-button" onClick={this.handleBack}>
             <i className="fa fa-chevron-left"></i>
           </Button>
-          <h1>React Bootstrap</h1>
+          <h1>React Blog</h1>
           <Button className="logout-button" onClick={this.handleLogout}>Logout</Button>
         </StandardLayout>
       </div>

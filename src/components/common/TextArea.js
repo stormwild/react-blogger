@@ -1,16 +1,17 @@
 import React, {PropTypes} from 'react';
+import './TextArea.scss';
 
-const TextArea = ({onKeyDown, onChange, onBlur, value}) => {
+const TextArea = ({onKeyDown, onChange, onBlur, value, initialHeight}) => {
   return (
-    <div className="editable-container">
       <textarea
-        className="editable" 
+        className="TextArea" 
         value={value}
         onKeyDown={onKeyDown}
         onBlur={onBlur}
         onChange={onChange}
-        autoFocus />
-    </div>
+        autoFocus
+        style={{height: initialHeight}}
+      />
   );
 };
 

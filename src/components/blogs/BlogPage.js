@@ -6,6 +6,7 @@ import toastr from 'toastr';
 import {Link} from 'react-router';
 import {Button} from 'react-bootstrap';
 import PostExcerpt from '../posts/PostExcerpt';
+import StandardLayout from '../common/StandardLayout';
 
 class BlogPage extends React.Component {
   constructor(props, context) {
@@ -67,21 +68,23 @@ class BlogPage extends React.Component {
     let {blog, posts} = this.state;
     const {params} = this.props;
     return (
-      <div>
-        <h1>{blog.title}</h1>
-        {posts.map((post, index) => {
-          return (
-            // The key cannot be the same as index
-            // has something to do with the key auto-updating when you delete elements out of order
-            <PostExcerpt 
-              key={post._id}
-              post={post}
-              params={params}
-              deletePost={this.handleDeletePost.bind(this, index)}
-            />
-          );
-        })}
-        <Button onClick={this.handleNewPost}>New Post</Button>
+      <div className="BlogPage">
+        <StandardLayout>
+          <h1>{blog.title}</h1>
+          {posts.map((post, index) => {
+            return (
+              // The key cannot be the same as index
+              // has something to do with the key auto-updating when you delete elements out of order
+              <PostExcerpt 
+                key={post._id}
+                post={post}
+                params={params}
+                deletePost={this.handleDeletePost.bind(this, index)}
+              />
+            );
+          })}
+          <Button onClick={this.handleNewPost}>New Post</Button>
+        </StandardLayout>
       </div>
     );
   }
