@@ -40,9 +40,6 @@ module.exports = {
     return [autoprefixer]
   },
   resolve: {
-    modules: [
-      path.resolve('./src'),
-      path.resolve('./node_modules')
-    ]
+    root: [path.resolve('./src')]
   }
 };

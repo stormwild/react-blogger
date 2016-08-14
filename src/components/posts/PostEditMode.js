@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import TextArea from '../common/TextArea';
 import {Grid, Row, Col} from 'react-bootstrap';
 import PostOutput from './PostOutput';
+import * as constants from 'constants/constants';
 
 class PostEditMode extends React.Component {
   constructor(props, context) {
@@ -18,12 +19,12 @@ class PostEditMode extends React.Component {
             <TextArea
               onChange={handleChange.bind(this, 'post-title')}
               value={post.title || ''}
-              initialHeight={'45px'}
+              initialHeight={constants.TEXTAREA_HEADER_HEIGHT}
             />
             <TextArea
               onChange={handleChange.bind(this, 'post-content')}
               value={post.content || ''}
-              initialHeight={'750px'}
+              initialHeight={constants.TEXTAREA_CONTENT_HEIGHT}
             />
           </Col>
           <Col sm={6}>

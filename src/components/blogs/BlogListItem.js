@@ -6,6 +6,7 @@ import TextArea from '../common/TextArea';
 import PostLink from '../posts/PostLink';
 import axios from 'axios';
 import toastr from 'toastr';
+import * as constants from 'constants/constants';
 import './BlogListItem.scss';
 
 class BlogListItem extends React.Component {
@@ -69,7 +70,8 @@ class BlogListItem extends React.Component {
         onKeyDown={this.handleChange}
         onChange={this.handleChange}
         onBlur={this.toggleEditing}
-        value={blog.title} 
+        value={blog.title}
+        initialHeight={constants.TEXTAREA_HEADER_HEIGHT}
       />
     );
 
