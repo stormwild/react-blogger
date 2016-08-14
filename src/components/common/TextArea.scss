@@ -7,4 +7,9 @@
   border-radius: 5px;
   padding: 10px;
   margin-bottom: 15px;
+
+  &:focus {
+    outline: none;
+    box-shadow: 2px 2px 2px 0px rgba(187, 187, 187, 0.75);
+  }
 }
