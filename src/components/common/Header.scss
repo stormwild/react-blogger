@@ -14,11 +14,77 @@
     float: left;
   }
 
-  .logout-button {
-    float: right;
+  .user-dropdown-group {
+    display: inline-block;
+  }
+
+  .fa.fa-user {
+    font-size: 24px;
+    border-right: 1px solid black;
   }
 
   .back-button {
     margin-right: 30px;
+  }
+
+  .user-dropdown-container {
+    display: inline-block;
+    float: right;
+  }
+
+  ul.user-dropdown {
+    text-align: left;
+    display: inline;
+    margin: 0;
+    padding: 15px 4px 17px 0;
+    list-style: none;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+    
+    li {
+      font: bold 12px/18px sans-serif;
+      display: inline-block;
+      margin-right: -4px;
+      position: relative;
+      padding: 15px 20px;
+      background: #fff;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      &:hover {
+        background: #555;
+        color: #fff;
+      }
+    }
+  }
+
+  ul.user-dropdown li ul {
+    padding: 0;
+    position: absolute;
+    z-index: 1000;
+    top: 48px;
+    left: 0;
+    width: 150px;
+    box-shadow: none;
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s;
+
+    li {
+      background: #555; 
+      display: block; 
+      color: #fff;
+      text-shadow: 0 -1px 0 #000;
+
+      &:hover {
+        background: #666;
+      }   
+    }
+  }
+
+  ul.user-dropdown.selected li ul {
+    display: block;
+    opacity: 1;
+    visibility: visible;
   }
 }

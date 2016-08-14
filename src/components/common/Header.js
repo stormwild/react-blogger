@@ -1,18 +1,22 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {Grid, Button} from 'react-bootstrap';
+import {Button} from 'react-bootstrap';
 import axios from 'axios';
 import {browserHistory} from 'react-router';
 import StandardLayout from './StandardLayout';
+import classNames from 'classnames';
 import './Header.scss';
 
 class Header extends React.Component {
   constructor(props, context) {
     super(props, context);
 
+    this.state = {dropdownSelected: false};
+
     this.handleBack = this.handleBack.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
+    this.toggleMenu = this.toggleMenu.bind(this);
   }
 
   handleBack() {
@@ -33,8 +37,16 @@ class Header extends React.Component {
     .catch(err => { throw err; });
   }
 
+  toggleMenu() {
+    this.setState({dropdownSelected: !this.state.dropdownSelected});
+  }
+
   render() {
     const {user} = this.props;
+    let userDropdownClass = classNames({
+      'user-dropdown': true,
+      'selected': this.state.dropdownSelected
+    });
 
     if (!user) {
       return (<div></div>);
@@ -46,7 +58,16 @@ class Header extends React.Component {
             <i className="fa fa-chevron-left"></i>
           </Button>
           <h1>React Blog</h1>
-          <Button className="logout-button" onClick={this.handleLogout}>Logout</Button>
+          <div className="user-dropdown-container">
+            <ul className={userDropdownClass} onClick={this.toggleMenu}>
+              <li>
+                {user.username}
+                <ul>
+                  <li onClick={this.handleLogout}>Logout</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
         </StandardLayout>
       </div>
     );
