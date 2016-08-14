@@ -3,7 +3,7 @@ import {Link} from 'react-router';
 import {Button} from 'react-bootstrap';
 import ToggleComponent from '../common/ToggleComponent';
 import TextArea from '../common/TextArea';
-import PostLink from '../posts/PostLink';
+import ContentLink from '../common/ContentLink';
 import axios from 'axios';
 import toastr from 'toastr';
 import * as constants from 'constants/constants';
@@ -76,7 +76,7 @@ class BlogListItem extends React.Component {
     );
 
     let blogLink = (
-      <PostLink
+      <ContentLink
         url={"/blogs/" + blog.blogId} 
         title={blog.title}
         isEditing={isEditing}

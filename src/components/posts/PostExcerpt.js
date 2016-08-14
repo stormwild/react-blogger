@@ -3,7 +3,7 @@ import {Link} from 'react-router';
 import {Button} from 'react-bootstrap';
 import ToggleComponent from '../common/ToggleComponent';
 import TextArea from '../common/TextArea';
-import PostLink from './PostLink';
+import ContentLink from '../common/ContentLink';
 import axios from 'axios';
 import toastr from 'toastr';
 import MarkdownOutput from '../common/MarkdownOutput';
@@ -86,7 +86,7 @@ class PostExcerpt extends React.Component {
     );
 
     let postLink = (
-      <PostLink
+      <ContentLink
         url={"/blogs/" + params.blogId + "/posts/" + post.postId} 
         title={post.title}
         isEditing={isEditing}
