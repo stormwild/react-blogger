@@ -7,6 +7,7 @@ import {Link} from 'react-router';
 import {Button} from 'react-bootstrap';
 import PostExcerpt from '../posts/PostExcerpt';
 import StandardLayout from '../common/StandardLayout';
+import './BlogPage.scss';
 
 class BlogPage extends React.Component {
   constructor(props, context) {
@@ -70,7 +71,7 @@ class BlogPage extends React.Component {
     return (
       <div className="BlogPage">
         <StandardLayout>
-          <h1>{blog.title}</h1>
+          <h1 className="blog-title">{blog.title}</h1>
           {posts.map((post, index) => {
             return (
               // The key cannot be the same as index
