@@ -6,6 +6,7 @@ import TextArea from '../common/TextArea';
 import PostLink from './PostLink';
 import axios from 'axios';
 import toastr from 'toastr';
+import MarkdownOutput from '../common/MarkdownOutput';
 
 class PostExcerpt extends React.Component {
   constructor(props, context) {
@@ -54,6 +55,13 @@ class PostExcerpt extends React.Component {
     }
   }
 
+  generatePostExcerpt(content) {
+    // For now, just return the first paragraph.
+    // Might want to offer an option to make the excepts a certain number of words instead.
+    let contentArr = content.split('\n');
+    return contentArr[0];
+  }
+
   render() {
     const {params, deletePost} = this.props;
     let {post, isEditing} = this.state;
@@ -86,7 +94,8 @@ class PostExcerpt extends React.Component {
             componentIfFalse={postLink}
           />
         </h1>
-        <p>{post.content}</p>
+        <MarkdownOutput content={this.generatePostExcerpt(post.content)} />
+        <Link to={"/blogs/" + params.blogId + "/posts/" + post.postId}>Read More</Link>
       </div>
     );
   }
