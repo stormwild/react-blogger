@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {Grid, Row, Col} from 'react-bootstrap';
+import StandardLayout from '../common/StandardLayout';
 import MarkdownOutput from '../common/MarkdownOutput';
 import PostOutput from './PostOutput';
 
@@ -12,13 +12,9 @@ class PostViewMode extends React.Component {
     let {post} = this.props;
     
     return (
-      <Grid>
-        <Row>
-          <Col sm={12}>
-            <PostOutput post={post} />
-          </Col>
-        </Row>
-      </Grid>
+      <StandardLayout>
+        <PostOutput post={post} />
+      </StandardLayout>
     );
   }
 }
