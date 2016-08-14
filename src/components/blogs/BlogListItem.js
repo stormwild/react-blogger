@@ -29,6 +29,12 @@ class BlogListItem extends React.Component {
   toggleEditing() {
     const {blog, lastValidTitle, isEditing} = this.state;
     if(isEditing) {
+      // Don't want to send a PUT request if the blog title didn't change
+      if (blog.title === lastValidTitle) {
+        this.setState({isEditing: !this.state.isEditing});
+        return;
+      }
+
       axios.put("/api/blogs/" + blog.blogId, {title: blog.title})
       .then(res => {
         // Need to update the entire blog after the PUT request to retreive the new postId
