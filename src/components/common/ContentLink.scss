@@ -1,7 +1,7 @@
 .ContentLink {
   $link-color: #4e4e4e;
   display: inline-block;
-  font-size: 1.3em;
+  font-size: 30px;
   margin-bottom: 0;
 
   &:hover a {
@@ -34,11 +34,13 @@
 
   .modify-buttons {
     display: inline-block;
+    margin-left: 2px;
   }
 
   .fa {
     color: #4e4e4e;
-    font-size: 1.5em;
+    font-size: 30px;
+    margin-left: 5px;
   }
 
   .fa.fa-pencil-square-o:hover {

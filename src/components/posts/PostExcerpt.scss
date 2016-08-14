@@ -3,4 +3,13 @@
   hr {
     border-top: #EBF2F6 1px solid;
   }
+
+  /* Hooks into the ContentLink component through a custom className */
+  .post-link {
+    margin-bottom: 25px;
+  }
+
+  .read-more {
+    font-size: 20px;
+  }
 }

@@ -53,7 +53,7 @@ module.exports = {
         blogId: blog.blogId,
         title: 'Generic blog post ' + rand,
         postId: generateId('Generic blog post ' + rand),
-        content: '## Generic content ' + rand + '\n\n' + loremIpsum
+        content: '## Sub-Heading ' + rand + '\n\n' + loremIpsum
       }
     });
   }

@@ -3,9 +3,9 @@ import {Link} from 'react-router';
 import {Button} from 'react-bootstrap';
 import './ContentLink.scss';
 
-const ContentLink = ({url, title, isEditing, toggleEditing, deletePost}) => {
+const ContentLink = ({url, title, isEditing, toggleEditing, deletePost, className=''}) => {
   return (
-    <h2 className="ContentLink">
+    <h2 className={"ContentLink " + className}>
       <Link to={url}>{title}</Link>
       <div className="modify-buttons">
         {!isEditing && <i className="fa fa-pencil-square-o" onClick={toggleEditing}></i>}

@@ -1,5 +1,49 @@
 .MarkdownOutput {
+  /* The following is based on inspection of Github's markdown editor */
+  h1 {
+    font-size: 40px;
+    margin: 26.8px 0;
+  }
+
   h2 {
-    margin-bottom: 15px;
+    font-size: 32px;
+    margin: 26.5px 0;
+  }
+
+  h3 {
+    font-size: 24px;
+    margin: 24px 0;
+  }
+
+  h4 {
+    font-size: 19.2px;
+    margin: 22px 0;
+  }
+
+  h5 {
+    font-size: 16px;
+    margin: 20px 0;
+  }
+
+  h6 {
+    font-size: 14.4px;
+    margin: 18px 0;
+  }
+
+  p {
+    font-size: 16px;
+    margin-bottom: 16px;
+  }
+
+  ul {
+    margin-bottom: 16px;
+  }
+
+  li {
+    font-size: 16px;
+  }
+
+  blockquote {
+    margin-bottom: 16px;
   }
 }

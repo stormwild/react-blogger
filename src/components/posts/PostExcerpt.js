@@ -92,6 +92,7 @@ class PostExcerpt extends React.Component {
         isEditing={isEditing}
         toggleEditing={this.toggleEditing}
         deletePost={deletePost}
+        className="post-link"
       />
     );
 
@@ -103,7 +104,7 @@ class PostExcerpt extends React.Component {
           componentIfFalse={postLink}
         />
         <MarkdownOutput content={this.generatePostExcerpt(post.content)} />
-        <Link to={"/blogs/" + params.blogId + "/posts/" + post.postId}>Read More</Link>
+        <Link className="read-more" to={"/blogs/" + params.blogId + "/posts/" + post.postId}>Read More</Link>
         <hr/>
       </div>
     );

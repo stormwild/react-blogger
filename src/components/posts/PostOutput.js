@@ -5,7 +5,7 @@ import './PostOutput.scss';
 const PostOutput = ({post}) => {
   return (
     <div className="PostOutput">
-      <h1 className="blog-title"><MarkdownOutput content={post.title || ''} /></h1>
+      <h1 className="blog-title">{post.title || ''}</h1>
       <MarkdownOutput content={post.content || ''} />
     </div>
   );
