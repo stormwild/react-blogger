@@ -1,17 +1,6 @@
-Interactive blog creation platform built using React. Work in progress.
+Interactive blog creation platform built using React, Redux, Node/Express and MongoDB.
 
-To remove the vast majority of hot reload behavior, simply remove `"presets": ["react-hmre"]` from the `.babelrc` file. I haven't fully tested it, but it seems to always trigger full reloads when I want it to.
-
-***
-
-To use ES6 on the server side without babel-node, need to use a polyfill for import statements. Not sure if it's worth the trouble honestly.
-
-***
-
-Having trouble getting initDB to run as a standalone script. Issue has to do with `node ./server/initDB.js` running as a separate node session. See [here](http://stackoverflow.com/a/10083152/2472351) for more details.
-
-***
-
-Was considering ditching Redux since only really want to pass User data to each page. I considered passing `window.user` into a top-level component and passing it as props to each route in the react router. This does works, but is a little clunky.
-
-Current train of thought is to use Redux JUST for the login and use local state everywhere else.
+Features
+- Create an entire blog or post in two clicks. You literally click `New Blog`, type in a title and your blog is created and saved in a database.
+- Edit blog posts directly in the browser with a split-screen preview. Type up the content of your post in markup format in the left half of the screen, and see a live preview of the output in the right half, which is so responsive that it responds to every key stroke
+- Lightning fast performance. Since the app is built in React, the entire web application is bundled and minified into a file that is smaller than an average JPEG image.
